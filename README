@@ -1,0 +1,9 @@
+OE layer for all in midlife crisis
+
+This layer depends on:
+
+URI: git://git.openembedded.org/openembedded-core
+branch: master
+revision: HEAD
+
+Layer maintainer: Andreas Müller <schnitzeltony@googlemail.com>
