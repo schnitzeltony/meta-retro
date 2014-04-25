@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Colour Genie Emulator
+Path=/usr/share
+Exec=cgenie
+Terminal=false
+StartupNotify=false
+Categories=Game

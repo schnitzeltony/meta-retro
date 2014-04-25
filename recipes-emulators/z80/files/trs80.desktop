@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=TRS80 Emulator
+Path=/usr/share
+Exec=trs80
+Terminal=false
+StartupNotify=false
+Categories=Game
