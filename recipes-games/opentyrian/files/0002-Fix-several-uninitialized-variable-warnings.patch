@@ -1,0 +1,63 @@
+From 7e1c9fb3c30d12139ad531b6b14c53fb5764b24c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Sun, 16 Aug 2015 16:04:41 +0200
+Subject: [PATCH 2/2] Fix several uninitialized variable warnings
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Backport [1]
+
+[1] https://bitbucket.org/opentyrian/opentyrian/commits/03cdbc8922f7856378f2e4b51f9adb5073f6fc9e/raw/
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ src/mainint.c | 2 +-
+ src/shots.c   | 2 +-
+ src/tyrian2.c | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/mainint.c b/src/mainint.c
+index 2805752..b00074e 100644
+--- a/src/mainint.c
++++ b/src/mainint.c
+@@ -3635,7 +3635,7 @@ redo:
+ 				blit_sprite2x2(VGAScreen, this_player->x - 17, this_player->y - 7, *shapes9ptr_, 220);
+ 				blit_sprite2x2(VGAScreen, this_player->x + 7, this_player->y - 7, *shapes9ptr_, 222);
+ 
+-				int ship_banking;
++				int ship_banking = 0;
+ 				switch (ship_sprite)
+ 				{
+ 				case 5:
+diff --git a/src/shots.c b/src/shots.c
+index 606a19f..7aa6ac5 100644
+--- a/src/shots.c
++++ b/src/shots.c
+@@ -319,7 +319,7 @@ JE_integer player_shot_create( JE_word portNum, uint bay_i, JE_word PX, JE_word
+ 	if (weapon->sound > 0)
+ 		soundQueue[soundChannel[bay_i]] = weapon->sound;
+ 
+-	int shot_id;
++	int shot_id = MAX_PWEAPON;
+ 	/*Rot*/
+ 	for (int multi_i = 1; multi_i <= weapon->multi; multi_i++)
+ 	{
+diff --git a/src/tyrian2.c b/src/tyrian2.c
+index 3a0a101..4d528cf 100644
+--- a/src/tyrian2.c
++++ b/src/tyrian2.c
+@@ -4325,8 +4325,8 @@ void JE_eventSystem( void )
+ 
+ 	case 19: /* Enemy Global Move */
+ 	{
+-		int initial_i, max_i;
+-		bool all_enemies;
++		int initial_i = 0, max_i = 0;
++		bool all_enemies = false;
+ 
+ 		if (eventRec[eventLoc-1].eventdat3 > 79 && eventRec[eventLoc-1].eventdat3 < 90)
+ 		{
+-- 
+2.1.0
+

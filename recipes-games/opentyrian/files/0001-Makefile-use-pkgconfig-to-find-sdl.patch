@@ -1,0 +1,42 @@
+From de64bf5798755f4ea24cc1b8f1d6197b8a0fc7c7 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Sun, 16 Aug 2015 15:43:44 +0200
+Subject: [PATCH 1/2] Makefile: use pkgconfig to find sdl
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropriate [Configuration]
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ Makefile | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 88a8bd6..63c2983 100644
+--- a/Makefile
++++ b/Makefile
+@@ -14,8 +14,6 @@ WITH_NETWORK := true
+ 
+ STRIP := strip
+ 
+-SDL_CONFIG := sdl-config
+-
+ SRCS := $(wildcard src/*.c)
+ OBJS := $(SRCS:src/%.c=obj/%.o)
+ 
+@@ -39,8 +37,8 @@ endif
+ 
+ EXTRA_LDLIBS += -lm
+ 
+-SDL_CFLAGS := $(shell $(SDL_CONFIG) --cflags)
+-SDL_LDLIBS := $(shell $(SDL_CONFIG) --libs)
++SDL_CFLAGS := $(shell pkg-config --cflags sdl)
++SDL_LDLIBS := $(shell pkg-config --libs sdl)
+ ifeq ($(WITH_NETWORK), true)
+     SDL_LDLIBS += -lSDL_net
+ endif
+-- 
+2.1.0
+
