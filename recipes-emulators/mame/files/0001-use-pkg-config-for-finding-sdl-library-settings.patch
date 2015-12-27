@@ -1,0 +1,75 @@
+From 168f7f181099e6fbbb4ba7100e45f224afec6107 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Sat, 26 Dec 2015 21:29:16 +0100
+Subject: [PATCH] use pkg-config for finding sdl library settings
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ scripts/src/osd/sdl.lua     | 6 +++---
+ scripts/src/osd/sdl_cfg.lua | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/scripts/src/osd/sdl.lua b/scripts/src/osd/sdl.lua
+index 4cb31f3..b0ea27c 100644
+--- a/scripts/src/osd/sdl.lua
++++ b/scripts/src/osd/sdl.lua
+@@ -258,7 +258,7 @@ if BASE_TARGETOS=="unix" then
+ 				}
+ 			end
+ 		else
+-			local str = backtick(sdlconfigcmd() .. " --libs | sed 's/-lSDLmain//'")
++			local str = backtick("pkg-config --libs sdl | sed 's/-lSDLmain//'")
+ 			addlibfromstring(str)
+ 			addoptionsfromstring(str)
+ 		end
+@@ -278,7 +278,7 @@ if BASE_TARGETOS=="unix" then
+ 				}
+ 			end
+ 		end
+-		local str = backtick(sdlconfigcmd() .. " --libs")
++		local str = backtick("pkg-config --libs sdl")
+ 		addlibfromstring(str)
+ 		addoptionsfromstring(str)
+ 		if _OPTIONS["targetos"]~="haiku" then
+@@ -299,7 +299,7 @@ if BASE_TARGETOS=="unix" then
+ 		end
+ 	end
+ elseif BASE_TARGETOS=="os2" then
+-	local str = backtick(sdlconfigcmd() .. " --libs")
++	local str = backtick("pkg-config --libs sdl")
+ 	addlibfromstring(str)
+ 	addoptionsfromstring(str)
+ 	links {
+diff --git a/scripts/src/osd/sdl_cfg.lua b/scripts/src/osd/sdl_cfg.lua
+index 878a5a2..febb084 100644
+--- a/scripts/src/osd/sdl_cfg.lua
++++ b/scripts/src/osd/sdl_cfg.lua
+@@ -90,12 +90,12 @@ if BASE_TARGETOS=="unix" then
+ 				"MACOSX_USE_LIBSDL",
+ 			}
+ 			buildoptions {
+-				backtick(sdlconfigcmd() .. " --cflags | sed 's:/SDL::'"),
++				backtick("pkg-config --cflags sdl | sed 's:/SDL::'"),
+ 			}
+ 		end
+ 	else
+ 		buildoptions {
+-			backtick(sdlconfigcmd() .. " --cflags"),
++			backtick("pkg-config --cflags sdl"),
+ 		}
+ 		if _OPTIONS["targetos"]~="asmjs" then
+ 			buildoptions {
+@@ -148,6 +148,6 @@ elseif _OPTIONS["targetos"]=="os2" then
+ 		"SDLMAME_OS2",
+ 	}
+ 	buildoptions {
+-		backtick(sdlconfigcmd() .. " --cflags"),
++		backtick("pkg-config --cflags sdl"),
+ 	}
+ end
+-- 
+2.5.0
+
