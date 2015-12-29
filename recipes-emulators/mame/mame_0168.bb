@@ -13,7 +13,22 @@ SRC_URI[sha256sum] = "3b6db52ddffed867ae171664e327f0b2bade64139d3450dc7166c4f90b
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
-DEPENDS = "libsdl libsdl-ttf expat zlib jpeg lua-native"
+# TBD
+# * move to libsdl2 libsdl2-ttf
+
+DEPENDS = " \
+    libsdl \
+    libsdl-ttf \
+    fontconfig \
+    libxinerama \
+    \
+    expat \
+    zlib \
+    flac \
+    jpeg \
+    lua lua-native \
+    sqlite3 \
+"
 
 EXTRA_OEMAKE += " \
     linux \
@@ -26,5 +41,36 @@ EXTRA_OEMAKE += " \
     USE_QTDEBUG=0 \
     NOWERROR=1 \
     USE_SYSTEM_LIB_EXPAT=1 \
+    USE_SYSTEM_LIB_ZLIB=1 \
+    USE_SYSTEM_LIB_FLAC=1 \
     USE_SYSTEM_LIB_JPEG=1 \
+    USE_SYSTEM_LIB_LUA=1 \
+    USE_SYSTEM_LIB_SQLITE3=1 \
 "
+
+do_install() {
+    # Note: Unstripped mame binary for armv7 is > 1GB!!
+    install -d ${D}${bindir}
+    install mame ${D}${bindir}/
+
+    install -d ${D}${libexecdir}
+    for binary in \
+        castool \
+        chdman \
+        floptool \
+        imgtool \
+        jedutil \
+        ldresample \
+        ldverify \
+        nltool \
+        nlwav \
+        pngcmp \
+        split \
+        srcclean \
+        testkeys \
+        unidasm \
+        ; \
+    do
+        install $binary ${D}${libexecdir}/
+    done
+}
