@@ -21,7 +21,7 @@ index 4cb31f3..b0ea27c 100644
  			end
  		else
 -			local str = backtick(sdlconfigcmd() .. " --libs | sed 's/-lSDLmain//'")
-+			local str = backtick("pkg-config --libs sdl | sed 's/-lSDLmain//'")
++			local str = backtick("pkg-config --libs sdl2 | sed 's/-lSDLmain//'")
  			addlibfromstring(str)
  			addoptionsfromstring(str)
  		end
@@ -30,7 +30,7 @@ index 4cb31f3..b0ea27c 100644
  			end
  		end
 -		local str = backtick(sdlconfigcmd() .. " --libs")
-+		local str = backtick("pkg-config --libs sdl")
++		local str = backtick("pkg-config --libs sdl2")
  		addlibfromstring(str)
  		addoptionsfromstring(str)
  		if _OPTIONS["targetos"]~="haiku" then
@@ -39,7 +39,7 @@ index 4cb31f3..b0ea27c 100644
  	end
  elseif BASE_TARGETOS=="os2" then
 -	local str = backtick(sdlconfigcmd() .. " --libs")
-+	local str = backtick("pkg-config --libs sdl")
++	local str = backtick("pkg-config --libs sdl2")
  	addlibfromstring(str)
  	addoptionsfromstring(str)
  	links {
@@ -52,13 +52,13 @@ index 878a5a2..febb084 100644
  			}
  			buildoptions {
 -				backtick(sdlconfigcmd() .. " --cflags | sed 's:/SDL::'"),
-+				backtick("pkg-config --cflags sdl | sed 's:/SDL::'"),
++				backtick("pkg-config --cflags sdl2 | sed 's:/SDL::'"),
  			}
  		end
  	else
  		buildoptions {
 -			backtick(sdlconfigcmd() .. " --cflags"),
-+			backtick("pkg-config --cflags sdl"),
++			backtick("pkg-config --cflags sdl2"),
  		}
  		if _OPTIONS["targetos"]~="asmjs" then
  			buildoptions {
@@ -67,7 +67,7 @@ index 878a5a2..febb084 100644
  	}
  	buildoptions {
 -		backtick(sdlconfigcmd() .. " --cflags"),
-+		backtick("pkg-config --cflags sdl"),
++		backtick("pkg-config --cflags sdl2"),
  	}
  end
 -- 

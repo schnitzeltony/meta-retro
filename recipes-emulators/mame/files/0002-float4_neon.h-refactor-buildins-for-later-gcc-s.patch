@@ -1,0 +1,327 @@
+From 917f9e35b110c84b7748e47d7cf27097c04f8e49 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Fri, 1 Jan 2016 20:48:10 +0100
+Subject: [PATCH] float4_neon.h: refactor buildins for later gcc's
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+taken from [1-2]
+
+[1] https://patchwork.ozlabs.org/patch/410050/
+[2] https://gcc.gnu.org/ml/gcc-patches/2014-04/txtfStfgLNxV5.txt
+
+Upstream-Status: Pending
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ 3rdparty/bx/include/bx/float4_neon.h | 74 ++++++++++++++++++++++++------------------------
+ 1 file changed, 37 insertions(+), 37 deletions(-)
+
+diff --git a/3rdparty/bx/include/bx/float4_neon.h b/3rdparty/bx/include/bx/float4_neon.h
+index 3b6fa18..df42814 100644
+--- a/3rdparty/bx/include/bx/float4_neon.h
++++ b/3rdparty/bx/include/bx/float4_neon.h
+@@ -96,22 +96,22 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 
+ 	BX_FLOAT4_FORCE_INLINE float float4_x(float4_t _a)
+ 	{
+-		return __builtin_neon_vget_lanev4sf(_a, 0, 3);
++		return __builtin_neon_vget_lanev4sf(_a, 0);
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float float4_y(float4_t _a)
+ 	{
+-		return __builtin_neon_vget_lanev4sf(_a, 1, 3);
++		return __builtin_neon_vget_lanev4sf(_a, 1);
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float float4_z(float4_t _a)
+ 	{
+-		return __builtin_neon_vget_lanev4sf(_a, 2, 3);
++		return __builtin_neon_vget_lanev4sf(_a, 2);
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float float4_w(float4_t _a)
+ 	{
+-		return __builtin_neon_vget_lanev4sf(_a, 3, 3);
++		return __builtin_neon_vget_lanev4sf(_a, 3);
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_ld(const void* _ptr)
+@@ -179,14 +179,14 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_itof(float4_t _a)
+ 	{
+ 		const _i32x4_t itof   = __builtin_neon_vreinterpretv4siv4sf(_a);
+-		const float4_t result = __builtin_neon_vcvtv4si(itof, 1);
++		const float4_t result = __builtin_neon_vcvtsv4si(itof);
+ 
+ 		return result;
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_ftoi(float4_t _a)
+ 	{
+-		const _i32x4_t ftoi   = __builtin_neon_vcvtv4sf(_a, 1);
++		const _i32x4_t ftoi   = __builtin_neon_vcvtsv4sf(_a);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(ftoi);
+ 
+ 		return result;
+@@ -194,32 +194,32 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_add(float4_t _a, float4_t _b)
+ 	{
+-		return __builtin_neon_vaddv4sf(_a, _b, 3);
++		return __builtin_neon_vaddv4sf(_a, _b);
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_sub(float4_t _a, float4_t _b)
+ 	{
+-		return __builtin_neon_vsubv4sf(_a, _b, 3);
++		return __builtin_neon_vsubv4sf(_a, _b);
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_mul(float4_t _a, float4_t _b)
+ 	{
+-		return __builtin_neon_vmulv4sf(_a, _b, 3);
++		return __builtin_neon_vmulfv4sf(_a, _b);
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_rcp_est(float4_t _a)
+ 	{
+-		return __builtin_neon_vrecpev4sf(_a, 3);
++		return __builtin_neon_vrecpev4sf(_a);
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_rsqrt_est(float4_t _a)
+ 	{
+-		return __builtin_neon_vrsqrtev4sf(_a, 3);
++		return __builtin_neon_vrsqrtev4sf(_a);
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_cmpeq(float4_t _a, float4_t _b)
+ 	{
+-		const _i32x4_t tmp    = __builtin_neon_vceqv4sf(_a, _b, 3);
++		const _i32x4_t tmp    = __builtin_neon_vceqv4sf(_a, _b);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp);
+ 
+ 		return result;
+@@ -227,7 +227,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_cmplt(float4_t _a, float4_t _b)
+ 	{
+-		const _i32x4_t tmp    = __builtin_neon_vcgtv4sf(_b, _a, 3);
++		const _i32x4_t tmp    = __builtin_neon_vcgtv4sf(_b, _a);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp);
+ 
+ 		return result;
+@@ -235,7 +235,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_cmple(float4_t _a, float4_t _b)
+ 	{
+-		const _i32x4_t tmp    = __builtin_neon_vcgev4sf(_b, _a, 3);
++		const _i32x4_t tmp    = __builtin_neon_vcgev4sf(_b, _a);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp);
+ 
+ 		return result;
+@@ -243,7 +243,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_cmpgt(float4_t _a, float4_t _b)
+ 	{
+-		const _i32x4_t tmp    = __builtin_neon_vcgtv4sf(_a, _b, 3);
++		const _i32x4_t tmp    = __builtin_neon_vcgtv4sf(_a, _b);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp);
+ 
+ 		return result;
+@@ -251,7 +251,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_cmpge(float4_t _a, float4_t _b)
+ 	{
+-		const _i32x4_t tmp    = __builtin_neon_vcgev4sf(_a, _b, 3);
++		const _i32x4_t tmp    = __builtin_neon_vcgev4sf(_a, _b);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp);
+ 
+ 		return result;
+@@ -259,19 +259,19 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_min(float4_t _a, float4_t _b)
+ 	{
+-		return __builtin_neon_vminv4sf(_a, _b, 3);
++		return __builtin_neon_vminfv4sf(_a, _b);
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_max(float4_t _a, float4_t _b)
+ 	{
+-		return __builtin_neon_vmaxv4sf(_a, _b, 3);
++		return __builtin_neon_vmaxfv4sf(_a, _b);
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_and(float4_t _a, float4_t _b)
+ 	{
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t tmp1   = __builtin_neon_vreinterpretv4siv4sf(_b);
+-		const _i32x4_t tmp2   = __builtin_neon_vandv4si(tmp0, tmp1, 0);
++		const _i32x4_t tmp2   = tmp0 & tmp1;
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp2);
+ 
+ 		return result;
+@@ -281,7 +281,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 	{
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t tmp1   = __builtin_neon_vreinterpretv4siv4sf(_b);
+-		const _i32x4_t tmp2   = __builtin_neon_vbicv4si(tmp0, tmp1, 0);
++		const _i32x4_t tmp2   = tmp0 & ~tmp1;
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp2);
+ 
+ 		return result;
+@@ -291,7 +291,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 	{
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t tmp1   = __builtin_neon_vreinterpretv4siv4sf(_b);
+-		const _i32x4_t tmp2   = __builtin_neon_vorrv4si(tmp0, tmp1, 0);
++		const _i32x4_t tmp2   = tmp0 | tmp1;
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp2);
+ 
+ 		return result;
+@@ -301,7 +301,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 	{
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t tmp1   = __builtin_neon_vreinterpretv4siv4sf(_b);
+-		const _i32x4_t tmp2   = __builtin_neon_veorv4si(tmp0, tmp1, 0);
++		const _i32x4_t tmp2   = tmp0 ^ tmp1;
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp2);
+ 
+ 		return result;
+@@ -312,7 +312,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 		if (__builtin_constant_p(_count) )
+ 		{
+ 			const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+-			const _i32x4_t tmp1   = __builtin_neon_vshl_nv4si(tmp0, _count, 0);
++			const _i32x4_t tmp1   = __builtin_neon_vshl_nv4si(tmp0, _count);
+ 			const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp1);
+ 
+ 			return result;
+@@ -320,7 +320,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t shift  = __builtin_neon_vdup_nv4si( (__builtin_neon_si)_count);
+-		const _i32x4_t tmp1   = __builtin_neon_vshlv4si(tmp0, shift, 1);
++		const _i32x4_t tmp1   = __builtin_neon_vshlsv4si(tmp0, shift);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp1);
+ 
+ 		return result;
+@@ -331,7 +331,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 		if (__builtin_constant_p(_count) )
+ 		{
+ 			const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+-			const _i32x4_t tmp1   = __builtin_neon_vshr_nv4si(tmp0, _count, 0);
++			const _i32x4_t tmp1   = __builtin_neon_vshru_nv4si(tmp0, _count);
+ 			const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp1);
+ 
+ 			return result;
+@@ -339,7 +339,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t shift  = __builtin_neon_vdup_nv4si( (__builtin_neon_si)-_count);
+-		const _i32x4_t tmp1   = __builtin_neon_vshlv4si(tmp0, shift, 1);
++		const _i32x4_t tmp1   = __builtin_neon_vshlsv4si(tmp0, shift);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp1);
+ 
+ 		return result;
+@@ -350,7 +350,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 		if (__builtin_constant_p(_count) )
+ 		{
+ 			const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+-			const _i32x4_t tmp1   = __builtin_neon_vshr_nv4si(tmp0, _count, 1);
++			const _i32x4_t tmp1   = __builtin_neon_vshrs_nv4si(tmp0, _count);
+ 			const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp1);
+ 
+ 			return result;
+@@ -358,7 +358,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t shift  = __builtin_neon_vdup_nv4si( (__builtin_neon_si)-_count);
+-		const _i32x4_t tmp1   = __builtin_neon_vshlv4si(tmp0, shift, 1);
++		const _i32x4_t tmp1   = __builtin_neon_vshlsv4si(tmp0, shift);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp1);
+ 
+ 		return result;
+@@ -366,19 +366,19 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_madd(float4_t _a, float4_t _b, float4_t _c)
+ 	{
+-		return __builtin_neon_vmlav4sf(_c, _a, _b, 3);
++		return __builtin_neon_vmlav4sf(_c, _a, _b);
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_nmsub(float4_t _a, float4_t _b, float4_t _c)
+ 	{
+-		return __builtin_neon_vmlsv4sf(_c, _a, _b, 3);
++		return __builtin_neon_vmlsv4sf(_c, _a, _b);
+ 	}
+ 
+ 	BX_FLOAT4_FORCE_INLINE float4_t float4_icmpeq(float4_t _a, float4_t _b)
+ 	{
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t tmp1   = __builtin_neon_vreinterpretv4siv4sf(_b);
+-		const _i32x4_t tmp2   = __builtin_neon_vceqv4si(tmp0, tmp1, 1);
++		const _i32x4_t tmp2   = __builtin_neon_vceqv4si(tmp0, tmp1);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp2);
+ 
+ 		return result;
+@@ -388,7 +388,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 	{
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t tmp1   = __builtin_neon_vreinterpretv4siv4sf(_b);
+-		const _i32x4_t tmp2   = __builtin_neon_vcgtv4si(tmp1, tmp0, 1);
++		const _i32x4_t tmp2   = __builtin_neon_vcgtv4si(tmp1, tmp0);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp2);
+ 
+ 		return result;
+@@ -398,7 +398,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 	{
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t tmp1   = __builtin_neon_vreinterpretv4siv4sf(_b);
+-		const _i32x4_t tmp2   = __builtin_neon_vcgtv4si(tmp0, tmp1, 1);
++		const _i32x4_t tmp2   = __builtin_neon_vcgtv4si(tmp0, tmp1);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp2);
+ 
+ 		return result;
+@@ -408,7 +408,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 	{
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t tmp1   = __builtin_neon_vreinterpretv4siv4sf(_b);
+-		const _i32x4_t tmp2   = __builtin_neon_vminv4si(tmp0, tmp1, 1);
++		const _i32x4_t tmp2   = __builtin_neon_vminsv4si(tmp0, tmp1);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp2);
+ 
+ 		return result;
+@@ -418,7 +418,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 	{
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t tmp1   = __builtin_neon_vreinterpretv4siv4sf(_b);
+-		const _i32x4_t tmp2   = __builtin_neon_vmaxv4si(tmp0, tmp1, 1);
++		const _i32x4_t tmp2   = __builtin_neon_vmaxsv4si(tmp0, tmp1);
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp2);
+ 
+ 		return result;
+@@ -428,7 +428,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 	{
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t tmp1   = __builtin_neon_vreinterpretv4siv4sf(_b);
+-		const _i32x4_t tmp2   = __builtin_neon_vaddv4si(tmp0, tmp1, 1);
++		const _i32x4_t tmp2   = tmp0 + tmp1;
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp2);
+ 
+ 		return result;
+@@ -438,7 +438,7 @@ IMPLEMENT_TEST(xyzw , xyzw);
+ 	{
+ 		const _i32x4_t tmp0   = __builtin_neon_vreinterpretv4siv4sf(_a);
+ 		const _i32x4_t tmp1   = __builtin_neon_vreinterpretv4siv4sf(_b);
+-		const _i32x4_t tmp2   = __builtin_neon_vsubv4si(tmp0, tmp1, 1);
++		const _i32x4_t tmp2   = tmp0 - tmp1;
+ 		const float4_t result = __builtin_neon_vreinterpretv4sfv4si(tmp2);
+ 
+ 		return result;
+-- 
+2.5.0
+

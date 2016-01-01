@@ -1,15 +1,16 @@
 SUMMARY = "Multiple Arcade Machine Emulator"
 HOMEPAGE = "http://www.mamedev.org/index.php" 
 
-LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://README.md;beginline=22;endline=29;md5=4e58445eb710431608ce9127a9462da1" 
+LICENSE = "MAME"
+LIC_FILES_CHKSUM = "file://docs/mamelicense.txt;md5=f40fdf5d5756f220c8e44004f2ef48dc" 
 
 SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
     file://0001-use-pkg-config-for-finding-sdl-library-settings.patch \
+    file://0002-float4_neon.h-refactor-buildins-for-later-gcc-s.patch \
 "
-SRC_URI[md5sum] = "227a506592308e004dbd55a4dc3b51d7"
-SRC_URI[sha256sum] = "3b6db52ddffed867ae171664e327f0b2bade64139d3450dc7166c4f90b6d94e8"
+SRC_URI[md5sum] = "1611cdd2a24c84c8211a104ad236b753"
+SRC_URI[sha256sum] = "3c71d44260899ee01a1f85bd173d57edcc98f2973f8f068e038e30ad4d1ba5dc"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
@@ -17,8 +18,8 @@ S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 # * move to libsdl2 libsdl2-ttf
 
 DEPENDS = " \
-    libsdl \
-    libsdl-ttf \
+    libsdl2 \
+    libsdl2-ttf \
     fontconfig \
     libxinerama \
     \
@@ -28,15 +29,15 @@ DEPENDS = " \
     jpeg \
     lua lua-native \
     sqlite3 \
+    portaudio-v19 \
 "
 
-EXTRA_OEMAKE += " \
+EXTRA_OEMAKE = " \
     linux \
     CROSS_BUILD=1 \
-    NOASM=1 \
     OVERRIDE_CC='${CC}' \
     OVERRIDE_CXX='${CXX}' \
-    SDL_LIBVER=sdl \
+    SDL_LIBVER=sdl2 \
     TOOLS=1 \
     USE_QTDEBUG=0 \
     NOWERROR=1 \
@@ -46,6 +47,11 @@ EXTRA_OEMAKE += " \
     USE_SYSTEM_LIB_JPEG=1 \
     USE_SYSTEM_LIB_LUA=1 \
     USE_SYSTEM_LIB_SQLITE3=1 \
+    USE_SYSTEM_LIB_PORTAUDIO=1 \
+"
+
+EXTRA_OEMAKE_append_arm = " \
+    NOASM=1 \
 "
 
 do_install() {
