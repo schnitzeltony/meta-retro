@@ -11,7 +11,7 @@ SRC_URI = " \
     file://trs80.desktop \
 "
 
-SRCREV= "516c0e046fcc29ee1c6ff08db28eaf749cfcfec2"
+SRCREV= "413ca44336c4423ac0e39b55d75fce95ff4c31fc"
 PV = "0.3.1+git${SRCPV}"
 
 inherit pkgconfig
