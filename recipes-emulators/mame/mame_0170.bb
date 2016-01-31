@@ -9,8 +9,8 @@ SRC_URI = " \
     file://0001-use-pkg-config-for-finding-sdl-library-settings.patch \
     file://0002-float4_neon.h-refactor-buildins-for-later-gcc-s.patch \
 "
-SRC_URI[md5sum] = "1611cdd2a24c84c8211a104ad236b753"
-SRC_URI[sha256sum] = "3c71d44260899ee01a1f85bd173d57edcc98f2973f8f068e038e30ad4d1ba5dc"
+SRC_URI[md5sum] = "c75857953b36347503c5e4ac6e10cc4d"
+SRC_URI[sha256sum] = "eb4b319a69b1876601407df37fdd0aa3ff54929c8e7fa90e6016aff0e074bb53"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
