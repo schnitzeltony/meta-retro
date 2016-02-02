@@ -14,9 +14,6 @@ SRC_URI[sha256sum] = "eb4b319a69b1876601407df37fdd0aa3ff54929c8e7fa90e6016aff0e0
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
-# TBD
-# * move to libsdl2 libsdl2-ttf
-
 DEPENDS = " \
     libsdl2 \
     libsdl2-ttf \
