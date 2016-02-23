@@ -20,6 +20,8 @@ DEPENDS = "expat libsdl"
 
 S = "${WORKDIR}/git"
 
+EXTRA_OEMAKE = "-e MAKEFLAGS="
+
 do_compile() {
 	SDL_INC=$(pkg-config --cflags sdl)
 	SDL_LIB=$(pkg-config --libs sdl)
