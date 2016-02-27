@@ -1,0 +1,52 @@
+From 032998923ef3a8e3267d64063723482679a7f736 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Fri, 26 Feb 2016 22:49:19 +0100
+Subject: [PATCH] use pkgconfig to find sdl
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropriate [oe specific]
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ configure.in | 20 +-------------------
+ 1 file changed, 1 insertion(+), 19 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index 016ea95..79341e5 100644
+--- a/configure.in
++++ b/configure.in
+@@ -28,28 +28,10 @@ if test x$host = xi386-pc-os2-emx ; then
+ fi
+ 
+ dnl Check for SDL
+-SDL_VERSION=1.2.0
+-AM_PATH_SDL($SDL_VERSION,
+-            :,
+-	    AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!])
+-)
++PKG_CHECK_MODULES([SDL], [sdl])
+ LIBS="$LIBS $SDL_LIBS"
+ CPPFLAGS="$CPPFLAGS $SDL_CFLAGS"
+ 
+-dnl Check if SDL is 1.2.x (1.3 not supported)
+-AC_MSG_CHECKING([SDL version only being 1.2.X])
+-AC_COMPILE_IFELSE([
+-#include "SDL.h"
+-void blah(){
+-#if SDL_MINOR_VERSION != 2
+-#error "Only SDL 1.2 supported"
+-#endif
+-;
+-}
+-],AC_MSG_RESULT([yes]),[
+- AC_MSG_RESULT([no]) 
+- AC_MSG_ERROR([Only libSDL 1.2.X supported])])
+-
+ dnl Checks for header files.
+ 
+ dnl Checks for typedefs, structures, and compiler characteristics.
+-- 
+2.5.0
+
