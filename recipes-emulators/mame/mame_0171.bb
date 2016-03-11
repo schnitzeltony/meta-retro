@@ -9,8 +9,8 @@ SRC_URI = " \
     file://0001-use-pkg-config-for-finding-sdl-library-settings.patch \
     file://0002-float4_neon.h-refactor-buildins-for-later-gcc-s.patch \
 "
-SRC_URI[md5sum] = "c75857953b36347503c5e4ac6e10cc4d"
-SRC_URI[sha256sum] = "eb4b319a69b1876601407df37fdd0aa3ff54929c8e7fa90e6016aff0e074bb53"
+SRC_URI[md5sum] = "4b21d52df5f826de756a4c80975bd414"
+SRC_URI[sha256sum] = "e543316e238b02ae80f8de6e1da3eaaac3754bc8370deb7c31a4bc73121763c5"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
@@ -29,12 +29,13 @@ DEPENDS = " \
     portaudio-v19 \
 "
 
+CLEANBROKEN = "1"
+
 EXTRA_OEMAKE = " \
     linux \
     CROSS_BUILD=1 \
     OVERRIDE_CC='${CC}' \
     OVERRIDE_CXX='${CXX}' \
-    SDL_LIBVER=sdl2 \
     TOOLS=1 \
     USE_QTDEBUG=0 \
     NOWERROR=1 \

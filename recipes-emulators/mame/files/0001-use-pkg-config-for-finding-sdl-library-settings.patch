@@ -13,41 +13,41 @@ Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
  2 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/scripts/src/osd/sdl.lua b/scripts/src/osd/sdl.lua
-index 4cb31f3..b0ea27c 100644
+index 76947ad..9b6b54d 100644
 --- a/scripts/src/osd/sdl.lua
 +++ b/scripts/src/osd/sdl.lua
-@@ -258,7 +258,7 @@ if BASE_TARGETOS=="unix" then
+@@ -68,7 +68,7 @@ function maintargetosdoptions(_target,_subtarget)
  				}
- 			end
+ 			configuration { }
  		else
--			local str = backtick(sdlconfigcmd() .. " --libs | sed 's/-lSDLmain//'")
+-			local str = backtick(sdlconfigcmd() .. " --libs | sed 's/ -lSDLmain//'")
 +			local str = backtick("pkg-config --libs sdl2 | sed 's/-lSDLmain//'")
  			addlibfromstring(str)
  			addoptionsfromstring(str)
  		end
-@@ -278,7 +278,7 @@ if BASE_TARGETOS=="unix" then
- 				}
- 			end
+@@ -256,7 +256,7 @@ if BASE_TARGETOS=="unix" then
+ 				"SDL2.framework",
+ 			}
+ 		else
+-			local str = backtick(sdlconfigcmd() .. " --libs --static | sed 's/-lSDLmain//'")
++			local str = backtick("pkg-config --libs --static sdl2 | sed 's/-lSDLmain//'")
+ 			addlibfromstring(str)
+ 			addoptionsfromstring(str)
+ 		end
+@@ -270,7 +270,7 @@ if BASE_TARGETOS=="unix" then
+ 				"/usr/openwin/lib",
+ 			}
  		end
 -		local str = backtick(sdlconfigcmd() .. " --libs")
 +		local str = backtick("pkg-config --libs sdl2")
  		addlibfromstring(str)
  		addoptionsfromstring(str)
  		if _OPTIONS["targetos"]~="haiku" then
-@@ -299,7 +299,7 @@ if BASE_TARGETOS=="unix" then
- 		end
- 	end
- elseif BASE_TARGETOS=="os2" then
--	local str = backtick(sdlconfigcmd() .. " --libs")
-+	local str = backtick("pkg-config --libs sdl2")
- 	addlibfromstring(str)
- 	addoptionsfromstring(str)
- 	links {
 diff --git a/scripts/src/osd/sdl_cfg.lua b/scripts/src/osd/sdl_cfg.lua
-index 878a5a2..febb084 100644
+index e3a6f91..f88394e 100644
 --- a/scripts/src/osd/sdl_cfg.lua
 +++ b/scripts/src/osd/sdl_cfg.lua
-@@ -90,12 +90,12 @@ if BASE_TARGETOS=="unix" then
+@@ -84,12 +84,12 @@ if BASE_TARGETOS=="unix" then
  				"MACOSX_USE_LIBSDL",
  			}
  			buildoptions {
@@ -62,7 +62,7 @@ index 878a5a2..febb084 100644
  		}
  		if _OPTIONS["targetos"]~="asmjs" then
  			buildoptions {
-@@ -148,6 +148,6 @@ elseif _OPTIONS["targetos"]=="os2" then
+@@ -142,7 +142,7 @@ elseif _OPTIONS["targetos"]=="os2" then
  		"SDLMAME_OS2",
  	}
  	buildoptions {
@@ -70,6 +70,7 @@ index 878a5a2..febb084 100644
 +		backtick("pkg-config --cflags sdl2"),
  	}
  end
+ 
 -- 
 2.5.0
 
