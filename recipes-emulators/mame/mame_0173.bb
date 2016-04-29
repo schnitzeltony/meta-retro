@@ -1,16 +1,16 @@
 SUMMARY = "Multiple Arcade Machine Emulator"
 HOMEPAGE = "http://www.mamedev.org/index.php" 
 
-LICENSE = "MAME"
-LIC_FILES_CHKSUM = "file://docs/mamelicense.txt;md5=f40fdf5d5756f220c8e44004f2ef48dc" 
+LICENSE = "GPLv2+"
+LIC_FILES_CHKSUM = "file://LICENSE.md;md5=89436197a991695e278e47475b4ff7ae" 
 
 SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
     file://0001-use-pkg-config-for-finding-sdl-library-settings.patch \
     file://0002-float4_neon.h-refactor-buildins-for-later-gcc-s.patch \
 "
-SRC_URI[md5sum] = "4b21d52df5f826de756a4c80975bd414"
-SRC_URI[sha256sum] = "e543316e238b02ae80f8de6e1da3eaaac3754bc8370deb7c31a4bc73121763c5"
+SRC_URI[md5sum] = "0113caa215641610903d0c1567419a70"
+SRC_URI[sha256sum] = "499172e28eb53f30b3036a036c3834f0a865d5505f7234aebd49145358621654"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
@@ -66,12 +66,11 @@ do_install() {
         jedutil \
         ldresample \
         ldverify \
+        mame \
         nltool \
-        nlwav \
-        pngcmp \
+        romcmp \
         split \
-        srcclean \
-        testkeys \
+        src2html \
         unidasm \
         ; \
     do

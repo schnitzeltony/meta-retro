@@ -9,52 +9,53 @@ Content-Transfer-Encoding: 8bit
 Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
 ---
  scripts/src/osd/sdl.lua     | 6 +++---
- scripts/src/osd/sdl_cfg.lua | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ scripts/src/osd/sdl_cfg.lua | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/scripts/src/osd/sdl.lua b/scripts/src/osd/sdl.lua
-index 76947ad..9b6b54d 100644
+index d1a8322..32ca84a 100644
 --- a/scripts/src/osd/sdl.lua
 +++ b/scripts/src/osd/sdl.lua
-@@ -68,7 +68,7 @@ function maintargetosdoptions(_target,_subtarget)
+@@ -78,7 +78,7 @@ function maintargetosdoptions(_target,_subtarget)
+ 					}
+ 				configuration { }
+ 			else
+-				local str = backtick(sdlconfigcmd() .. " --libs | sed 's/ -lSDLmain//'")
++				local str = backtick("pkg-config --libs sdl2 | sed 's/-lSDLmain//'")
+ 				addlibfromstring(str)
+ 				addoptionsfromstring(str)
+ 			end
+@@ -280,7 +280,7 @@ if BASE_TARGETOS=="unix" then
+ 					"SDL2.framework",
  				}
- 			configuration { }
+ 			else
+-				local str = backtick(sdlconfigcmd() .. " --libs --static | sed 's/-lSDLmain//'")
++				local str = backtick("pkg-config --libs --static sdl2 | sed 's/-lSDLmain//'")
+ 				addlibfromstring(str)
+ 				addoptionsfromstring(str)
+ 			end
+@@ -300,7 +300,7 @@ if BASE_TARGETOS=="unix" then
+ 				"SDL2",
+ 			}
  		else
--			local str = backtick(sdlconfigcmd() .. " --libs | sed 's/ -lSDLmain//'")
-+			local str = backtick("pkg-config --libs sdl2 | sed 's/-lSDLmain//'")
+-			local str = backtick(sdlconfigcmd() .. " --libs")
++			local str = backtick("pkg-config --libs sdl2")
  			addlibfromstring(str)
  			addoptionsfromstring(str)
  		end
-@@ -256,7 +256,7 @@ if BASE_TARGETOS=="unix" then
- 				"SDL2.framework",
- 			}
- 		else
--			local str = backtick(sdlconfigcmd() .. " --libs --static | sed 's/-lSDLmain//'")
-+			local str = backtick("pkg-config --libs --static sdl2 | sed 's/-lSDLmain//'")
- 			addlibfromstring(str)
- 			addoptionsfromstring(str)
- 		end
-@@ -270,7 +270,7 @@ if BASE_TARGETOS=="unix" then
- 				"/usr/openwin/lib",
- 			}
- 		end
--		local str = backtick(sdlconfigcmd() .. " --libs")
-+		local str = backtick("pkg-config --libs sdl2")
- 		addlibfromstring(str)
- 		addoptionsfromstring(str)
- 		if _OPTIONS["targetos"]~="haiku" then
 diff --git a/scripts/src/osd/sdl_cfg.lua b/scripts/src/osd/sdl_cfg.lua
-index e3a6f91..f88394e 100644
+index 0fd15e5..839a468 100644
 --- a/scripts/src/osd/sdl_cfg.lua
 +++ b/scripts/src/osd/sdl_cfg.lua
-@@ -84,12 +84,12 @@ if BASE_TARGETOS=="unix" then
- 				"MACOSX_USE_LIBSDL",
- 			}
- 			buildoptions {
--				backtick(sdlconfigcmd() .. " --cflags | sed 's:/SDL::'"),
-+				backtick("pkg-config --cflags sdl2 | sed 's:/SDL::'"),
- 			}
- 		end
+@@ -84,13 +84,13 @@ if BASE_TARGETOS=="unix" then
+ 					"MACOSX_USE_LIBSDL",
+ 				}
+ 				buildoptions {
+-					backtick(sdlconfigcmd() .. " --cflags | sed 's:/SDL::'"),
++					backtick("pkg-config --cflags sdl2 | sed 's:/SDL::'"),
+ 				}
+ 			end
+ 			end
  	else
  		buildoptions {
 -			backtick(sdlconfigcmd() .. " --cflags"),
@@ -62,15 +63,6 @@ index e3a6f91..f88394e 100644
  		}
  		if _OPTIONS["targetos"]~="asmjs" then
  			buildoptions {
-@@ -142,7 +142,7 @@ elseif _OPTIONS["targetos"]=="os2" then
- 		"SDLMAME_OS2",
- 	}
- 	buildoptions {
--		backtick(sdlconfigcmd() .. " --cflags"),
-+		backtick("pkg-config --cflags sdl2"),
- 	}
- end
- 
 -- 
-2.5.0
+2.5.5
 
