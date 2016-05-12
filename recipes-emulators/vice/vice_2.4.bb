@@ -8,6 +8,7 @@ LIC_FILES_CHKSUM = "file://doc/html/plain/COPYING;md5=c93c0550bd3173f4504b2cbd89
 
 SRC_URI = " \
     ${SOURCEFORGE_MIRROR}/project/vice-emu/releases/${BPN}-${PV}.tar.gz \
+    file://0001-gifdrv.c-fix-build-with-giflib-5.1.0.patch \
     file://vice_64.desktop \
 "
 SRC_URI[md5sum] = "b017647a0c159bbe43cdb81762d1c577"

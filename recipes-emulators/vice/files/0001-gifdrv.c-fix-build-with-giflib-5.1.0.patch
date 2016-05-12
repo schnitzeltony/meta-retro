@@ -1,0 +1,56 @@
+From 0901ffbd5537d3cf974a3d790304ebf049ca60b1 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Fri, 13 May 2016 00:24:03 +0200
+Subject: [PATCH] gifdrv.c: fix build with giflib > 5.1.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ src/gfxoutputdrv/gifdrv.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/gfxoutputdrv/gifdrv.c b/src/gfxoutputdrv/gifdrv.c
+index 7f7f3bc..5056b55 100644
+--- a/src/gfxoutputdrv/gifdrv.c
++++ b/src/gfxoutputdrv/gifdrv.c
+@@ -114,7 +114,7 @@ static int gifdrv_open(screenshot_t *screenshot, const char *filename)
+   if (EGifPutScreenDesc(sdata->fd, screenshot->width, screenshot->height, 8, 0, gif_colors) == GIF_ERROR ||
+       EGifPutImageDesc(sdata->fd, 0, 0, screenshot->width, screenshot->height, 0, NULL) == GIF_ERROR)
+   {
+-    EGifCloseFile(sdata->fd);
++    EGifCloseFile(sdata->fd, 0);
+     VICE_FreeMapObject(gif_colors);
+     lib_free(sdata->data);
+     lib_free(sdata->ext_filename);
+@@ -145,7 +145,7 @@ static int gifdrv_close(screenshot_t *screenshot)
+ 
+     sdata = screenshot->gfxoutputdrv_data;
+ 
+-    EGifCloseFile(sdata->fd);
++    EGifCloseFile(sdata->fd, 0);
+     VICE_FreeMapObject(gif_colors);
+ 
+     /* for some reason giflib will create a file with unexpected
+@@ -184,7 +184,7 @@ static char *gifdrv_memmap_ext_filename;
+ 
+ static int gifdrv_close_memmap(void)
+ {
+-  EGifCloseFile(gifdrv_memmap_fd);
++  EGifCloseFile(gifdrv_memmap_fd, 0);
+   VICE_FreeMapObject(gif_colors);
+   lib_free(gifdrv_memmap_ext_filename);
+ 
+@@ -231,7 +231,7 @@ static int gifdrv_open_memmap(const char *filename, int x_size, int y_size, BYTE
+   if (EGifPutScreenDesc(gifdrv_memmap_fd, x_size, y_size, 8, 0, gif_colors) == GIF_ERROR ||
+       EGifPutImageDesc(gifdrv_memmap_fd, 0, 0, x_size, y_size, 0, NULL) == GIF_ERROR)
+   {
+-    EGifCloseFile(gifdrv_memmap_fd);
++    EGifCloseFile(gifdrv_memmap_fd, 0);
+     VICE_FreeMapObject(gif_colors);
+     lib_free(gifdrv_memmap_ext_filename);
+     return -1;
+-- 
+2.5.5
+
