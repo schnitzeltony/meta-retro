@@ -8,9 +8,10 @@ SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
     file://0001-use-pkg-config-for-finding-sdl-library-settings.patch \
     file://0002-float4_neon.h-refactor-buildins-for-later-gcc-s.patch \
+    file://0003-bx-float4_neon.h-Remove-neon_reinterpret-use-casts.patch \
 "
-SRC_URI[md5sum] = "299b77d7be7e303c8bfc71237fcf84b2"
-SRC_URI[sha256sum] = "249dc43d27f435b47e6bd30754eaa2b52253da37aa04498cb9cc6df5c2041cfa"
+SRC_URI[md5sum] = "b2aed655e1ea2bccf26bf96f189257ba"
+SRC_URI[sha256sum] = "e8837ae9c21ac6ca289c0214747a6d7ff7cc4683b9426377f42cda318fddcb25"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
