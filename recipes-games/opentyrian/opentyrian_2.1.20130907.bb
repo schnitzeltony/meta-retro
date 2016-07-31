@@ -13,6 +13,7 @@ SRC_URI = " \
     http://camanis.net/opentyrian/tyrian21.zip;name=data \
     file://0001-Makefile-use-pkgconfig-to-find-sdl.patch \
     file://0002-Fix-several-uninitialized-variable-warnings.patch \
+    file://0003-fix-build-with-pedantic-gcc6.patch \
 "
 SRC_URI[md5sum] = "978686c5a1dfbac69a2161aadf084c2b"
 SRC_URI[sha256sum] = "f54b6b3cedcefa187c9f605d6164aae29ec46a731a6df30d351af4c008dee45f"
