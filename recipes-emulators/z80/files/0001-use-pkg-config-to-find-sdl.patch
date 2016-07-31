@@ -1,7 +1,7 @@
 From c12487107cc52aa13841533fd151362e37f37ff6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Fri, 13 Mar 2015 01:40:33 +0100
-Subject: [PATCH] use pkg-config to find sdl
+Subject: [PATCH] use pkg-config to find sdl2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -12,20 +12,20 @@ Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index de4782b..0dfc7ce 100644
+index 1144f9b..9bfef24 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -27,8 +27,8 @@ LIBS:=		-L/usr/lib -lz
- CFLAGS+=	-DDEBUG=$(DEBUG)
+@@ -27,8 +27,8 @@ LIBS:=		-lz
+ #CFLAGS+=	-DDEBUG=$(DEBUG)
  
  # SDL libraries and cflags
--SDL_LIB:=	$(shell sdl-config --libs)
--SDL_INC:=	$(shell sdl-config --cflags)
-+SDL_LIB:=	$(shell pkg-config --libs sdl)
-+SDL_INC:=	$(shell pkg-config --cflags sdl)
+-SDL_LIB:=	$(shell sdl2-config --libs)
+-SDL_INC:=	$(shell sdl2-config --cflags)
++SDL_LIB:=	$(shell pkg-config --libs sdl2)
++SDL_INC:=	$(shell pkg-config --cflags sdl2)
  
  # Expat libraries and cflags
  EXPAT_LIB:=	-L/usr/pkg/lib -lexpat
 -- 
-1.9.3
+2.5.5
 
