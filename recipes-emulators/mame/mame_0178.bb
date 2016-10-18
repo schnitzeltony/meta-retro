@@ -7,11 +7,9 @@ LIC_FILES_CHKSUM = "file://LICENSE.md;md5=89436197a991695e278e47475b4ff7ae"
 SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
     file://0001-use-pkg-config-for-finding-sdl-library-settings.patch \
-    file://0002-float4_neon.h-refactor-buildins-for-later-gcc-s.patch \
-    file://0003-bx-float4_neon.h-Remove-neon_reinterpret-use-casts.patch \
 "
-SRC_URI[md5sum] = "b2aed655e1ea2bccf26bf96f189257ba"
-SRC_URI[sha256sum] = "e8837ae9c21ac6ca289c0214747a6d7ff7cc4683b9426377f42cda318fddcb25"
+SRC_URI[md5sum] = "89ee2eeb14a990f4d8aeddf6b835a4d5"
+SRC_URI[sha256sum] = "e48df1fbdd8e2a5c3ad87bf3cfa793c619ebbabc2462f5a5569c0f1d29ef0d37"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
