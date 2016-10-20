@@ -26,6 +26,7 @@ DEPENDS = " \
     lua lua-native \
     sqlite3 \
     portaudio-v19 \
+    lua \
 "
 
 CLEANBROKEN = "1"
