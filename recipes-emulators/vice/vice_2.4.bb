@@ -16,7 +16,7 @@ SRC_URI[sha256sum] = "ff8b8d5f0f497d1f8e75b95bbc4204993a789284a08a8a59ba727ad81d
 
 inherit autotools pkgconfig
 
-DEPENDS = "libxt libxmu libxaw libxpm libxv pulseaudio libav libsdl libpng jpeg giflib"
+DEPENDS = "libxt libxmu libxaw libxpm libxv pulseaudio libav libsdl libpng jpeg giflib libxxf86vm"
 
 # some options autotools.bbclass adds by default cause configure to complain
 # so (hack): copy from autotools.bbclass and remove unwanted
