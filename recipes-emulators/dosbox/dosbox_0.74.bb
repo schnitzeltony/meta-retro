@@ -18,6 +18,12 @@ SRC_URI = " \
 SRC_URI[md5sum] = "b9b240fa87104421962d14eee71351e8"
 SRC_URI[sha256sum] = "13f74916e2d4002bad1978e55727f302ff6df3d9be2f9b0e271501bd0a938e05"
 
+PACKAGECONFIG ??= " \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'opengl', '', d)} \
+"
+
+PACKAGECONFIG[opengl] = "--enable-opengl,--disable-opengl,virtual/libgl"
+
 do_install_append() {
 	install -d ${D}/${datadir}/applications
 	install -m 0644 ${WORKDIR}/*.desktop ${D}/${datadir}/applications
