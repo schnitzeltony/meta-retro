@@ -20,13 +20,13 @@ SRC_URI[sha256sum] = "1d73ba3761b161aa76a31a9b8c6550c998272fa2feff19451d870120b1
 
 inherit autotools pkgconfig
 
-DEPENDS = "pulseaudio libav libsdl libpng jpeg giflib libxxf86vm portaudio-v19 mpg123 virtual/libgl"
+DEPENDS = "gtk+ pulseaudio libav libsdl libpng jpeg giflib libxxf86vm portaudio-v19 mpg123 virtual/libgl vte9"
 
 EXTRA_OECONF = " \
     --disable-option-checking \
     --enable-external-ffmpeg \
     --enable-parsid \
-    --enable-sdlui \
+    --enable-gnomeui \
 "
 
 do_install_append() {
