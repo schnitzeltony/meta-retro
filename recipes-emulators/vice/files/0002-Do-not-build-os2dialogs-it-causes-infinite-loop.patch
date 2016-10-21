@@ -1,0 +1,28 @@
+From 197fd2b3059255280770b96f457147fa11adea0b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Fri, 21 Oct 2016 20:51:59 +0200
+Subject: [PATCH] Do not build os2dialogs it causes infinite loop
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ src/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 906f950..598d592 100755
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -608,7 +608,6 @@ infocontrib.h:	$(top_srcdir)/doc/vice.texi $(srcdir)/infocontrib.sed
+ 	$(SHELL) $(srcdir)/geninfocontrib_h.sh indexhtml <index.tmp >../doc/html/index.html
+ 	rm -f index.tmp
+ 	cp $(top_srcdir)/src/arch/os2/dialogs/dialogs.rc ./dialogs.tmp
+-	$(SHELL) $(srcdir)/geninfocontrib_h.sh os2dialogs <dialogs.tmp >arch/os2/dialogs/dialogs.rc
+ 	rm -f dialogs.tmp
+ 	$(SHELL) $(srcdir)/geninfocontrib_h.sh vice1 | $(srcdir)/sedinfocontrib_h.sh $(srcdir)/infocontrib.sed >../man/vice.1
+ 	rm -f team.tmp
+-- 
+2.5.5
+
