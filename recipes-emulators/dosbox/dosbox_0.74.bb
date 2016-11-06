@@ -1,4 +1,4 @@
-SUMMARY = "OSBox is a DOS-emulator that uses the SDL-library"
+SUMMARY = "DOSBox is a DOS-emulator that uses the SDL-library"
 HOMEPAGE = "http://www.dosbox.com/" 
 
 LICENSE = "GPLv2+"
