@@ -1,7 +1,9 @@
 [Desktop Entry]
 Type=Application
-Name=Vice C64 Emulator
+Name=X64 (Vice)
+Comment=Commodore 64 Emulator
 Exec=x64
+Icon=c64
 Terminal=false
 StartupNotify=false
 Categories=Game
