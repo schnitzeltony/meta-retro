@@ -22,13 +22,31 @@ SRC_URI[sha256sum] = "111bb26310bd660802767084f6840a75156158134689a23a3c8a0e0d81
 
 inherit autotools pkgconfig gtk-icon-cache
 
-DEPENDS = "gtk+ pulseaudio libav libsdl libpng jpeg giflib libxxf86vm portaudio-v19 mpg123 virtual/libgl vte9"
+DEPENDS = " \
+    gtk+ \
+    libav \
+    libsdl \
+    libpng \
+    jpeg \
+    giflib \
+    libxxf86vm \
+    portaudio-v19 \
+    mpg123 \
+    virtual/libgl \
+    vte9 \
+    ${@bb.utils.contains("DISTRO_FEATURES", "x11 opengl", "gtkglext", "", d)} \
+"
+
+PACKAGECONFIG[pulseaudio] = "--with-pulse,--without-pulse,pulseaudio"
 
 EXTRA_OECONF = " \
     --disable-option-checking \
     --enable-external-ffmpeg \
     --enable-parsid \
+    --enable-fullscreen \
     --enable-gnomeui \
+    --with-uithreads \
+    --without-oss \
 "
 
 do_install_append() {
@@ -36,8 +54,8 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/vice_64.desktop ${D}/${datadir}/applications
 
     for size in 16 32 48; do
-        install -d ${D}/${datadir}/icons/hicolor/${size}x${size}
-        install -m 0644 ${WORKDIR}/c64_${size}.png ${D}/${datadir}/icons/hicolor/${size}x${size}/
+        install -d ${D}/${datadir}/icons/hicolor/${size}x${size}/apps
+        install -m 0644 ${WORKDIR}/c64_${size}.png ${D}/${datadir}/icons/hicolor/${size}x${size}/apps/c64.png
     done
 }
 
