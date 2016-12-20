@@ -16,3 +16,5 @@ DEPENDS = "libsdl2 zlib libpng"
 FILES_${PN} += "${datadir}/icons"
 
 inherit autotools-brokensep
+
+CLEANBROKEN = "1"
