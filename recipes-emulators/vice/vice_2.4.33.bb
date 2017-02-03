@@ -37,7 +37,7 @@ DEPENDS = " \
     ${@bb.utils.contains("DISTRO_FEATURES", "x11 opengl", "gtkglext", "", d)} \
 "
 
-PACKAGECONFIG[pulseaudio] = "--with-pulse,--without-pulse,pulseaudio"
+PACKAGECONFIG[pulseaudio] = "--with-pulse,--without-pulse,pulseaudio,pulseaudio-server"
 
 EXTRA_OECONF = " \
     --disable-option-checking \
