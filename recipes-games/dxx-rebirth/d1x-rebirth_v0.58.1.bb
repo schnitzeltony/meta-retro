@@ -4,7 +4,7 @@ SECTION = "games"
 LICENSE = "DXX-Rebirth"
 LIC_FILES_CHKSUM = "file://COPYING.txt;md5=022f1bfd6fd458067b51b10cd3186e78"
 
-DEPENDS = "python-scons-native libsdl libsdl-mixer physfs"
+DEPENDS = "python-scons-native libsdl libsdl-mixer physfs p7zip-native"
 
 SRC_URI = " \
     http://www.dxx-rebirth.com/download/dxx/${BPN}_${PV}-src.tar.gz \
