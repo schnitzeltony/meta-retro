@@ -1,5 +1,5 @@
 diff --git a/Makefile b/Makefile
-index 67b1a10a7a81..620072cc1b9c 100644
+index 7a17d53..1a33741 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -172,7 +172,7 @@ config.mak: $(srcdir)/configure
@@ -12,10 +12,10 @@ index 67b1a10a7a81..620072cc1b9c 100644
  	$(INSTALL) -c -m 644 "$(srcdir)/Announce.txt" "$(srcdir)/Changes.txt" "$(srcdir)/Copyright.txt" "$(srcdir)/License.txt" "$(srcdir)/README-SDL.txt" "$(srcdir)/Readme.txt" "$(srcdir)/Todo.txt" "$(srcdir)/docs/index.html" "$(srcdir)/docs/debugger.html" "$(DESTDIR)$(DOCDIR)/"
  	$(INSTALL) -d "$(DESTDIR)$(DOCDIR)/graphics"
 diff --git a/configure b/configure
-index 419eb8a5fe10..8f453b9f5d62 100755
+index c17e5f3..1e0664b 100755
 --- a/configure
 +++ b/configure
-@@ -334,6 +334,7 @@ mingw32-cross)
+@@ -315,6 +315,7 @@ mingw32-cross)
  	_host_cpu=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\1/'`
  	_host_os=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
  	_host_vendor=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\2/'`
@@ -23,27 +23,17 @@ index 419eb8a5fe10..8f453b9f5d62 100755
  	;;
  esac
  
-@@ -375,20 +376,27 @@ esac
+@@ -355,21 +356,26 @@ esac
+ #
  # Determine the C++ compiler
  #
- echo_n "Looking for C++ compiler... "
+-echo_n "Looking for C++ compiler... "
 -if test -n "$_host"; then
 -	compilers="$CXX $_host_prefix-g++ $_host_prefix-c++ $_host_cpu-$_host_os-g++ $_host_cpu-$_host_os-c++"
--else
--	compilers="$CXX g++ c++"
--fi
- 
--for compiler in $compilers; do
--	if test_compiler $compiler; then
--		CXX=$compiler
--		echo $CXX
--		break
--	fi
--done
--if test -z $CXX; then
 +if test_compiler "$CXX"; then
 +    echo "$CXX"
-+else
+ else
+-	compilers="$CXX g++ c++"
 +    if test -n "$_host"; then
 +        compilers="$_host_prefix-g++ $_host_prefix-c++ $_host_cpu-$_host_os-g++ $_host_cpu-$_host_os-c++"
 +    else
@@ -54,17 +44,25 @@ index 419eb8a5fe10..8f453b9f5d62 100755
 +        echo "testing compile $compiler"
 +        if test_compiler $compiler; then
 +		    CXX=$compiler
-+        	echo $CXX
++            echo $CXX
 +		    break
 +        fi
 +    done
-+fi
-+
+ fi
+ 
+-for compiler in $compilers; do
+-	if test_compiler "$compiler -std=c++11"; then
+-		CXX=$compiler
+-		echo $CXX
+-		break
+-	fi
+-done
+-if test -z $CXX; then
 +if test -z "$CXX"; then
  	echo "none found!"
  	exit 1
  fi
-@@ -529,8 +537,9 @@ if test -n "$_host"; then
+@@ -502,8 +508,9 @@ if test -n "$_host"; then
  			_host_os=win32
  			;;
  		*)
@@ -76,7 +74,7 @@ index 419eb8a5fe10..8f453b9f5d62 100755
  			;;
  	esac
  	
-@@ -734,7 +743,7 @@ fi
+@@ -668,7 +675,7 @@ fi
  # Now, add the appropriate defines/libraries/headers
  #
  echo
@@ -85,7 +83,7 @@ index 419eb8a5fe10..8f453b9f5d62 100755
  
  SRC="src"
  CORE="$SRC/emucore"
-@@ -750,7 +759,7 @@ ZLIB="$SRC/zlib"
+@@ -684,7 +691,7 @@ ZLIB="$SRC/zlib"
  
  INCLUDES="-I$CORE -I$COMMON -I$TV -I$GUI"
  
@@ -94,7 +92,7 @@ index 419eb8a5fe10..8f453b9f5d62 100755
  if test "$_build_static" = yes ; then
  	_sdl_conf_libs="--static-libs"
  	LDFLAGS="-static $LDFLAGS"
-@@ -758,7 +767,7 @@ else
+@@ -692,7 +699,7 @@ else
  	_sdl_conf_libs="--libs"
  fi
  
