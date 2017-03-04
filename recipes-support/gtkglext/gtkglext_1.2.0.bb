@@ -7,7 +7,7 @@ inherit gnomebase pkgconfig distro_features_check
 
 REQUIRED_DISTRO_FEATURES = "x11 opengl"
 
-DEPENDS += "gtk+ pangox-compat libglu libxmu"
+DEPENDS += "gtk+ glib-2.0-native pangox-compat libglu libxmu"
 
 SRC_URI += "file://0001-gtkglwidget-various-fixes.patch"
 SRC_URI[archive.md5sum] = "ed7ba24ce06a8630c07f2d0ee5f04ab4"
