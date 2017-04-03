@@ -2,14 +2,14 @@ SUMMARY = "Multiple Arcade Machine Emulator"
 HOMEPAGE = "http://www.mamedev.org/index.php" 
 
 LICENSE = "GPLv2+"
-LIC_FILES_CHKSUM = "file://LICENSE.md;md5=89436197a991695e278e47475b4ff7ae" 
+LIC_FILES_CHKSUM = "file://LICENSE.md;md5=0769ab9bcec03256fada66b95212b36d" 
 
 SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
     file://0001-use-pkg-config-for-finding-sdl-library-settings.patch \
 "
-SRC_URI[md5sum] = "164ecdea39fe7027ca71749f34c6df9d"
-SRC_URI[sha256sum] = "ba3f815418b93c5fc0d6e2f73fbc47e4898e27bee7176e7cdad3e32e774116c1"
+SRC_URI[md5sum] = "e2350bf2474c873e34d8c286e65c6394"
+SRC_URI[sha256sum] = "8bae785a5fc97a84a8bb94a123de3b5c71efc31fe849151da9701329d6a31555"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
