@@ -11,10 +11,10 @@ SRC_URI = "https://github.com/stella-emu/stella/releases/download/release-${PV}/
 SRC_URI[md5sum] = "898578ee405430815e12374f191e9b51"
 SRC_URI[sha256sum] = "93a75d1b343b1e66b6dc526c0f9d8a0c3678d346033f7cdfe76dc93f14d956ad"
 
-DEPENDS = "libsdl2 zlib libpng"
-
 FILES_${PN} += "${datadir}/icons"
 
-inherit autotools-brokensep
+inherit autotools-brokensep gtk-icon-cache
+
+DEPENDS += "libsdl2 zlib libpng"
 
 CLEANBROKEN = "1"
