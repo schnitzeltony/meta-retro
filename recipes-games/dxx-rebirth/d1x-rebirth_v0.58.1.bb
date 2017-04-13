@@ -4,7 +4,7 @@ SECTION = "games"
 LICENSE = "DXX-Rebirth"
 LIC_FILES_CHKSUM = "file://COPYING.txt;md5=022f1bfd6fd458067b51b10cd3186e78"
 
-DEPENDS = "python-scons-native libsdl libsdl-mixer physfs p7zip-native"
+DEPENDS = "python-scons-native libsdl libsdl-mixer physfs"
 
 SRC_URI = " \
     http://www.dxx-rebirth.com/download/dxx/${BPN}_${PV}-src.tar.gz \
@@ -22,6 +22,8 @@ SRC_URI[music.md5sum] = "bf54b45a648052b2531bbb95c001403b"
 SRC_URI[music.sha256sum] = "b27f7b9dc5f9c2744402c56c9499dfd9503c17e73a2a5223e745529d7867962f"
 
 S = "${WORKDIR}/${BPN}_${PV}-src"
+
+do_unpack[depends] += "p7zip-native:do_populate_sysroot"
 
 do_compile() {
     scons opengl=0 prefix=${D}${prefix} sharepath=${datadir}/${BPN}
