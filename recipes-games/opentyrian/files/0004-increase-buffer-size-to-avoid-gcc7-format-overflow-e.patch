@@ -1,0 +1,73 @@
+From 229d704ce2958ed22ca3ece49169bf1b1b97163d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Fri, 30 Jun 2017 11:15:40 +0200
+Subject: [PATCH] increase buffer size to avoid gcc7 format-overflow errors
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Pending
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ src/episodes.c | 2 +-
+ src/episodes.h | 2 +-
+ src/lvllib.c   | 2 +-
+ src/lvllib.h   | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/episodes.c b/src/episodes.c
+index 796d531..f346641 100644
+--- a/src/episodes.c
++++ b/src/episodes.c
+@@ -41,7 +41,7 @@ JE_EnemyDatType enemyDat;
+ /* EPISODE variables */
+ JE_byte    initial_episode_num, episodeNum = 0;
+ JE_boolean episodeAvail[EPISODE_MAX]; /* [1..episodemax] */
+-char       episode_file[13], cube_file[13];
++char       episode_file[15], cube_file[15];
+ 
+ JE_longint episode1DataLoc;
+ 
+diff --git a/src/episodes.h b/src/episodes.h
+index 598e1ae..0ff4380 100644
+--- a/src/episodes.h
++++ b/src/episodes.h
+@@ -162,7 +162,7 @@ extern JE_EnemyDatType enemyDat;
+ extern JE_byte initial_episode_num, episodeNum;
+ extern JE_boolean episodeAvail[EPISODE_MAX];
+ 
+-extern char episode_file[13], cube_file[13];
++extern char episode_file[15], cube_file[15];
+ 
+ extern JE_longint episode1DataLoc;
+ extern JE_boolean bonusLevel;
+diff --git a/src/lvllib.c b/src/lvllib.c
+index a09c040..ca9a183 100644
+--- a/src/lvllib.c
++++ b/src/lvllib.c
+@@ -22,7 +22,7 @@
+ 
+ JE_LvlPosType lvlPos;
+ 
+-char levelFile[13]; /* string [12] */
++char levelFile[30]; /* string [29] for gcc7's sake */
+ JE_word lvlNum;
+ 
+ void JE_analyzeLevel( void )
+diff --git a/src/lvllib.h b/src/lvllib.h
+index f22e3f5..61b3882 100644
+--- a/src/lvllib.h
++++ b/src/lvllib.h
+@@ -25,7 +25,7 @@
+ typedef JE_longint JE_LvlPosType[43]; /* [1..42 + 1] */
+ 
+ extern JE_LvlPosType lvlPos;
+-extern char levelFile[13]; /* string [12] */
++extern char levelFile[30]; /* string [29] for gcc7's sake */
+ extern JE_word lvlNum;
+ 
+ void JE_analyzeLevel( void );
+-- 
+2.9.4
+
