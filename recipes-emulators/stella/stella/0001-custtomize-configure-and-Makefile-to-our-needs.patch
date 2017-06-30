@@ -1,8 +1,24 @@
+From 389ed0e18c10a8b3368d0b9fbd2e1f5a7e37f072 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Fri, 30 Jun 2017 09:30:32 +0200
+Subject: [PATCH] custtomize configure and Makefile to our needs
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropriate [oe-specific]
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ Makefile  |  2 +-
+ configure | 39 +++++++++++++++++++++++----------------
+ 2 files changed, 24 insertions(+), 17 deletions(-)
+
 diff --git a/Makefile b/Makefile
-index 7a17d53..1a33741 100644
+index 4a00892..790d5dd 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -172,7 +172,7 @@ config.mak: $(srcdir)/configure
+@@ -173,7 +173,7 @@ config.mak: $(srcdir)/configure
  
  install: all
  	$(INSTALL) -d "$(DESTDIR)$(BINDIR)"
@@ -12,18 +28,18 @@ index 7a17d53..1a33741 100644
  	$(INSTALL) -c -m 644 "$(srcdir)/Announce.txt" "$(srcdir)/Changes.txt" "$(srcdir)/Copyright.txt" "$(srcdir)/License.txt" "$(srcdir)/README-SDL.txt" "$(srcdir)/Readme.txt" "$(srcdir)/Todo.txt" "$(srcdir)/docs/index.html" "$(srcdir)/docs/debugger.html" "$(DESTDIR)$(DOCDIR)/"
  	$(INSTALL) -d "$(DESTDIR)$(DOCDIR)/graphics"
 diff --git a/configure b/configure
-index c17e5f3..1e0664b 100755
+index b1218e9..d9f7534 100755
 --- a/configure
 +++ b/configure
-@@ -315,6 +315,7 @@ mingw32-cross)
+@@ -312,6 +312,7 @@ mingw32-cross)
  	_host_cpu=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\1/'`
  	_host_os=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
  	_host_vendor=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\2/'`
-+    _host_prefix=$_host
++	_host_prefix=$_host
  	;;
  esac
  
-@@ -355,21 +356,26 @@ esac
+@@ -352,21 +353,26 @@ esac
  #
  # Determine the C++ compiler
  #
@@ -62,18 +78,18 @@ index c17e5f3..1e0664b 100755
  	echo "none found!"
  	exit 1
  fi
-@@ -502,8 +508,9 @@ if test -n "$_host"; then
+@@ -499,8 +505,9 @@ if test -n "$_host"; then
  			_host_os=win32
  			;;
  		*)
 -			echo "Cross-compiling to unknown target, please add your target to configure."
 -			exit 1
-+            echo "Cross-compiling for Yocto Project based systems."
-+            DEFINES="$DEFINES -DUNIX"
-+            _host_os=unix
++			echo "Cross-compiling for Yocto Project based systems."
++			DEFINES="$DEFINES -DUNIX"
++			_host_os=unix
  			;;
  	esac
- 	
+ 
 @@ -668,7 +675,7 @@ fi
  # Now, add the appropriate defines/libraries/headers
  #
@@ -83,21 +99,15 @@ index c17e5f3..1e0664b 100755
  
  SRC="src"
  CORE="$SRC/emucore"
-@@ -684,7 +691,7 @@ ZLIB="$SRC/zlib"
+@@ -685,7 +692,7 @@ ZLIB="$SRC/zlib"
  
- INCLUDES="-I$CORE -I$COMMON -I$TV -I$GUI"
+ INCLUDES="-I$CORE -I$COMMON -I$TV -I$GUI -I$TIA"
  
 -INCLUDES="$INCLUDES `$_sdlconfig --cflags`"
 +INCLUDES="$INCLUDES `pkg-config --cflags sdl2`"
  if test "$_build_static" = yes ; then
  	_sdl_conf_libs="--static-libs"
  	LDFLAGS="-static $LDFLAGS"
-@@ -692,7 +699,7 @@ else
- 	_sdl_conf_libs="--libs"
- fi
- 
--LIBS="$LIBS `$_sdlconfig $_sdl_conf_libs`"
-+LIBS="$LIBS `pkg-config --libs sdl2`"
- LD=$CXX 
- case $_host_os in
- 		unix)
+-- 
+2.9.4
+
