@@ -8,8 +8,8 @@ SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
     file://0001-use-pkg-config-for-finding-sdl-library-settings.patch \
 "
-SRC_URI[md5sum] = "e2350bf2474c873e34d8c286e65c6394"
-SRC_URI[sha256sum] = "8bae785a5fc97a84a8bb94a123de3b5c71efc31fe849151da9701329d6a31555"
+SRC_URI[md5sum] = "304ad6657fa5b6928fa0257f91be10c1"
+SRC_URI[sha256sum] = "5ac6950158ba6f550b3c5f19434752e837f17edf0d83c41ab07d0f02cca787b0"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
