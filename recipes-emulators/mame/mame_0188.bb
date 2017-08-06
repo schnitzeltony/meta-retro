@@ -6,10 +6,9 @@ LIC_FILES_CHKSUM = "file://LICENSE.md;md5=0769ab9bcec03256fada66b95212b36d"
 
 SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
-    file://0001-use-pkg-config-for-finding-sdl-library-settings.patch \
 "
-SRC_URI[md5sum] = "304ad6657fa5b6928fa0257f91be10c1"
-SRC_URI[sha256sum] = "5ac6950158ba6f550b3c5f19434752e837f17edf0d83c41ab07d0f02cca787b0"
+SRC_URI[md5sum] = "d0811c2cfe39bf8b622c35b4012c8392"
+SRC_URI[sha256sum] = "d3e55ec783fde39124bdb867ded9eadfcf769697d6c3d933444a29a785d6c99b"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
