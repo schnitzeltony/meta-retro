@@ -21,9 +21,9 @@ diff --git a/configure.ac b/configure.ac
 index b5403d2..3b7f0bb 100755
 --- a/configure.ac
 +++ b/configure.ac
-@@ -2208,7 +2208,6 @@ if test x"$FFMPEG_DO_SUBDIRS" = "xyes"; then
+@@ -2360,7 +2360,6 @@ if test x"$FFMPEG_DO_SUBDIRS" = "xyes"; then
    else
-       ac_configure_args="$ac_configure_args --enable-make-command=${MAKE-make} --enable-full-host=${ac_cv_host} --enable-compiler=${CC} --prefix=${prefix}"
+       ac_configure_args="$ac_configure_args --enable-yasm-command=${YASM} --enable-make-command=${MAKE-make} --enable-full-host=${ac_cv_host} --enable-compiler=${CC} --prefix=${prefix}"
    fi
 -  AC_CONFIG_SUBDIRS(src/lib/ffmpeg)
  fi
