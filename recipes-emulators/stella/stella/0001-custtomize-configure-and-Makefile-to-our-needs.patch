@@ -9,16 +9,17 @@ Content-Transfer-Encoding: 8bit
 Upstream-Status: Inappropriate [oe-specific]
 
 Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+
 ---
  Makefile  |  2 +-
  configure | 39 +++++++++++++++++++++++----------------
  2 files changed, 24 insertions(+), 17 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 4a00892..790d5dd 100644
+index 35a1e36..a8984d0 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -173,7 +173,7 @@ config.mak: $(srcdir)/configure
+@@ -177,7 +177,7 @@ config.mak: $(srcdir)/configure
  
  install: all
  	$(INSTALL) -d "$(DESTDIR)$(BINDIR)"
@@ -28,10 +29,10 @@ index 4a00892..790d5dd 100644
  	$(INSTALL) -c -m 644 "$(srcdir)/Announce.txt" "$(srcdir)/Changes.txt" "$(srcdir)/Copyright.txt" "$(srcdir)/License.txt" "$(srcdir)/README-SDL.txt" "$(srcdir)/Readme.txt" "$(srcdir)/Todo.txt" "$(srcdir)/docs/index.html" "$(srcdir)/docs/debugger.html" "$(DESTDIR)$(DOCDIR)/"
  	$(INSTALL) -d "$(DESTDIR)$(DOCDIR)/graphics"
 diff --git a/configure b/configure
-index b1218e9..d9f7534 100755
+index a1ecfb1..05e5c1c 100755
 --- a/configure
 +++ b/configure
-@@ -312,6 +312,7 @@ mingw32-cross)
+@@ -307,6 +307,7 @@ mingw32-cross)
  	_host_cpu=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\1/'`
  	_host_os=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
  	_host_vendor=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\2/'`
@@ -39,7 +40,7 @@ index b1218e9..d9f7534 100755
  	;;
  esac
  
-@@ -352,21 +353,26 @@ esac
+@@ -347,21 +348,26 @@ esac
  #
  # Determine the C++ compiler
  #
@@ -67,7 +68,7 @@ index b1218e9..d9f7534 100755
  fi
  
 -for compiler in $compilers; do
--	if test_compiler "$compiler -std=c++11"; then
+-	if test_compiler "$compiler -std=c++14"; then
 -		CXX=$compiler
 -		echo $CXX
 -		break
@@ -78,7 +79,7 @@ index b1218e9..d9f7534 100755
  	echo "none found!"
  	exit 1
  fi
-@@ -499,8 +505,9 @@ if test -n "$_host"; then
+@@ -511,8 +517,9 @@ if test -n "$_host"; then
  			_host_os=win32
  			;;
  		*)
@@ -90,7 +91,7 @@ index b1218e9..d9f7534 100755
  			;;
  	esac
  
-@@ -668,7 +675,7 @@ fi
+@@ -676,7 +683,7 @@ fi
  # Now, add the appropriate defines/libraries/headers
  #
  echo
@@ -99,9 +100,9 @@ index b1218e9..d9f7534 100755
  
  SRC="src"
  CORE="$SRC/emucore"
-@@ -685,7 +692,7 @@ ZLIB="$SRC/zlib"
+@@ -694,7 +701,7 @@ ZLIB="$SRC/zlib"
  
- INCLUDES="-I$CORE -I$COMMON -I$TV -I$GUI -I$TIA"
+ INCLUDES="-I$CORE -I$COMMON -I$TV -I$GUI -I$TIA -I$TIA_FRAME_MANAGER"
  
 -INCLUDES="$INCLUDES `$_sdlconfig --cflags`"
 +INCLUDES="$INCLUDES `pkg-config --cflags sdl2`"
@@ -109,5 +110,5 @@ index b1218e9..d9f7534 100755
  	_sdl_conf_libs="--static-libs"
  	LDFLAGS="-static $LDFLAGS"
 -- 
-2.9.4
+2.14.3
 
