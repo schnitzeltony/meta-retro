@@ -51,6 +51,16 @@ EXTRA_OEMAKE_append_arm = " \
     NOASM=1 \
 "
 
+do_compile_prepend() {
+    # seems there is some race. Build complains
+    # | Assembler messages:
+    # | Fatal error: can't create obj/Release/3rdparty/lzma/C/7zAlloc.o: No such file or directory
+    # | Assembler messages:
+    # | Fatal error: can't create obj/Release/src/mame/drivers/acvirus.o: No such file or directory
+    # But that directory is created with a few files
+    mkdir -p ${S}/build/projects/sdl/mame/gmake-linux/obj/Release/3rdparty/lzma/C
+}
+
 do_install() {
     # Note: Unstripped mame binary for armv7 is > 1GB!!
     install -d ${D}${bindir}
