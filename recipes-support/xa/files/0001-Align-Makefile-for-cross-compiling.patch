@@ -1,0 +1,94 @@
+From 3a0c607e6b4cdcb283ce41a555e76269687f1b50 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Wed, 6 Jun 2018 23:38:38 +0200
+Subject: [PATCH] Align Makefiles for cross compiling
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropriate [oe-specific]
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ Makefile      | 31 ++++++-------------------------
+ misc/Makefile | 10 +++++-----
+ 2 files changed, 11 insertions(+), 30 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 0cda4d6..a87cc35 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,38 +1,19 @@
+-# Unix gcc or DOS go32 cross-compiling gcc
+-#
+-CC = gcc
+-LD = gcc
+-# for testing. not to be used; build failures in misc/.
+-#CFLAGS = -O2 -W -Wall -pedantic -ansi
+-CFLAGS = -O2
+-LDFLAGS = -lc
+-
+-# for DOS?
+-# CC = gcc-go32
+-# LD = gcc-go32
+-# CFLAGS = -W -Wall -pedantic 
+-
+-# Other cc
+-#CC = cc
+-#CFLAGS =
+-#LD = ld
+-
+-DESTDIR = /usr/local
+-
+-BINDIR = $(DESTDIR)/bin
+-MANDIR = $(DESTDIR)/share/man/man1
+-DOCDIR = $(DESTDIR)/share/doc
++BINDIR = $(DESTDIR)/usr/bin
++MANDIR = $(DESTDIR)/usr/share/man/man1
++DOCDIR = $(DESTDIR)/usr/share/doc
+ 
+ MKDIR = mkdir -p
+ INSTALL = install
+ 
++LD = $(CC)
++
+ all: killxa xa uncpk
+ 
+ killxa:
+ 	rm -f xa
+ 
+ xa:
+-	(cd src && LD=${LD} CC="${CC} ${CFLAGS}" ${MAKE})
++	(cd src && LD="${LD}" CC="${CC} ${CFLAGS}" ${MAKE})
+ 
+ load:	
+ 	(cd loader && CC="${CC} ${CFLAGS}" ${MAKE})
+diff --git a/misc/Makefile b/misc/Makefile
+index 2b450e0..6967dad 100644
+--- a/misc/Makefile
++++ b/misc/Makefile
+@@ -10,19 +10,19 @@ LIBS = #-lncurses -ltermcap -lm
+ all: ../mkrom.sh ../uncpk ../printcbm ../file65 ../reloc65 ../ldo65
+ 
+ ../uncpk: uncpk.c
+-	${CC} ${CFLAGS} uncpk.c -o $(XCBMLIB)/uncpk
++	${CC} ${CFLAGS} $(LDFLAGS) uncpk.c -o $(XCBMLIB)/uncpk
+ 
+ ../printcbm: printcbm.c
+-	${CC} ${CFLAGS} printcbm.c -o $(XCBMLIB)/printcbm
++	${CC} ${CFLAGS} $(LDFLAGS) printcbm.c -o $(XCBMLIB)/printcbm
+ 
+ ../file65: file65.c
+-	${CC} ${CFLAGS} file65.c -o $(XCBMLIB)/file65
++	${CC} ${CFLAGS} $(LDFLAGS) file65.c -o $(XCBMLIB)/file65
+ 
+ ../ldo65: ldo65.c
+-	${CC} ${CFLAGS} ldo65.c -o $(XCBMLIB)/ldo65
++	${CC} ${CFLAGS} $(LDFLAGS) ldo65.c -o $(XCBMLIB)/ldo65
+ 
+ ../reloc65: reloc65.c
+-	${CC} ${CFLAGS} reloc65.c -o $(XCBMLIB)/reloc65
++	${CC} ${CFLAGS} $(LDFLAGS) reloc65.c -o $(XCBMLIB)/reloc65
+ 
+ ../mkrom.sh: mkrom.sh
+ 	cp mkrom.sh ../mkrom.sh
