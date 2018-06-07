@@ -14,8 +14,8 @@ SRC_URI = " \
     file://c64_48.png \
     file://vice_64.desktop \
 "
-SRC_URI[md5sum] = "f9018ca464b863da0bb1a82c56374432"
-SRC_URI[sha256sum] = "3eb8159633816095006dec36c5c3edd055a87fd8bda193a1194a6801685d1240"
+SRC_URI[md5sum] = "58ba6b6653097898e059e0194615705a"
+SRC_URI[sha256sum] = "28d99f5e110720c97ef16d8dd4219cf9a67661d58819835d19378143697ba523"
 
 inherit autotools pkgconfig gtk-icon-cache
 
@@ -23,6 +23,7 @@ DEPENDS = " \
     bdftopcf-native \
     mkfontdir-native \
     mkfontscale-native \
+    xa-native \
     gtk+ \
     libav \
     libsdl \
