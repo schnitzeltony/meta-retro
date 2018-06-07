@@ -1,4 +1,4 @@
-From 3a0c607e6b4cdcb283ce41a555e76269687f1b50 Mon Sep 17 00:00:00 2001
+From 59fbf0c8d72e22caa7e19afa48c031f8822f276e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Wed, 6 Jun 2018 23:38:38 +0200
 Subject: [PATCH] Align Makefiles for cross compiling
@@ -9,16 +9,17 @@ Content-Transfer-Encoding: 8bit
 Upstream-Status: Inappropriate [oe-specific]
 
 Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+
 ---
- Makefile      | 31 ++++++-------------------------
+ Makefile      | 39 ++++++---------------------------------
  misc/Makefile | 10 +++++-----
- 2 files changed, 11 insertions(+), 30 deletions(-)
+ 2 files changed, 11 insertions(+), 38 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 0cda4d6..a87cc35 100644
+index 0cda4d6..5b9ead0 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1,38 +1,19 @@
+@@ -1,30 +1,4 @@
 -# Unix gcc or DOS go32 cross-compiling gcc
 -#
 -CC = gcc
@@ -43,18 +44,14 @@ index 0cda4d6..a87cc35 100644
 -BINDIR = $(DESTDIR)/bin
 -MANDIR = $(DESTDIR)/share/man/man1
 -DOCDIR = $(DESTDIR)/share/doc
-+BINDIR = $(DESTDIR)/usr/bin
-+MANDIR = $(DESTDIR)/usr/share/man/man1
-+DOCDIR = $(DESTDIR)/usr/share/doc
- 
- MKDIR = mkdir -p
- INSTALL = install
- 
+-
+-MKDIR = mkdir -p
+-INSTALL = install
 +LD = $(CC)
-+
+ 
  all: killxa xa uncpk
  
- killxa:
+@@ -32,7 +6,7 @@ killxa:
  	rm -f xa
  
  xa:
@@ -63,6 +60,22 @@ index 0cda4d6..a87cc35 100644
  
  load:	
  	(cd loader && CC="${CC} ${CFLAGS}" ${MAKE})
+@@ -56,11 +30,10 @@ clean:
+ 	rm -f xa *.exe *.o65
+ 
+ install: xa uncpk
+-	$(MKDIR) $(BINDIR)
+-	$(MKDIR) $(MANDIR)
+-	$(INSTALL) xa reloc65 ldo65 file65 printcbm uncpk $(BINDIR)
+-	$(INSTALL) man/file65.1 man/ldo65.1 man/printcbm.1 man/reloc65.1 man/uncpk.1 man/xa.1 $(MANDIR)
+-	#$(MKDIR) $(DOCDIR)/xa65
++	install -d $(DESTDIR)$(PREFIX)/bin
++	install -m 755 xa reloc65 ldo65 file65 printcbm uncpk $(DESTDIR)$(PREFIX)/bin
++	install -d $(DESTDIR)$(PREFIX)/share/man/man1
++	install -m 644 man/file65.1 man/ldo65.1 man/printcbm.1 man/reloc65.1 man/uncpk.1 man/xa.1 $(DESTDIR)$(PREFIX)/share/man/man1
+ 
+ dist: clean
+ 	#cd .. ; tar cvf xa-2.3.8A.tar xa-2.3.8 ; gzip xa-2.3.8A.tar
 diff --git a/misc/Makefile b/misc/Makefile
 index 2b450e0..6967dad 100644
 --- a/misc/Makefile
