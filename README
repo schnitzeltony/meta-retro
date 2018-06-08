@@ -10,4 +10,4 @@ URI: git://github.com/cazfi/meta-games.git
 branch: master
 revision: HEAD
 
-Layer maintainer: Andreas Müller <schnitzeltony@googlemail.com>
+Layer maintainer: Andreas Müller <schnitzeltony@gmail.com>
