@@ -1,0 +1,82 @@
+From 655427d665ee6c9bd9f61193b6e48d3dde8b0bde Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Thu, 5 Jul 2018 19:11:21 +0200
+Subject: [PATCH] fix build with gcc8
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Pending
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ src/game_menu.c | 2 +-
+ src/joystick.c  | 4 ++--
+ src/tyrian2.c   | 6 +++---
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/src/game_menu.c b/src/game_menu.c
+index 416f2cb..7d24ad7 100644
+--- a/src/game_menu.c
++++ b/src/game_menu.c
+@@ -852,7 +852,7 @@ void JE_itemScreen( void )
+ 					                   ? 100
+ 					                   : (yLoc * 100) / ((cube[currentCube].last_line - 9) * 12);
+ 
+-					char buf[20];
++					char buf[50];
+ 					snprintf(buf, sizeof(buf), "%s %d%%", miscText[11], percent_read);
+ 					JE_outTextAndDarken(VGAScreen, 176, 160, buf, 14, 1, TINY_FONT);
+ 
+diff --git a/src/joystick.c b/src/joystick.c
+index bf99647..933b791 100644
+--- a/src/joystick.c
++++ b/src/joystick.c
+@@ -493,14 +493,14 @@ void code_to_assignment( Joystick_assignment *assignment, const char *buffer )
+ 	assignment->negative_axis = (toupper(direction) == '-');
+ }
+ 
+-/* gives the short (6 or less characters) identifier for a joystick assignment
++/* gives the short (15 or less characters) identifier for a joystick assignment
+  * 
+  * two of these per direction/action is all that can fit on the joystick config screen,
+  * assuming two digits for the axis/button/hat number
+  */
+ const char *assignment_to_code( const Joystick_assignment *assignment )
+ {
+-	static char name[7];
++	static char name[16];
+ 	
+ 	switch (assignment->type)
+ 	{
+diff --git a/src/tyrian2.c b/src/tyrian2.c
+index 4d528cf..411d8b6 100644
+--- a/src/tyrian2.c
++++ b/src/tyrian2.c
+@@ -2088,12 +2088,12 @@ draw_player_shot_loop_end:
+ 	if (debug)
+ 	{
+ 		strcpy(tempStr, "");
+-		for (temp = 0; temp < 9; temp++)
++		/*for (temp = 0; temp < 9; temp++)
+ 		{
+ 			sprintf(tempStr, "%s%c", tempStr,  smoothies[temp] + 48);
+ 		}
+ 		sprintf(buffer, "SM = %s", tempStr);
+-		JE_outText(VGAScreen, 30, 70, buffer, 4, 0);
++		JE_outText(VGAScreen, 30, 70, buffer, 4, 0);*/
+ 
+ 		sprintf(buffer, "Memory left = %d", -1);
+ 		JE_outText(VGAScreen, 30, 80, buffer, 4, 0);
+@@ -2608,7 +2608,7 @@ new_game:
+ 							read_encrypted_pascal_string(s, sizeof(s), ep_f);
+ 
+ 							char buf[256];
+-							strncpy(buf, (strlen(s) > 8) ? s + 8 : "", sizeof(buf));
++							strncpy(buf, (strlen(s) > 8) ? s + 8 : "", sizeof(buf)-1);
+ 
+ 							int j = 0, temp;
+ 							while (str_pop_int(buf, &temp))
+-- 
+2.14.4
+

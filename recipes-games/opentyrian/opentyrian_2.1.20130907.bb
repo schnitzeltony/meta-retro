@@ -15,6 +15,7 @@ SRC_URI = " \
     file://0002-Fix-several-uninitialized-variable-warnings.patch \
     file://0003-fix-build-with-pedantic-gcc6.patch \
     file://0004-increase-buffer-size-to-avoid-gcc7-format-overflow-e.patch \
+    file://0005-fix-build-with-gcc8.patch \
 "
 SRC_URI[md5sum] = "978686c5a1dfbac69a2161aadf084c2b"
 SRC_URI[sha256sum] = "f54b6b3cedcefa187c9f605d6164aae29ec46a731a6df30d351af4c008dee45f"
