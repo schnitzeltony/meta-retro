@@ -12,6 +12,8 @@ SRC_URI[sha256sum] = "fc4436a23d7f2ef0b3c3f600c00745bc468541d0d29bcd3a1e0c599c5c
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
+inherit siteinfo
+
 DEPENDS = " \
     libsdl2 \
     libsdl2-ttf \
@@ -33,11 +35,14 @@ CLEANBROKEN = "1"
 # TBD: x86 may overrideoverrides later - cannot test
 MAME_NOASM="NOASM=1"
 
+# genie.lua does not detect 64bit targets at least on aarch64
+MAME_PTR64 = "${@oe.utils.conditional('SITEINFO_BITS', '64', '-DPTR64=1', '', d)}"
+
 EXTRA_OEMAKE = " \
     linux \
     CROSS_BUILD=1 \
-    OVERRIDE_CC='${CC}' \
-    OVERRIDE_CXX='${CXX}' \
+    OVERRIDE_CC='${CC} ${MAME_PTR64}' \
+    OVERRIDE_CXX='${CXX} ${MAME_PTR64}' \
     TOOLS=1 \
     USE_QTDEBUG=0 \
     NOWERROR=1 \
