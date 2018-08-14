@@ -30,6 +30,9 @@ DEPENDS = " \
 
 CLEANBROKEN = "1"
 
+# TBD: x86 may overrideoverrides later - cannot test
+MAME_NOASM="NOASM=1"
+
 EXTRA_OEMAKE = " \
     linux \
     CROSS_BUILD=1 \
@@ -38,6 +41,7 @@ EXTRA_OEMAKE = " \
     TOOLS=1 \
     USE_QTDEBUG=0 \
     NOWERROR=1 \
+    ${MAME_NOASM} \
     USE_SYSTEM_LIB_EXPAT=1 \
     USE_SYSTEM_LIB_ZLIB=1 \
     USE_SYSTEM_LIB_FLAC=1 \
@@ -45,10 +49,6 @@ EXTRA_OEMAKE = " \
     USE_SYSTEM_LIB_LUA=1 \
     USE_SYSTEM_LIB_SQLITE3=1 \
     USE_SYSTEM_LIB_PORTAUDIO=1 \
-"
-
-EXTRA_OEMAKE_append_arm = " \
-    NOASM=1 \
 "
 
 do_compile_prepend() {
