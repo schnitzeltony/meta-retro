@@ -25,6 +25,7 @@ DEPENDS = " \
     mkfontdir-native \
     mkfontscale-native \
     xa-native \
+    bison-native \
     gtk+ \
     libav \
     libsdl \
