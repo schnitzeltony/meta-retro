@@ -7,8 +7,8 @@ LIC_FILES_CHKSUM = "file://LICENSE.md;md5=f7c747554c44283f89bdf31be2d12551"
 SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
 "
-SRC_URI[md5sum] = "17fd519e023007084cef2e76be2a50bd"
-SRC_URI[sha256sum] = "fc4436a23d7f2ef0b3c3f600c00745bc468541d0d29bcd3a1e0c599c5c02df7f"
+SRC_URI[md5sum] = "e690994e57a13380045bd74258a698ca"
+SRC_URI[sha256sum] = "d51f2a3d740dff13acbe23b0bdcdd9a7077ee873baeabdf8ad5b1499bd9df99f"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
