@@ -1,6 +1,6 @@
 From 032998923ef3a8e3267d64063723482679a7f736 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
-Date: Fri, 26 Feb 2016 22:49:19 +0100
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Sun, 9 Sep 2018 22:31:41 +0200
 Subject: [PATCH] use pkgconfig to find sdl
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -8,19 +8,20 @@ Content-Transfer-Encoding: 8bit
 
 Upstream-Status: Inappropriate [oe specific]
 
-Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
 ---
- configure.in | 20 +-------------------
- 1 file changed, 1 insertion(+), 19 deletions(-)
+ configure.ac | 21 +--------------------
+ 1 file changed, 1 insertion(+), 20 deletions(-)
 
-diff --git a/configure.in b/configure.in
-index 016ea95..79341e5 100644
---- a/configure.in
-+++ b/configure.in
-@@ -28,28 +28,10 @@ if test x$host = xi386-pc-os2-emx ; then
+diff --git a/configure.ac b/configure.ac
+index a723222..3b28be1 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -26,29 +26,10 @@ if test x$host = xi386-pc-os2-emx ; then
+     LDFLAGS="$LDFLAGS -Zomf -Zmt"
  fi
  
- dnl Check for SDL
+-dnl Check for SDL
 -SDL_VERSION=1.2.0
 -AM_PATH_SDL($SDL_VERSION,
 -            :,
@@ -32,7 +33,7 @@ index 016ea95..79341e5 100644
  
 -dnl Check if SDL is 1.2.x (1.3 not supported)
 -AC_MSG_CHECKING([SDL version only being 1.2.X])
--AC_COMPILE_IFELSE([
+-AC_COMPILE_IFELSE([AC_LANG_SOURCE([
 -#include "SDL.h"
 -void blah(){
 -#if SDL_MINOR_VERSION != 2
@@ -40,7 +41,7 @@ index 016ea95..79341e5 100644
 -#endif
 -;
 -}
--],AC_MSG_RESULT([yes]),[
+-])],AC_MSG_RESULT([yes]),[
 - AC_MSG_RESULT([no]) 
 - AC_MSG_ERROR([Only libSDL 1.2.X supported])])
 -
@@ -48,5 +49,5 @@ index 016ea95..79341e5 100644
  
  dnl Checks for typedefs, structures, and compiler characteristics.
 -- 
-2.5.0
+2.14.4
 
