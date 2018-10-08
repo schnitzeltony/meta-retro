@@ -11,4 +11,9 @@ branch: master
 revision: HEAD
 layers: meta-oe
 
+URI: git://git.openembedded.org/meta-openembedded
+branch: master
+revision: HEAD
+layers: meta-filesystems
+
 Layer maintainer: Andreas Müller <schnitzeltony@gmail.com>
