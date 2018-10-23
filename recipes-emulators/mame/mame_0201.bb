@@ -44,6 +44,7 @@ EXTRA_OEMAKE = " \
     OVERRIDE_CXX='${CXX} ${MAME_PTR64}' \
     TOOLS=1 \
     USE_QTDEBUG=0 \
+    LTO=0 \
     NOWERROR=1 \
     ${MAME_NOASM} \
     USE_SYSTEM_LIB_EXPAT=1 \
