@@ -31,6 +31,18 @@ DEPENDS = " \
 
 CLEANBROKEN = "1"
 
+# avoid stip fail for size of executable >> 4GB - stolen from chromium
+DEBUG_FLAGS_remove_arm = "-g"
+DEBUG_FLAGS_append_arm = "-g1"
+DEBUG_FLAGS_remove_x86 = "-g"
+DEBUG_FLAGS_append_x86 = "-g1"
+DEBUG_FLAGS_remove_aarch64 = "-g"
+DEBUG_FLAGS_append_aarch64 = "-g1"
+DEBUG_FLAGS_remove_x86-64 = "-g"
+DEBUG_FLAGS_append_x86-64 = "-g1"
+
+PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
+
 # TBD: x86 may overrideoverrides later - cannot test
 MAME_NOASM="NOASM=1"
 
