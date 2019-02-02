@@ -2,13 +2,13 @@ SUMMARY = "Multiple Arcade Machine Emulator"
 HOMEPAGE = "http://www.mamedev.org/index.php" 
 
 LICENSE = "GPLv2+"
-LIC_FILES_CHKSUM = "file://LICENSE.md;md5=f7c747554c44283f89bdf31be2d12551" 
+LIC_FILES_CHKSUM = "file://LICENSE.md;md5=798620970c471a3a6b7b5e9c9192fe12"
 
 SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
 "
-SRC_URI[md5sum] = "3bf18d9ce718940b662e2d21650ad708"
-SRC_URI[sha256sum] = "80b7f9feb3a4da34c5c452de13d4f7db12381b8a17a90f41884ea2ca797d92ff"
+SRC_URI[md5sum] = "b20e4edb93b1e81802b2b23688ad87ca"
+SRC_URI[sha256sum] = "588ba357361cc49fdc2754d8343c8b91f6b965b30220a998cbb1da09e49dcbdd"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
