@@ -52,7 +52,9 @@ EXTRA_OECONF = " \
     --without-oss \
 "
 
-do_install_append() {
+do_install() {
+    oe_runmake DESTDIR=${D} VICEDIR=${libdir}
+
     install -d ${D}/${datadir}/applications
     install -m 0644 ${WORKDIR}/vice_64.desktop ${D}/${datadir}/applications
 
