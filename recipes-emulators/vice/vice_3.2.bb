@@ -10,6 +10,7 @@ SRC_URI = " \
     ${SOURCEFORGE_MIRROR}/vice-emu/${BPN}-${PV}.tar.gz \
     file://0001-fix-autoreconfig.patch \
     file://0002-Hack-build-with-latest-FFMPEG.patch \
+    file://0003-Set-fixed-VICEDIR.patch \
     file://c64_16.png \
     file://c64_32.png \
     file://c64_48.png \
@@ -50,11 +51,10 @@ EXTRA_OECONF = " \
     --enable-gnomeui \
     --with-uithreads \
     --without-oss \
+    --libdir=${libdir} \
 "
 
-do_install() {
-    oe_runmake DESTDIR=${D} VICEDIR=${libdir}
-
+do_install_append() {
     install -d ${D}/${datadir}/applications
     install -m 0644 ${WORKDIR}/vice_64.desktop ${D}/${datadir}/applications
 
