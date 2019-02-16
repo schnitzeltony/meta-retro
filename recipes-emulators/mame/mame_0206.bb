@@ -81,9 +81,7 @@ do_compile_prepend() {
 do_install() {
     # Note: Unstripped mame binary for armv7 is > 1GB!!
     install -d ${D}${bindir}
-    install mame ${D}${bindir}/
 
-    install -d ${D}${libexecdir}
     for binary in \
         castool \
         chdman \
@@ -100,6 +98,6 @@ do_install() {
         unidasm \
         ; \
     do
-        install $binary ${D}${libexecdir}/
+        install $binary ${D}${bindir}/
     done
 }
