@@ -1,0 +1,32 @@
+From 549674e69e467004a3e2366d2cd3d08071832ccc Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Wed, 13 Feb 2019 22:30:09 +0100
+Subject: [PATCH] Show video-mode option 'accel' in help and GUI
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Submitted [1]
+
+[1] https://github.com/mamedev/mame/pull/4650
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ src/osd/sdl/sdlmain.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/osd/sdl/sdlmain.cpp b/src/osd/sdl/sdlmain.cpp
+index f7d80a1048..37d1434a2e 100644
+--- a/src/osd/sdl/sdlmain.cpp
++++ b/src/osd/sdl/sdlmain.cpp
+@@ -375,6 +375,7 @@ static void osd_sdl_info(void)
+ void sdl_osd_interface::video_register()
+ {
+ 	video_options_add("soft", nullptr);
++	video_options_add("accel", nullptr);
+ #if USE_OPENGL
+ 	video_options_add("opengl", nullptr);
+ #endif
+-- 
+2.20.1
+

@@ -6,6 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE.md;md5=798620970c471a3a6b7b5e9c9192fe12"
 
 SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
+    file://0001-Show-video-mode-option-accel-in-help-and-GUI.patch \
 "
 SRC_URI[md5sum] = "b20e4edb93b1e81802b2b23688ad87ca"
 SRC_URI[sha256sum] = "588ba357361cc49fdc2754d8343c8b91f6b965b30220a998cbb1da09e49dcbdd"
