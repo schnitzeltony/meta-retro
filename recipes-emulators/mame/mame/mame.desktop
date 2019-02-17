@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Mame
+Comment=MAME is a multi-purpose emulation framework
+Exec=mame -video accel -renderdriver opengl -gl_glsl -gl_glsl_filter 0
+Icon=MAMElogo.svg
+Terminal=false
+StartupNotify=false
+Categories=Game

@@ -7,13 +7,15 @@ LIC_FILES_CHKSUM = "file://LICENSE.md;md5=798620970c471a3a6b7b5e9c9192fe12"
 SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
     file://0001-Show-video-mode-option-accel-in-help-and-GUI.patch \
+    file://mame.desktop \
+    file://MAMElogo.svg \
 "
 SRC_URI[md5sum] = "b20e4edb93b1e81802b2b23688ad87ca"
 SRC_URI[sha256sum] = "588ba357361cc49fdc2754d8343c8b91f6b965b30220a998cbb1da09e49dcbdd"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
-inherit siteinfo
+inherit siteinfo gtk-icon-cache
 
 DEPENDS = " \
     libsdl2 \
@@ -25,6 +27,7 @@ DEPENDS = " \
     zlib \
     flac \
     jpeg \
+    glm \
     lua lua-native \
     sqlite3 \
     portaudio-v19 \
@@ -61,12 +64,14 @@ EXTRA_OEMAKE = " \
     NOWERROR=1 \
     ${MAME_NOASM} \
     USE_SYSTEM_LIB_EXPAT=1 \
-    USE_SYSTEM_LIB_ZLIB=1 \
     USE_SYSTEM_LIB_FLAC=1 \
     USE_SYSTEM_LIB_JPEG=1 \
+    USE_SYSTEM_LIB_GLM=1 \
     USE_SYSTEM_LIB_LUA=1 \
-    USE_SYSTEM_LIB_SQLITE3=1 \
     USE_SYSTEM_LIB_PORTAUDIO=1 \
+    USE_SYSTEM_LIB_SQLITE3=1 \
+    USE_SYSTEM_LIB_ZLIB=1 \
+    SDL_INI_PATH=${sysconfdir}/${BPN} \
 "
 
 do_compile_prepend() {
@@ -80,25 +85,130 @@ do_compile_prepend() {
 }
 
 do_install() {
-    # Note: Unstripped mame binary for armv7 is > 1GB!!
-    install -d ${D}${bindir}
+    # stolen much from https://src.fedoraproject.org/cgit/rpms/mame.git/tree/mame.spec
 
-    for binary in \
-        castool \
-        chdman \
-        floptool \
-        imgtool \
-        jedutil \
-        ldresample \
-        ldverify \
-        mame \
-        nltool \
-        romcmp \
-        split \
-        src2html \
-        unidasm \
-        ; \
-    do
-        install $binary ${D}${bindir}/
+    # executables
+    install -d ${D}${bindir}
+    install -pm 755 castool chdman floptool imgtool jedutil ldresample ldverify \
+        mame nltool nlwav pngcmp romcmp unidasm ${D}${bindir}
+    for tool in regrep split src2html srcclean; do
+        install -pm 755 $tool ${D}${bindir}/${BPN}-$tool
     done
+
+    # misc
+    pushd artwork
+        find -type d -exec install -d ${D}${datadir}/${BPN}/artwork/{} \;
+        find -type f -exec install -pm 644 {} ${D}${datadir}/${BPN}/artwork/{} \;
+    popd
+
+    install -d ${D}${datadir}/${BPN}/ctrlr
+    install -pm 644 ctrlr/*.cfg ${D}${datadir}/${BPN}/ctrlr
+
+    install -d ${D}${datadir}/${BPN}/fonts
+    install -m 644 uismall.bdf ${D}${datadir}/${BPN}/fonts
+
+    install -d ${D}${datadir}/${BPN}/hash
+    install -pm 644 hash/* ${D}${datadir}/${BPN}/hash
+
+    install -d ${D}${datadir}/${BPN}/hlsl
+    install -pm 644 hlsl/*.fx ${D}${datadir}/${BPN}/hlsl
+
+    install -d ${D}${datadir}/${BPN}/keymaps
+    install -pm 644 keymaps/* ${D}${datadir}/${BPN}/keymaps
+
+    pushd language
+        find -type d -exec install -d ${D}${datadir}/${BPN}/language/{} \;
+        find -type f -name \*.mo -exec install -pm 644 {} ${D}${datadir}/${BPN}/language/{} \;
+    popd
+
+    pushd plugins
+        find -type d -exec install -d ${D}${datadir}/${BPN}/plugins/{} \;
+        find -type f -exec install -pm 644 {} ${D}${datadir}/${BPN}/plugins/{} \;
+    popd
+
+    install -d ${D}${datadir}/${BPN}/shader
+    pushd src/osd/modules/opengl
+        install -pm 644 shader/*.?sh ${D}${datadir}/${BPN}/shader
+    popd
+
+    pushd docs/man
+        install -d ${D}${mandir}/man1
+        install -pm 644 castool.1 chdman.1 imgtool.1 floptool.1 jedutil.1 ldresample.1 \
+                        ldverify.1 romcmp.1 ${D}${mandir}/man1
+        install -d ${D}${mandir}/man6
+        install -pm 644 mame.6 mess.6 ${D}${mandir}/man6
+    popd
+
+    # install paths where user can add downloaded files
+    for folder in roms samples; do
+        install -d ${D}${sysconfdir}/skel/Emulators/${BPN}/$folder
+    done
+    echo "Store your downloaded files in subfolders" >> ${D}${sysconfdir}/skel/Emulators/${BPN}/Readme
+
+    # install paths for created data
+    for folder in cfg comments diff inp nvram snap state; do
+        install -d ${D}${sysconfdir}/skel/.${BPN}/$folder
+    done
+
+    # user config
+    install -d ${D}${sysconfdir}/skel/.config/${BPN}/ini
+
+    # Create ini file
+    cat > ${WORKDIR}/${BPN}.ini << EOF
+# Define source paths
+artpath            ${datadir}/${BPN}/artwork
+#bgfx_path          ${datadir}/${BPN}/bgfx
+#cheatpath          ${datadir}/${BPN}/cheat
+#crosshairpath      ${datadir}/${BPN}/crosshair
+ctrlrpath          ${datadir}/${BPN}/ctrlr
+fontpath           ${datadir}/${BPN}/fonts
+hashpath           ${datadir}/${BPN}/hash
+languagepath       ${datadir}/${BPN}/language
+pluginspath        ${datadir}/${BPN}/plugins
+# Have these per user for simple download/install
+rompath            \$HOME/Emulators/${BPN}/roms
+samplepath         \$HOME/Emulators/${BPN}/samples
+
+# Allow user to override ini settings
+inipath            \$HOME/.config/${BPN}/ini;${sysconfdir}/${BPN}
+
+# Set paths for local storage
+cfg_directory      \$HOME/.${BPN}/cfg
+comment_directory  \$HOME/.${BPN}/comments
+diff_directory     \$HOME/.${BPN}/diff
+input_directory    \$HOME/.${BPN}/inp
+nvram_directory    \$HOME/.${BPN}/nvram
+snapshot_directory \$HOME/.${BPN}/snap
+state_directory    \$HOME/.${BPN}/state
+EOF
+    install -d ${D}${sysconfdir}/${BPN}
+    install -m 644 ${WORKDIR}/${BPN}.ini ${D}${sysconfdir}/${BPN}
+
+    # Logo
+    install -d ${D}${datadir}/pixmaps
+    install -m 644 ${WORKDIR}/MAMElogo.svg ${D}${datadir}/pixmaps
+
+    # cleanup
+    find ${D}${datadir}/${BPN} -name LICENSE -exec rm {} \;
+    find ${D}${datadir}/${BPN} -name README.md -exec rm {} \;
 }
+
+PACKAGES =+ "${PN}-tools"
+FILES_${PN}-tools = " \
+    ${bindir}/castool \
+    ${bindir}/chdman \
+    ${bindir}/floptool \
+    ${bindir}/imgtool \
+    ${bindir}/jedutil \
+    ${bindir}/ldresample \
+    ${bindir}/ldverify \
+    ${bindir}/nltool \
+    ${bindir}/nlwav \
+    ${bindir}/pngcmp \
+    ${bindir}/${BPN}-regrep \
+    ${bindir}/romcmp \
+    ${bindir}/${BPN}-split \
+    ${bindir}/${BPN}-src2html \
+    ${bindir}/${BPN}-srcclean \
+    ${bindir}/unidasm \
+"
