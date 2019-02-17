@@ -74,6 +74,8 @@ EXTRA_OEMAKE = " \
     SDL_INI_PATH=${sysconfdir}/${BPN} \
 "
 
+CFLAGS += "-O3"
+
 do_compile_prepend() {
     # seems there is some race. Build complains
     # | Assembler messages:
