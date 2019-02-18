@@ -151,7 +151,7 @@ do_install() {
     echo "Store your downloaded files in subfolders" >> ${D}${sysconfdir}/skel/Emulators/${BPN}/Readme
 
     # install paths for created data
-    for folder in cfg comments diff inp nvram snap state; do
+    for folder in cfg comments diff history inp nvram snap state; do
         install -d ${D}${sysconfdir}/skel/.${BPN}/$folder
     done
 
@@ -181,6 +181,7 @@ inipath            \$HOME/.config/${BPN}/ini;${sysconfdir}/${BPN}
 cfg_directory      \$HOME/.${BPN}/cfg
 comment_directory  \$HOME/.${BPN}/comments
 diff_directory     \$HOME/.${BPN}/diff
+historypath        \$HOME/.${BPN}/history
 input_directory    \$HOME/.${BPN}/inp
 nvram_directory    \$HOME/.${BPN}/nvram
 snapshot_directory \$HOME/.${BPN}/snap
