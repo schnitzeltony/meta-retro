@@ -98,6 +98,9 @@ do_install() {
     done
 
     # misc
+    install -d ${D}${datadir}/applications
+    install -m 644 ${WORKDIR}/mame.desktop ${D}${datadir}/applications
+
     pushd artwork
         find -type d -exec install -d ${D}${datadir}/${BPN}/artwork/{} \;
         find -type f -exec install -pm 644 {} ${D}${datadir}/${BPN}/artwork/{} \;
