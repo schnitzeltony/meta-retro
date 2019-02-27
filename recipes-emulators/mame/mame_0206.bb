@@ -7,6 +7,7 @@ LIC_FILES_CHKSUM = "file://LICENSE.md;md5=798620970c471a3a6b7b5e9c9192fe12"
 SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
     file://0001-Show-video-mode-option-accel-in-help-and-GUI.patch \
+    file://0002-pokey-performance-optimization-by-not-using-modulus.patch \
     file://mame.desktop \
     file://MAMElogo.svg \
 "
