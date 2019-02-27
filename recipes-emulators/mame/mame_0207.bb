@@ -6,13 +6,11 @@ LIC_FILES_CHKSUM = "file://LICENSE.md;md5=798620970c471a3a6b7b5e9c9192fe12"
 
 SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
-    file://0001-Show-video-mode-option-accel-in-help-and-GUI.patch \
-    file://0002-pokey-performance-optimization-by-not-using-modulus.patch \
+    file://0001-pokey-performance-optimization-by-not-using-modulus.patch \
     file://mame.desktop \
-    file://MAMElogo.svg \
 "
-SRC_URI[md5sum] = "b20e4edb93b1e81802b2b23688ad87ca"
-SRC_URI[sha256sum] = "588ba357361cc49fdc2754d8343c8b91f6b965b30220a998cbb1da09e49dcbdd"
+SRC_URI[md5sum] = "7a368efb80c228258d1928ed74bbc7a4"
+SRC_URI[sha256sum] = "69c29533d2128345c59fbf23fabc3af696322a77a6c1d7a7bd7f5a2ee57adafb"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
@@ -197,7 +195,7 @@ EOF
 
     # Logo
     install -d ${D}${datadir}/pixmaps
-    install -m 644 ${WORKDIR}/MAMElogo.svg ${D}${datadir}/pixmaps
+    install -m 644 ${S}/docs/source/images/MAMElogo.svg ${D}${datadir}/pixmaps
 
     # cleanup
     find ${D}${datadir}/${BPN} -name LICENSE -exec rm {} \;
