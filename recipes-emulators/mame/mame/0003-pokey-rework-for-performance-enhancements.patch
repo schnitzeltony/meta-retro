@@ -1,0 +1,186 @@
+From b6ad431ff6acc5d12ba51ed64242a5f61e2c87bf Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Fri, 1 Mar 2019 12:27:23 +0100
+Subject: [PATCH 2/2] pokey: rework for performance enhancements
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Profiling with valgrind pointed to the following hotspot:
+
+pokey_device::step_one_clock / line 686-689:
+| for (int ch = 0; ch < 4; ch++)
+| {
+| 	sum |= (((((m_channel[ch].m_output ^ m_channel[ch].m_filter_sample) || (m_channel[ch].m_AUDC & VOLUME_ONLY)) ? (m_channel[ch].m_AUDC & VOLUME_MASK) : 0 )) << (ch * 4));
+| }
+
+First solution was to move bit-shifting to first part of ?-part:
+
+| sum |= (((m_channel[ch].m_output ^ m_channel[ch].m_filter_sample) || (m_channel[ch].m_AUDC & VOLUME_ONLY)) ? ((m_channel[ch].m_AUDC & VOLUME_MASK) << (ch * 4)) : 0);
+
+because shifting 0 does not change value. Performance measurements showed
+improvements but they were not satisfying exactly (change is part of this
+patch).
+
+So I thought more of what this piece of code is about:
+* it is run at high frequency (@starwars: 1.5MHz * 4 pokey instances *
+  4 channels -> ~6MHz)
+  => that is creating the high CPU cycle consumption
+* frequency of output change is in a range of (double) audible frequencies (few
+  kHz).
+  => there are long sequences creating identical output
+* the sum value calculated depends on few channel input variables: m_output /
+  m_filter_sample / m_AUDC
+
+This patch suggests a solution which keeps track of possible input variable
+change and as long as they don't change there is no need to render output sum.
+
+The following tests were performed:
+* mame64 -bench 50 starwars: Average speed increases from ~430 to ~490 on my PC
+* starwars, missile-command and marble-madness do not show any audible
+  artefacts
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ src/devices/sound/pokey.cpp | 38 +++++++++++++++++++++++--------------
+ src/devices/sound/pokey.h   |  3 ++-
+ 2 files changed, 26 insertions(+), 15 deletions(-)
+
+diff --git a/src/devices/sound/pokey.cpp b/src/devices/sound/pokey.cpp
+index 08806da558..03ea12c7b5 100644
+--- a/src/devices/sound/pokey.cpp
++++ b/src/devices/sound/pokey.cpp
+@@ -254,6 +254,7 @@ void pokey_device::device_start()
+ 	m_kbd_cnt = 0;
+ 	m_out_filter = 0;
+ 	m_out_raw = 0;
++	m_old_raw_inval = true;
+ 	m_kbd_state = 0;
+ 
+ 	/* reset more internal state */
+@@ -435,14 +436,7 @@ void pokey_device::execute_run()
+ {
+ 	do
+ 	{
+-		uint32_t new_out = step_one_clock();
+-		if (m_out_raw != new_out)
+-		{
+-			//printf("forced update %08d %08x\n", m_icount, m_out_raw);
+-			m_stream->update();
+-			m_out_raw = new_out;
+-		}
+-
++		step_one_clock();
+ 		m_icount--;
+ 	} while (m_icount > 0);
+ 
+@@ -570,7 +564,7 @@ void pokey_device::step_pot()
+  *
+  */
+ 
+-uint32_t pokey_device::step_one_clock(void)
++void pokey_device::step_one_clock(void)
+ {
+ 	int const base_clock = (m_AUDCTL & CLK_15KHZ) ? CLK_114 : CLK_28;
+ 
+@@ -682,12 +676,23 @@ uint32_t pokey_device::step_one_clock(void)
+ 			m_channel[CHAN1].m_filter_sample = 1;
+ 	}
+ 
+-	uint32_t sum = 0;
+-	for (int ch = 0; ch < 4; ch++)
++	if (m_old_raw_inval)
+ 	{
+-		sum |= (((((m_channel[ch].m_output ^ m_channel[ch].m_filter_sample) || (m_channel[ch].m_AUDC & VOLUME_ONLY)) ? (m_channel[ch].m_AUDC & VOLUME_MASK) : 0 )) << (ch * 4));
++		uint32_t sum = 0;
++		for (int ch = 0; ch < 4; ch++)
++		{
++			sum |= (((m_channel[ch].m_output ^ m_channel[ch].m_filter_sample) || (m_channel[ch].m_AUDC & VOLUME_ONLY)) ?
++				((m_channel[ch].m_AUDC & VOLUME_MASK) << (ch * 4)) : 0);
++		}
++
++		if (m_out_raw != sum)
++		{
++			//printf("forced update %08d %08x\n", m_icount, m_out_raw);
++			m_stream->update();
++		}
++		m_old_raw_inval = false;
++		m_out_raw = sum;
+ 	}
+-	return sum;
+ }
+ 
+ //-------------------------------------------------
+@@ -898,6 +903,7 @@ void pokey_device::write_internal(offs_t offset, uint8_t data)
+ 	case AUDC1_C:
+ 		LOG_SOUND(("POKEY '%s' AUDC1  $%02x (%s)\n", tag(), data, audc2str(data)));
+ 		m_channel[CHAN1].m_AUDC = data;
++		m_old_raw_inval = true;
+ 		break;
+ 
+ 	case AUDF2_C:
+@@ -908,6 +914,7 @@ void pokey_device::write_internal(offs_t offset, uint8_t data)
+ 	case AUDC2_C:
+ 		LOG_SOUND(("POKEY '%s' AUDC2  $%02x (%s)\n", tag(), data, audc2str(data)));
+ 		m_channel[CHAN2].m_AUDC = data;
++		m_old_raw_inval = true;
+ 		break;
+ 
+ 	case AUDF3_C:
+@@ -918,6 +925,7 @@ void pokey_device::write_internal(offs_t offset, uint8_t data)
+ 	case AUDC3_C:
+ 		LOG_SOUND(("POKEY '%s' AUDC3  $%02x (%s)\n", tag(), data, audc2str(data)));
+ 		m_channel[CHAN3].m_AUDC = data;
++		m_old_raw_inval = true;
+ 		break;
+ 
+ 	case AUDF4_C:
+@@ -928,6 +936,7 @@ void pokey_device::write_internal(offs_t offset, uint8_t data)
+ 	case AUDC4_C:
+ 		LOG_SOUND(("POKEY '%s' AUDC4  $%02x (%s)\n", tag(), data, audc2str(data)));
+ 		m_channel[CHAN4].m_AUDC = data;
++		m_old_raw_inval = true;
+ 		break;
+ 
+ 	case AUDCTL_C:
+@@ -952,7 +961,7 @@ void pokey_device::write_internal(offs_t offset, uint8_t data)
+ 			m_channel[i].m_output = 0;
+ 			m_channel[i].m_filter_sample = (i<2 ? 1 : 0);
+ 		}
+-
++		m_old_raw_inval = true;
+ 		break;
+ 
+ 	case SKREST_C:
+@@ -1070,6 +1079,7 @@ inline void pokey_device::process_channel(int ch)
+ 			m_channel[ch].m_output = (m_poly9[m_p9] & 1);
+ 		else
+ 			m_channel[ch].m_output = (m_poly17[m_p17] & 1);
++		m_old_raw_inval = true;
+ 	}
+ }
+ 
+diff --git a/src/devices/sound/pokey.h b/src/devices/sound/pokey.h
+index e4498def7b..7e63e89e54 100644
+--- a/src/devices/sound/pokey.h
++++ b/src/devices/sound/pokey.h
+@@ -264,7 +264,7 @@ private:
+ 
+ 	static constexpr int POKEY_CHANNELS = 4;
+ 
+-	uint32_t step_one_clock();
++	void step_one_clock();
+ 	void step_keyboard();
+ 	void step_pot();
+ 
+@@ -285,6 +285,7 @@ private:
+ 	pokey_channel m_channel[POKEY_CHANNELS];
+ 
+ 	uint32_t m_out_raw;         /* raw output */
++	bool m_old_raw_inval;       /* true: recalc m_out_raw required */
+ 	double m_out_filter;        /* filtered output */
+ 
+ 	int32_t m_clock_cnt[3];     /* clock counters */
+-- 
+2.20.1
+

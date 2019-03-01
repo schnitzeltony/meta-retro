@@ -7,6 +7,8 @@ LIC_FILES_CHKSUM = "file://LICENSE.md;md5=798620970c471a3a6b7b5e9c9192fe12"
 SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
     file://0001-pokey-performance-optimization-by-not-using-modulus.patch \
+    file://0002-pokey-rename-pokey_device-m_output-pokey_device-m_ou.patch \
+    file://0003-pokey-rework-for-performance-enhancements.patch \
     file://mame.desktop \
 "
 SRC_URI[md5sum] = "7a368efb80c228258d1928ed74bbc7a4"
