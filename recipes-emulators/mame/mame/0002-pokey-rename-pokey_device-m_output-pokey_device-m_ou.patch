@@ -14,6 +14,10 @@ helpful to understand the code.
 renaming pokey_device::pokey_channel::m_output was not an option because this
 would damage stored machine states - right?
 
+Upstream-Status: Submitted [1]
+
+[1] https://github.com/mamedev/mame/pull/4702
+
 Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
 ---
  src/devices/sound/pokey.cpp | 18 +++++++++---------
