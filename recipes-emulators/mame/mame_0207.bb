@@ -9,7 +9,8 @@ SRC_URI = " \
     file://0001-pokey-performance-optimization-by-not-using-modulus.patch \
     file://0002-pokey-rename-pokey_device-m_output-pokey_device-m_ou.patch \
     file://0003-pokey-rework-for-performance-enhancements.patch \
-    file://0004-OSD-OpenGl-Improve-performance-by-moving-calculation.patch \
+    file://0004-pokey-rework-prescaler-handling.patch \
+    file://0005-OSD-OpenGl-Improve-performance-by-moving-calculation.patch \
     file://no-upstream/0001-pokey-Make-step_one_clock-inline.patch \
     file://mame.desktop \
 "

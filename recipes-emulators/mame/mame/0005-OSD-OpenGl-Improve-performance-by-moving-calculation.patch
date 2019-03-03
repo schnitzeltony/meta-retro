@@ -17,6 +17,8 @@ After: Average speed: 319.34% (58 seconds)
 
 I am aware that missile tests copyline_palette16() only.
 
+Upstream-Status: Pending
+
 Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
 ---
  src/osd/modules/render/drawogl.cpp | 14 ++++++++------

@@ -18,18 +18,18 @@ Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/devices/sound/pokey.cpp b/src/devices/sound/pokey.cpp
-index 03ea12c7b5..80b9f64d6a 100644
+index 231dc01e8b..d20c20cc8a 100644
 --- a/src/devices/sound/pokey.cpp
 +++ b/src/devices/sound/pokey.cpp
-@@ -564,7 +564,7 @@ void pokey_device::step_pot()
+@@ -562,7 +562,7 @@ void pokey_device::step_pot()
   *
   */
  
 -void pokey_device::step_one_clock(void)
 +inline void pokey_device::step_one_clock(void)
  {
- 	int const base_clock = (m_AUDCTL & CLK_15KHZ) ? CLK_114 : CLK_28;
- 
+ 	/* Clocks only count if we are not in a reset */
+ 	if (m_SKCTL & SK_RESET)
 diff --git a/src/devices/sound/pokey.h b/src/devices/sound/pokey.h
 index 7e63e89e54..48858bc743 100644
 --- a/src/devices/sound/pokey.h
