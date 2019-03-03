@@ -1,0 +1,78 @@
+From f2e16fa98a94ed51d04540e7b53ffdf0bc7b5b57 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Sat, 2 Mar 2019 23:13:27 +0100
+Subject: [PATCH] OSD/OpenGl: Improve performance by moving calculations out of
+ loop
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+This one was triggered by missile.
+
+Test case:
+mame64 -nothrottle missile
+
+Before: Average speed: 312.49% (58 seconds)
+After: Average speed: 319.34% (58 seconds)
+
+I am aware that missile tests copyline_palette16() only.
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ src/osd/modules/render/drawogl.cpp | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/src/osd/modules/render/drawogl.cpp b/src/osd/modules/render/drawogl.cpp
+index 98db62fdf1..045dc16954 100644
+--- a/src/osd/modules/render/drawogl.cpp
++++ b/src/osd/modules/render/drawogl.cpp
+@@ -2055,9 +2055,9 @@ static inline void copyline_palette16(uint32_t *dst, const uint16_t *src, int wi
+ 		*dst++ = 0xff000000 | palette[*src];
+ 	for (x = 0; x < width; x++)
+ 	{
+-		int srcpix = *src++;
++		uint32_t palval = palette[*src++];
+ 		for (int x2 = 0; x2 < xprescale; x2++)
+-			*dst++ = 0xff000000 | palette[srcpix];
++			*dst++ = 0xff000000 | palval;
+ 	}
+ 	if (xborderpix)
+ 		*dst++ = 0xff000000 | palette[*--src];
+@@ -2078,9 +2078,9 @@ static inline void copyline_palettea16(uint32_t *dst, const uint16_t *src, int w
+ 		*dst++ = palette[*src];
+ 	for (x = 0; x < width; x++)
+ 	{
+-		int srcpix = *src++;
++		uint32_t palval = palette[*src++];
+ 		for (int x2 = 0; x2 < xprescale; x2++)
+-			*dst++ = palette[srcpix];
++			*dst++ = palval;
+ 	}
+ 	if (xborderpix)
+ 		*dst++ = palette[*--src];
+@@ -2109,9 +2109,10 @@ static inline void copyline_rgb32(uint32_t *dst, const uint32_t *src, int width,
+ 		for (x = 0; x < width; x++)
+ 		{
+ 			rgb_t srcpix = *src++;
++			uint32_t palval = palette[0x200 + srcpix.r()] | palette[0x100 + srcpix.g()] | palette[srcpix.b()];
+ 			for (int x2 = 0; x2 < xprescale; x2++)
+ 			{
+-				*dst++ = 0xff000000 | palette[0x200 + srcpix.r()] | palette[0x100 + srcpix.g()] | palette[srcpix.b()];
++				*dst++ = 0xff000000 | palval;
+ 			}
+ 		}
+ 		if (xborderpix)
+@@ -2161,8 +2162,9 @@ static inline void copyline_argb32(uint32_t *dst, const uint32_t *src, int width
+ 		for (x = 0; x < width; x++)
+ 		{
+ 			rgb_t srcpix = *src++;
++			uint32_t palval = palette[0x200 + srcpix.r()] | palette[0x100 + srcpix.g()] | palette[srcpix.b()];
+ 			for (int x2 = 0; x2 < xprescale; x2++)
+-				*dst++ = (srcpix & 0xff000000) | palette[0x200 + srcpix.r()] | palette[0x100 + srcpix.g()] | palette[srcpix.b()];
++				*dst++ = (srcpix & 0xff000000) | palval;
+ 		}
+ 		if (xborderpix)
+ 		{
+-- 
+2.20.1
+

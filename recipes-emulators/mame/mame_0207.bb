@@ -9,6 +9,8 @@ SRC_URI = " \
     file://0001-pokey-performance-optimization-by-not-using-modulus.patch \
     file://0002-pokey-rename-pokey_device-m_output-pokey_device-m_ou.patch \
     file://0003-pokey-rework-for-performance-enhancements.patch \
+    file://0004-OSD-OpenGl-Improve-performance-by-moving-calculation.patch \
+    file://no-upstream/0001-pokey-Make-step_one_clock-inline.patch \
     file://mame.desktop \
 "
 SRC_URI[md5sum] = "7a368efb80c228258d1928ed74bbc7a4"
@@ -61,6 +63,7 @@ EXTRA_OEMAKE = " \
     CROSS_BUILD=1 \
     OVERRIDE_CC='${CC} ${MAME_PTR64}' \
     OVERRIDE_CXX='${CXX} ${MAME_PTR64}' \
+    OPTIMIZE=3 \
     TOOLS=1 \
     USE_QTDEBUG=0 \
     LTO=0 \
@@ -78,8 +81,6 @@ EXTRA_OEMAKE = " \
     ${@bb.utils.contains('BBFILE_COLLECTIONS', 'meta-qt5-extra', 'USE_SYSTEM_LIB_PORTMIDI=1', '', d)} \
     SDL_INI_PATH=${sysconfdir}/${BPN} \
 "
-
-CFLAGS += "-O3"
 
 do_compile_prepend() {
     # seems there is some race. Build complains
