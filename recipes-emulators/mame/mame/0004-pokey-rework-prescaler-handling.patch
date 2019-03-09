@@ -16,7 +16,7 @@ Performance test: mame64 -nothrottle starwars
 Before: Average speed: 409.36% (21 seconds)
 After: Average speed: 447.37% (21 seconds)
 
-Upstream-Status: Submitted [1]
+Upstream-Status: Applied [1]
 
 [1] https://github.com/mamedev/mame/pull/4702
 

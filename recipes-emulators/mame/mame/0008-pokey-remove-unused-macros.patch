@@ -1,0 +1,48 @@
+From fa6f8255b46ad594d7fbf949a64397b4aa8231ad Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Fri, 8 Mar 2019 01:05:24 +0100
+Subject: [PATCH 1/2] pokey: remove unused macros
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Submitted [1]
+
+[1] https://github.com/mamedev/mame/pull/4735
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ src/devices/sound/pokey.cpp | 10 ----------
+ 1 file changed, 10 deletions(-)
+
+diff --git a/src/devices/sound/pokey.cpp b/src/devices/sound/pokey.cpp
+index a79c8abb71..3372ac70a8 100644
+--- a/src/devices/sound/pokey.cpp
++++ b/src/devices/sound/pokey.cpp
+@@ -99,11 +99,6 @@
+ #define TIMER2  1
+ #define TIMER4  2
+ 
+-/* values to add to the divisors for the different modes */
+-#define DIVADD_LOCLK        1
+-#define DIVADD_HICLK        4
+-#define DIVADD_HICLK_JOINED 7
+-
+ /* AUDCx */
+ #define NOTPOLY5    0x80    /* selects POLY5 or direct CLOCK */
+ #define POLY4       0x40    /* selects POLY4 or POLY17 */
+@@ -152,11 +147,6 @@
+ #define DIV_64      28       /* divisor for 1.78979 MHz clock to 63.9211 kHz */
+ #define DIV_15      114      /* divisor for 1.78979 MHz clock to 15.6999 kHz */
+ 
+-#define P4(chip)  chip->poly4[chip->p4]
+-#define P5(chip)  chip->poly5[chip->p5]
+-#define P9(chip)  chip->poly9[chip->p9]
+-#define P17(chip) chip->poly17[chip->p17]
+-
+ #define CLK_1 0
+ #define CLK_28 1
+ #define CLK_114 2
+-- 
+2.20.1
+

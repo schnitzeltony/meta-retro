@@ -40,7 +40,7 @@ The following tests were performed:
 * starwars, missile-command and marble-madness do not show any audible
   artefacts
 
-Upstream-Status: Submitted [1]
+Upstream-Status: Applied [1]
 
 [1] https://github.com/mamedev/mame/pull/4702
 

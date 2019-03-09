@@ -11,6 +11,10 @@ SRC_URI = " \
     file://0003-pokey-rework-for-performance-enhancements.patch \
     file://0004-pokey-rework-prescaler-handling.patch \
     file://0005-OSD-OpenGl-Improve-performance-by-moving-calculation.patch \
+    file://0006-pokey_device-step_pot-remove-operations-with-no-effe.patch \
+    file://0007-pokey-force-recalculation-of-raw-sound-output-after-.patch \
+    file://0008-pokey-remove-unused-macros.patch \
+    file://0009-pokey-yet-another-performance-enhancement.patch \
     file://no-upstream/0001-pokey-Make-step_one_clock-inline.patch \
     file://mame.desktop \
 "
@@ -79,6 +83,7 @@ EXTRA_OEMAKE = " \
     USE_SYSTEM_LIB_SQLITE3=1 \
     USE_SYSTEM_LIB_ZLIB=1 \
     USE_SYSTEM_LIB_RAPIDJSON=1 \
+    USE_OPENMP=1 \
     ${@bb.utils.contains('BBFILE_COLLECTIONS', 'meta-qt5-extra', 'USE_SYSTEM_LIB_PORTMIDI=1', '', d)} \
     SDL_INI_PATH=${sysconfdir}/${BPN} \
 "
