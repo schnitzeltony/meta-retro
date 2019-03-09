@@ -14,7 +14,6 @@ SRC_URI = " \
     file://0006-pokey_device-step_pot-remove-operations-with-no-effe.patch \
     file://0007-pokey-force-recalculation-of-raw-sound-output-after-.patch \
     file://0008-pokey-remove-unused-macros.patch \
-    file://0009-pokey-yet-another-performance-enhancement.patch \
     file://no-upstream/0001-pokey-Make-step_one_clock-inline.patch \
     file://mame.desktop \
 "
