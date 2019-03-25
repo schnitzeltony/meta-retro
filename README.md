@@ -1,7 +1,9 @@
 OE layer for emulators and games from 8/16-bit era
+--------------------------------------------------
+
 
 Layer dependencies:
-----------------------
+-------------------
 see [layer.conf](conf/layer.conf) for dependencies and https://layers.openembedded.org/layerindex/branch/master/layers/ where to find layers
 
 
