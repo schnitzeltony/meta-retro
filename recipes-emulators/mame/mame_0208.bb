@@ -6,19 +6,11 @@ LIC_FILES_CHKSUM = "file://LICENSE.md;md5=798620970c471a3a6b7b5e9c9192fe12"
 
 SRC_URI = " \
     https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
-    file://0001-pokey-performance-optimization-by-not-using-modulus.patch \
-    file://0002-pokey-rename-pokey_device-m_output-pokey_device-m_ou.patch \
-    file://0003-pokey-rework-for-performance-enhancements.patch \
-    file://0004-pokey-rework-prescaler-handling.patch \
-    file://0005-OSD-OpenGl-Improve-performance-by-moving-calculation.patch \
-    file://0006-pokey_device-step_pot-remove-operations-with-no-effe.patch \
-    file://0007-pokey-force-recalculation-of-raw-sound-output-after-.patch \
-    file://0008-pokey-remove-unused-macros.patch \
     file://no-upstream/0001-pokey-Make-step_one_clock-inline.patch \
     file://mame.desktop \
 "
-SRC_URI[md5sum] = "7a368efb80c228258d1928ed74bbc7a4"
-SRC_URI[sha256sum] = "69c29533d2128345c59fbf23fabc3af696322a77a6c1d7a7bd7f5a2ee57adafb"
+SRC_URI[md5sum] = "c674867e5477f883678752566fe92af7"
+SRC_URI[sha256sum] = "d02dba8e144ac11878226ef48aa8e4d30a33d77dd72210f84e9803908c70e8b2"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
