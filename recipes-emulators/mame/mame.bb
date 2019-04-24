@@ -9,8 +9,9 @@ SRC_URI = " \
     file://no-upstream/0001-pokey-Make-step_one_clock-inline.patch \
     file://mame.desktop \
 "
-SRC_URI[md5sum] = "c674867e5477f883678752566fe92af7"
-SRC_URI[sha256sum] = "d02dba8e144ac11878226ef48aa8e4d30a33d77dd72210f84e9803908c70e8b2"
+PV = "0209"
+SRC_URI[md5sum] = "47054af93e71d9d0a5010b620ae7e1a2"
+SRC_URI[sha256sum] = "9442e88bd87cfe407eb093a2ecb42a3850cabe31cd52c4efdef1bf7f584a8eab"
 
 S = "${WORKDIR}/${BPN}-${BPN}${PV}"
 
