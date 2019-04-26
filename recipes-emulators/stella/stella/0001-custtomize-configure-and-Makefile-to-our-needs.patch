@@ -40,45 +40,6 @@ index a1ecfb1..05e5c1c 100755
  	;;
  esac
  
-@@ -347,21 +348,26 @@ esac
- #
- # Determine the C++ compiler
- #
--echo_n "Looking for C++ compiler... "
--if test -n "$_host"; then
--	compilers="$CXX $_host_prefix-g++ $_host_prefix-c++ $_host_cpu-$_host_os-g++ $_host_cpu-$_host_os-c++"
-+if test_compiler "$CXX"; then
-+    echo "$CXX"
- else
--	compilers="$CXX g++ c++"
-+    if test -n "$_host"; then
-+        compilers="$_host_prefix-g++ $_host_prefix-c++ $_host_cpu-$_host_os-g++ $_host_cpu-$_host_os-c++"
-+    else
-+        compilers="g++ c++"
-+    fi
-+
-+    for compiler in $compilers; do
-+        echo "testing compile $compiler"
-+        if test_compiler $compiler; then
-+		    CXX=$compiler
-+            echo $CXX
-+		    break
-+        fi
-+    done
- fi
- 
--for compiler in $compilers; do
--	if test_compiler "$compiler -std=c++14"; then
--		CXX=$compiler
--		echo $CXX
--		break
--	fi
--done
--if test -z $CXX; then
-+if test -z "$CXX"; then
- 	echo "none found!"
- 	exit 1
- fi
 @@ -511,8 +517,9 @@ if test -n "$_host"; then
  			_host_os=win32
  			;;
