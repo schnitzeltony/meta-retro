@@ -5,15 +5,13 @@ LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://LICENSE.md;md5=798620970c471a3a6b7b5e9c9192fe12"
 
 SRC_URI = " \
-    https://github.com/mamedev/mame/archive/${BPN}${PV}.tar.gz \
+    git://github.com/mamedev/mame.git \
     file://no-upstream/0001-pokey-Make-step_one_clock-inline.patch \
     file://mame.desktop \
 "
-PV = "0209"
-SRC_URI[md5sum] = "47054af93e71d9d0a5010b620ae7e1a2"
-SRC_URI[sha256sum] = "9442e88bd87cfe407eb093a2ecb42a3850cabe31cd52c4efdef1bf7f584a8eab"
-
-S = "${WORKDIR}/${BPN}-${BPN}${PV}"
+PV = "0210"
+SRCREV = "ad45c9c6094b2dc78a5610422566bd0ce39e0d9e"
+S = "${WORKDIR}/git"
 
 inherit siteinfo gtk-icon-cache
 
