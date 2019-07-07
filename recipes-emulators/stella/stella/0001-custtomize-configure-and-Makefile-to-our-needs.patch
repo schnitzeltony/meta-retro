@@ -1,5 +1,5 @@
 From 389ed0e18c10a8b3368d0b9fbd2e1f5a7e37f072 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@fmail.com>
 Date: Fri, 30 Jun 2017 09:30:32 +0200
 Subject: [PATCH] custtomize configure and Makefile to our needs
 MIME-Version: 1.0
@@ -8,7 +8,7 @@ Content-Transfer-Encoding: 8bit
 
 Upstream-Status: Inappropriate [oe-specific]
 
-Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+Signed-off-by: Andreas Müller <schnitzeltony@fmail.com>
 
 ---
  Makefile  |  2 +-
@@ -61,7 +61,7 @@ index a1ecfb1..05e5c1c 100755
  
  SRC="src"
  CORE="$SRC/emucore"
-@@ -694,7 +701,7 @@ ZLIB="$SRC/zlib"
+@@ -698,7 +698,7 @@ ZLIB="$SRC/zlib"
  
  INCLUDES="-I$CORE -I$COMMON -I$TV -I$GUI -I$TIA -I$TIA_FRAME_MANAGER"
  
@@ -70,6 +70,15 @@ index a1ecfb1..05e5c1c 100755
  if test "$_build_static" = yes ; then
  	_sdl_conf_libs="--static-libs"
  	LDFLAGS="-static $LDFLAGS"
+@@ -706,7 +706,7 @@ else
+ 	_sdl_conf_libs="--libs"
+ fi
+ 
+-LIBS="$LIBS `$_sdlconfig $_sdl_conf_libs`"
++LIBS="$LIBS `pkg-config $_sdl_conf_libs sdl2`"
+ LD=$CXX
+ 
+ case $_host_os in
 -- 
 2.14.3
 
