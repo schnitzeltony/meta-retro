@@ -1,5 +1,5 @@
 From 389ed0e18c10a8b3368d0b9fbd2e1f5a7e37f072 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@fmail.com>
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Fri, 30 Jun 2017 09:30:32 +0200
 Subject: [PATCH] custtomize configure and Makefile to our needs
 MIME-Version: 1.0
@@ -8,7 +8,7 @@ Content-Transfer-Encoding: 8bit
 
 Upstream-Status: Inappropriate [oe-specific]
 
-Signed-off-by: Andreas Müller <schnitzeltony@fmail.com>
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
 
 ---
  Makefile  |  2 +-
