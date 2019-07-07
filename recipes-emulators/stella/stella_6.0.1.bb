@@ -13,7 +13,7 @@ SRC_URI = " \
     https://github.com/stella-emu/stella/releases/download/${PV}/${BPN}-${PV}-src.tar.xz \
     file://0001-custtomize-configure-and-Makefile-to-our-needs.patch \
 "
-SRC_URI[md5sum] = "496dc9837f6bd634a7567e37f21a49f2"
-SRC_URI[sha256sum] = "17aa8c5f08e09c51dd7dd933f93b0a1929d2832bd66f3bd994fa50ebb2b9a2b1"
+SRC_URI[md5sum] = "9df5fd3af9720115359ebf0171ed36e6"
+SRC_URI[sha256sum] = "d611f98bb35ed9eacfb63826b12b4e8b67b874a2a87019d4bdaf1e7f4724c40d"
 
 CLEANBROKEN = "1"
