@@ -9,8 +9,8 @@ SRC_URI = " \
     file://no-upstream/0001-pokey-Make-step_one_clock-inline.patch \
     file://mame.desktop \
 "
-PV = "0211"
-SRCREV = "1b969a8acbc754384deb08b835af7d4964611f64"
+PV = "0212"
+SRCREV = "1182bd9325bd3381cc94cce6d7d9a1b510ed6ae4"
 S = "${WORKDIR}/git"
 
 inherit siteinfo gtk-icon-cache
