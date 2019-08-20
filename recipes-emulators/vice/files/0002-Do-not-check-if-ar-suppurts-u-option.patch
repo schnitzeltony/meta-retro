@@ -1,0 +1,50 @@
+From e65294ee2a7890e7a224db38a98ea20ccc412391 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Wed, 21 Aug 2019 01:26:42 +0200
+Subject: [PATCH] Do not check if ar suppurts '-u' option
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+wrap-u-ar.sh does not semm necessary and it does notwork for us in first place
+
+Upstream-Status: Pending
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ configure.ac | 19 -------------------
+ 1 file changed, 19 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 3d51636..c36fc5c 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1238,25 +1238,6 @@ if test x"$ar_check" != "xno"; then
+   fi
+ fi
+ 
+-dnl check if ar needs a wrapper to get rid of the 'u' option
+-if test x"$ar_check" != "xno"; then
+-  AC_MSG_CHECKING(if ar complains about the 'u' option)
+-  rm -f vicetest.c
+-  touch vicetest.c
+-  $CC -c vicetest.c -o vicetest.o
+-  rm -f vicetest.c
+-  rm -f libvicetest.a
+-  complains=`$AR cru libvicetest.a vicetest.o 2>&1`
+-  if test x"$complains" != "x"; then
+-    AC_MSG_RESULT(yes)
+-    echo "using ar wrapper instead of ar directly"
+-    AR_WRAP="$AR"
+-    AR="\$(top_srcdir)/src/wrap-u-ar.sh \"$AR_WRAP\""
+-  else
+-    AC_MSG_RESULT(no)
+-  fi
+-fi
+-
+ AC_CHECK_PROGS(MAKEINFO, makeinfo, no)
+ 
+ AC_CHECK_PROGS(TEXI2DVI, texi2dvi, no)
+-- 
+2.21.0
+
