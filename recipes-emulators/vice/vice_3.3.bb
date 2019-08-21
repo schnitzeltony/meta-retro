@@ -63,3 +63,5 @@ do_install_append() {
         install -m 0644 ${WORKDIR}/c64_${size}.png ${D}/${datadir}/icons/hicolor/${size}x${size}/apps/c64.png
     done
 }
+
+RDEPENDS_${PN} += "hicolor-icon-theme"
