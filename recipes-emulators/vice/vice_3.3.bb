@@ -53,3 +53,13 @@ EXTRA_OECONF = " \
     --without-oss \
     --libdir=${libdir} \
 "
+
+do_install_append() {
+    install -d ${D}/${datadir}/applications
+    install -m 0644 ${WORKDIR}/vice_64.desktop ${D}/${datadir}/applications
+
+    for size in 16 32 48; do
+        install -d ${D}/${datadir}/icons/hicolor/${size}x${size}/apps
+        install -m 0644 ${WORKDIR}/c64_${size}.png ${D}/${datadir}/icons/hicolor/${size}x${size}/apps/c64.png
+    done
+}
