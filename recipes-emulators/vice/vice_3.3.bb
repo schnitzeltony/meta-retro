@@ -26,9 +26,7 @@ DEPENDS = " \
     mkfontscale-native \
     xa-native \
     bison-native \
-    gtk+3 \
     libav \
-    libsdl \
     libpng \
     jpeg \
     giflib \
@@ -39,15 +37,22 @@ DEPENDS = " \
     vte9 \
 "
 
-PACKAGECONFIG ??= "${@bb.utils.filter('DISTRO_FEATURES', 'pulseaudio', d)}"
+PACKAGECONFIG ??= "sdl2 ${@bb.utils.filter('DISTRO_FEATURES', 'pulseaudio', d)}"
 PACKAGECONFIG[pulseaudio] = "--with-pulse,--without-pulse,pulseaudio,pulseaudio-server"
+
+# either gtk3 or sdl2 for gui
+PACKAGECONFIG[gtk3] = "--enable-native-gtk3ui,--disable-native-gtk3ui,gtk+3 pango"
+# together with gtk3 / requires OpenGL3
+PACKAGECONFIG[glew] = ",,glew"
+
+PACKAGECONFIG[sdl2] = "--enable-sdlui2,--disable-sdlui2,libsdl2"
+
 
 EXTRA_OECONF = " \
     --disable-option-checking \
     --enable-external-ffmpeg \
     --enable-parsid \
     --enable-fullscreen \
-    --enable-gnomeui \
     --with-uithreads \
     --without-oss \
     --libdir=${libdir} \
