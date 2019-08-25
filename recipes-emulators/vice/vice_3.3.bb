@@ -9,6 +9,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=c93c0550bd3173f4504b2cbd8991e50b"
 SRC_URI = " \
     ${SOURCEFORGE_MIRROR}/vice-emu/${BPN}-${PV}.tar.gz \
     file://0001-fix-autoreconfig.patch \
+    file://0002-Try-to-port-shaders-to-OpenGL-2.patch \
     file://c64_16.png \
     file://c64_32.png \
     file://c64_48.png \
@@ -37,7 +38,7 @@ DEPENDS = " \
     vte9 \
 "
 
-PACKAGECONFIG ??= "sdl2 ${@bb.utils.filter('DISTRO_FEATURES', 'pulseaudio', d)}"
+PACKAGECONFIG ??= "gtk3 glew ${@bb.utils.filter('DISTRO_FEATURES', 'pulseaudio', d)}"
 PACKAGECONFIG[pulseaudio] = "--with-pulse,--without-pulse,pulseaudio,pulseaudio-server"
 
 # either gtk3 or sdl2 for gui

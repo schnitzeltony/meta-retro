@@ -1,0 +1,51 @@
+From 331c04f53b26f3e17acc5c94b88ee9cea6905f57 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Sun, 25 Aug 2019 22:30:54 +0200
+Subject: [PATCH] Try to port shaders to OpenGL 2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ src/arch/gtk3/opengl_renderer.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
+
+diff --git a/src/arch/gtk3/opengl_renderer.c b/src/arch/gtk3/opengl_renderer.c
+index 07c1acd..3a1d793 100644
+--- a/src/arch/gtk3/opengl_renderer.c
++++ b/src/arch/gtk3/opengl_renderer.c
+@@ -130,11 +130,11 @@ static float vertexData[] = {
+  * This simply scales the geometry it is provided and provides
+  * smoothly interpolated texture coordinates between each vertex. The
+  * world coordinates remain [-1, 1] in all dimensions. */
+-static const char *vertexShader = "#version 150\n"
++static const char *vertexShader = "#version 120\n"
+     "uniform vec4 scale;\n"
+-    "in vec4 position;\n"
+-    "in vec2 tex;\n"
+-    "smooth out vec2 texCoord;\n"
++    "attribute vec4 position;\n"
++    "attribute vec2 tex;\n"
++    "varying vec2 texCoord;\n"
+     "void main() {\n"
+     "  gl_Position = position * scale;\n"
+     "  texCoord = tex;\n"
+@@ -144,11 +144,10 @@ static const char *vertexShader = "#version 150\n"
+  *
+  * This does nothing but texture lookups based on the values fed to it
+  * by the vertex shader. */
+-static const char *fragmentShader = "#version 150\n"
++static const char *fragmentShader = "#version 120\n"
+     "uniform sampler2D sampler;\n"
+-    "smooth in vec2 texCoord;\n"
+-    "out vec4 outputColor;\n"
+-    "void main() { outputColor = texture2D(sampler, texCoord); }\n";
++    "uniform vec2 texCoord;\n"
++    "void main() { gl_FragColor = texture2D(sampler, texCoord); }\n";
+ 
+ /** \brief Compile a shader.
+  *
+-- 
+2.20.1
+
