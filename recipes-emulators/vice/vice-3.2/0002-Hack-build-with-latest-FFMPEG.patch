@@ -1,0 +1,101 @@
+From 6f69c122f0ea97b89bb0bb72cb75e97dc24d5506 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Fri, 8 Jun 2018 11:10:25 +0200
+Subject: [PATCH] Hack build with latest FFMPEG
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Taking videos in raw format won't work with ne FFMPEG.
+
+| ../../../vice-3.2/src/gfxoutputdrv/ffmpegdrv.c:363:34: error: 'CODEC_CAP_VARIABLE_FRAME_SIZE' undeclared (first use in this function); did you mean 'AV_CODEC_CAP_VARIABLE_FRAME_SIZE'?
+|      if (c->codec->capabilities & CODEC_CAP_VARIABLE_FRAME_SIZE) {
+|                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+|                                   AV_CODEC_CAP_VARIABLE_FRAME_SIZE
+
+| ../../../vice-3.2/src/gfxoutputdrv/ffmpegdrv.c:461:21: error: 'CODEC_FLAG_GLOBAL_HEADER' undeclared (first use in this function); did you mean 'AV_CODEC_FLAG_GLOBAL_HEADER'?
+|          c->flags |= CODEC_FLAG_GLOBAL_HEADER;
+|                      ^~~~~~~~~~~~~~~~~~~~~~~~
+|                      AV_CODEC_FLAG_GLOBAL_HEADER
+
+| ../../../../../../../../../oe-core/workspace/sources/vice/src/gfxoutputdrv/ffmpegdrv.c:982:40: error: 'AVFMT_RAWPICTURE' undeclared (first use in this function); did you mean 'FF_API_AVPICTURE'?
+|      if (ffmpegdrv_oc->oformat->flags & AVFMT_RAWPICTURE) {
+|                                         ^~~~~~~~~~~~~~~~
+|                                         FF_API_AVPICTURE
+
+Upstream-Status: Pending
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ src/gfxoutputdrv/ffmpegdrv.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/src/gfxoutputdrv/ffmpegdrv.c b/src/gfxoutputdrv/ffmpegdrv.c
+index 4748348..b52e39b 100644
+--- a/src/gfxoutputdrv/ffmpegdrv.c
++++ b/src/gfxoutputdrv/ffmpegdrv.c
+@@ -360,7 +360,11 @@ static int ffmpegdrv_open_audio(AVFormatContext *oc, AVStream *st)
+     }
+ 
+     audio_is_open = 1;
++#ifdef AV_CODEC_CAP_VARIABLE_FRAME_SIZE
++    if (c->codec->capabilities & AV_CODEC_CAP_VARIABLE_FRAME_SIZE) {
++#else
+     if (c->codec->capabilities & CODEC_CAP_VARIABLE_FRAME_SIZE) {
++#endif
+         audio_inbuf_samples = 10000;
+     } else {
+         audio_inbuf_samples = c->frame_size;
+@@ -454,7 +458,11 @@ static int ffmpegmovie_init_audio(int speed, int channels, soundmovie_buffer_t *
+ 
+     /* Some formats want stream headers to be separate. */
+     if (ffmpegdrv_oc->oformat->flags & AVFMT_GLOBALHEADER)
++#ifdef AV_CODEC_FLAG_GLOBAL_HEADER
++        c->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
++#else
+         c->flags |= CODEC_FLAG_GLOBAL_HEADER;
++#endif
+ 
+     /* create resampler context */
+ #ifndef HAVE_FFMPEG_AVRESAMPLE
+@@ -787,7 +795,11 @@ static void ffmpegdrv_init_video(screenshot_t *screenshot)
+ 
+     /* Some formats want stream headers to be separate. */
+     if (ffmpegdrv_oc->oformat->flags & AVFMT_GLOBALHEADER) {
++#ifdef AV_CODEC_FLAG_GLOBAL_HEADER
++        c->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
++#else
+         c->flags |= CODEC_FLAG_GLOBAL_HEADER;
++#endif
+     }
+ 
+     if (audio_init_done) {
+@@ -967,6 +979,7 @@ static int ffmpegdrv_record(screenshot_t *screenshot)
+ 
+     video_st.frame->pts = video_st.next_pts++;
+ 
++#ifdef AVFMT_RAWPICTURE
+     if (ffmpegdrv_oc->oformat->flags & AVFMT_RAWPICTURE) {
+         AVPacket pkt;
+         VICE_P_AV_INIT_PACKET(&pkt);
+@@ -978,6 +991,7 @@ static int ffmpegdrv_record(screenshot_t *screenshot)
+ 
+         ret = VICE_P_AV_INTERLEAVED_WRITE_FRAME(ffmpegdrv_oc, &pkt);
+     } else {
++#endif
+         AVPacket pkt = { 0 };
+         int got_packet;
+ 
+@@ -998,7 +1012,9 @@ static int ffmpegdrv_record(screenshot_t *screenshot)
+         } else {
+             ret = 0;
+         }
++#ifdef AVFMT_RAWPICTURE
+     }
++#endif
+     if (ret < 0) {
+         log_debug("Error while writing video frame");
+         return -1;
+-- 
+2.14.3
+

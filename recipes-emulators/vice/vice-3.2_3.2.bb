@@ -6,27 +6,30 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=c93c0550bd3173f4504b2cbd8991e50b"
 # Sources for c64 software:
 # [1] ftp://arnold.c64.org/pub/games/
 
+BPN = "vice"
+
 SRC_URI = " \
     ${SOURCEFORGE_MIRROR}/vice-emu/${BPN}-${PV}.tar.gz \
     file://0001-fix-autoreconfig.patch \
+    file://0002-Hack-build-with-latest-FFMPEG.patch \
+    file://0003-Set-fixed-VICEDIR.patch \
     file://c64_16.png \
     file://c64_32.png \
     file://c64_48.png \
     file://vice_64.desktop \
 "
-SRC_URI[md5sum] = "b0797f534b33f638220418207d606cf5"
-SRC_URI[sha256sum] = "1a55b38cc988165b077808c07c52a779d181270b28c14b5c9abf4e569137431d"
+SRC_URI[md5sum] = "58ba6b6653097898e059e0194615705a"
+SRC_URI[sha256sum] = "28d99f5e110720c97ef16d8dd4219cf9a67661d58819835d19378143697ba523"
 
 inherit autotools pkgconfig gtk-icon-cache
 
 DEPENDS = " \
-    glib-2.0-native \
     bdftopcf-native \
     mkfontdir-native \
     mkfontscale-native \
     xa-native \
     bison-native \
-    gtk+3 \
+    gtk+ \
     libav \
     libsdl \
     libpng \
@@ -37,6 +40,7 @@ DEPENDS = " \
     mpg123 \
     virtual/libgl \
     vte9 \
+    ${@bb.utils.contains("DISTRO_FEATURES", "x11 opengl", "gtkglext", "", d)} \
 "
 
 PACKAGECONFIG ??= "${@bb.utils.filter('DISTRO_FEATURES', 'pulseaudio', d)}"
@@ -53,8 +57,6 @@ EXTRA_OECONF = " \
     --libdir=${libdir} \
 "
 
-export ar_check="no"
-
 do_install_append() {
     install -d ${D}/${datadir}/applications
     install -m 0644 ${WORKDIR}/vice_64.desktop ${D}/${datadir}/applications
@@ -65,7 +67,7 @@ do_install_append() {
     done
 }
 
-RDEPENDS_${PN} += "hicolor-icon-theme"
+FILES_${PN} += "${datadir}/icons"
 
-RREPLACES_${PN} += "vice-3.2"
-RCONFLICTS_${PN} += "vice-3.2"
+RREPLACES_${PN} += "vice"
+RCONFLICTS_${PN} += "vice"
