@@ -75,7 +75,7 @@ index 0cda4d6..5b9ead0 100644
 +	install -m 644 man/file65.1 man/ldo65.1 man/printcbm.1 man/reloc65.1 man/uncpk.1 man/xa.1 $(DESTDIR)$(PREFIX)/share/man/man1
  
  dist: clean
- 	#cd .. ; tar cvf xa-2.3.8A.tar xa-2.3.8 ; gzip xa-2.3.8A.tar
+ 	cd .. ; tar cvf xa-2.3.9.tar xa-2.3.9 ; gzip xa-2.3.9.tar
 diff --git a/misc/Makefile b/misc/Makefile
 index 2b450e0..6967dad 100644
 --- a/misc/Makefile

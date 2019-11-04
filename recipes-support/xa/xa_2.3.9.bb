@@ -6,8 +6,8 @@ SRC_URI = " \
     http://www.floodgap.com/retrotech/xa/dists/${BPN}-${PV}.tar.gz \
     file://0001-Align-Makefiles-for-cross-compiling.patch \
 "
-SRC_URI[md5sum] = "884c3dc5bcc8e8f10b05a6907781623d"
-SRC_URI[sha256sum] = "3b97d2fe8891336676ca28ff127b69e997f0b5accf2c7009b4517496929b462a"
+SRC_URI[md5sum] = "f533c3d36fcedcbca3b61a90ded6f37f"
+SRC_URI[sha256sum] = "8d3097d3b75adf4305d7d5c8e8f2568a7176cb348bcc50006cfc58378540c555"
 
 BBCLASSEXTEND = "native"
 
