@@ -2,6 +2,9 @@ SUMMARY = "Open-source 6502 cross assembler"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=1f67e705f4eb5064027b8c40ccfdb43e"
 
+# They move old versions to a different folder
+MIRRORS =+ "http://www.floodgap.com/retrotech/xa/dists/ http://www.floodgap.com/retrotech/xa/dists/unsupported/"
+
 SRC_URI = " \
     http://www.floodgap.com/retrotech/xa/dists/${BPN}-${PV}.tar.gz \
     file://0001-Align-Makefiles-for-cross-compiling.patch \
