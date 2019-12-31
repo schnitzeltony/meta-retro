@@ -14,10 +14,12 @@ SRC_URI = " \
     file://c64_48.png \
     file://vice_64.desktop \
 "
-SRC_URI[md5sum] = "b0797f534b33f638220418207d606cf5"
-SRC_URI[sha256sum] = "1a55b38cc988165b077808c07c52a779d181270b28c14b5c9abf4e569137431d"
+SRC_URI[md5sum] = "24d83f692910f5d87de19857e8095f0b"
+SRC_URI[sha256sum] = "4bd00c1c63d38cd1fe01b90032834b52f774bc29e4b67eeb1e525b14fee07aeb"
 
-inherit autotools pkgconfig gtk-icon-cache
+inherit autotools pkgconfig gtk-icon-cache features_check
+
+REQUIRED_DISTRO_FEATURES = "opengl x11"
 
 DEPENDS = " \
     glib-2.0-native \
@@ -26,6 +28,7 @@ DEPENDS = " \
     mkfontscale-native \
     xa-native \
     bison-native \
+    glew \
     gtk+3 \
     libav \
     libsdl \
