@@ -13,6 +13,8 @@ SRC_URI = " \
     file://c64_32.png \
     file://c64_48.png \
     file://vice_64.desktop \
+    file://vice_64dtv.desktop \
+    file://vice_64sc.desktop \
 "
 SRC_URI[md5sum] = "24d83f692910f5d87de19857e8095f0b"
 SRC_URI[sha256sum] = "4bd00c1c63d38cd1fe01b90032834b52f774bc29e4b67eeb1e525b14fee07aeb"
@@ -67,7 +69,7 @@ export ar_check="no"
 
 do_install_append() {
     install -d ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/vice_64.desktop ${D}/${datadir}/applications
+    install -m 0644 ${WORKDIR}/vice_64*.desktop ${D}/${datadir}/applications
 
     for size in 16 32 48; do
         install -d ${D}/${datadir}/icons/hicolor/${size}x${size}/apps

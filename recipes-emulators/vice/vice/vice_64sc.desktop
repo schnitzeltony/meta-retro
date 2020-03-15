@@ -1,9 +1,10 @@
 [Desktop Entry]
 Type=Application
-Name=X64-old (Vice)
-Comment=Commodore 64 Emulator (performing best currently)
-Exec=x64
+Name=X64sc (Vice)
+Comment=Commodore 64 Emulator
+Exec=x64sc
 Icon=c64
 Terminal=false
 StartupNotify=false
 Categories=Game
+Name[en_US]=vice_64sc
