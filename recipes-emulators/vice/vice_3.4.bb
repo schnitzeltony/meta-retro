@@ -46,14 +46,21 @@ PACKAGECONFIG ??= "${@bb.utils.filter('DISTRO_FEATURES', 'pulseaudio', d)}"
 PACKAGECONFIG[pulseaudio] = "--with-pulse,--without-pulse,pulseaudio,pulseaudio-server"
 
 EXTRA_OECONF = " \
-    --disable-option-checking \
     --enable-external-ffmpeg \
     --enable-parsid \
-    --enable-fullscreen \
-    --enable-gnomeui \
-    --with-uithreads \
+    --enable-native-gtk3ui \
     --without-oss \
     --libdir=${libdir} \
+    --enable-x64 \
+"
+
+EXTRA_OECONF_remove = " \
+    --disable-static \
+"
+
+CONFIGUREOPTS_remove = " \
+    --disable-silent-rules \
+    ${@append_libtool_sysroot(d)} \
 "
 
 export ar_check="no"
