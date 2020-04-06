@@ -2,15 +2,15 @@ SUMMARY = "Multiple Arcade Machine Emulator"
 HOMEPAGE = "http://www.mamedev.org/index.php" 
 
 LICENSE = "GPLv2+"
-LIC_FILES_CHKSUM = "file://LICENSE.md;md5=c5c8c4977a2fd418cb2b35f011b37df3"
+LIC_FILES_CHKSUM = "file://COPYING;md5=0e3f1798ec9d172989b43198146441e6"
 
 SRC_URI = " \
     git://github.com/mamedev/mame.git \
     file://no-upstream/0001-pokey-Make-step_one_clock-inline.patch \
     file://mame.desktop \
 "
-PV = "0219"
-SRCREV = "221f00644261049b4a63fe448f8a968135b070c3"
+PV = "0220"
+SRCREV = "c5c5723b9d5c19220825eaaebf4eb12e2f452a7a"
 S = "${WORKDIR}/git"
 
 inherit siteinfo gtk-icon-cache
@@ -96,7 +96,7 @@ do_install() {
     install -d ${D}${bindir}
     install -pm 755 castool chdman floptool imgtool jedutil ldresample ldverify \
         mame nltool nlwav pngcmp romcmp unidasm ${D}${bindir}
-    for tool in regrep split src2html srcclean; do
+    for tool in regrep split srcclean; do
         install -pm 755 $tool ${D}${bindir}/${BPN}-$tool
     done
 
