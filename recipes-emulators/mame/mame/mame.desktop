@@ -2,7 +2,7 @@
 Type=Application
 Name=Mame
 Comment=MAME is a multi-purpose emulation framework
-Exec=mame -natural
+Exec=mame
 Icon=MAMElogo.svg
 Terminal=false
 StartupNotify=false
