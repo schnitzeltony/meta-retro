@@ -8,6 +8,7 @@ SRC_URI = " \
     git://github.com/mamedev/mame.git \
     file://no-upstream/0001-pokey-Make-step_one_clock-inline.patch \
     file://mame.desktop \
+    file://mame32k.desktop \
 "
 PV = "0220"
 SRCREV = "c5c5723b9d5c19220825eaaebf4eb12e2f452a7a"
@@ -103,6 +104,7 @@ do_install() {
     # misc
     install -d ${D}${datadir}/applications
     install -m 644 ${WORKDIR}/mame.desktop ${D}${datadir}/applications
+    install -m 644 ${WORKDIR}/mame32k.desktop ${D}${datadir}/applications
 
     pushd artwork
         find -type d -exec install -d ${D}${datadir}/${BPN}/artwork/{} \;

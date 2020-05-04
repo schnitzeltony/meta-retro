@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Mame (32k RAM)
+Comment=MAME is a multi-purpose emulation framework
+Exec=mame -ramsize 32k
+Icon=MAMElogo.svg
+Terminal=false
+StartupNotify=false
+Categories=Game
