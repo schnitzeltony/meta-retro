@@ -2,7 +2,7 @@ SUMMARY = "Multiple Arcade Machine Emulator"
 HOMEPAGE = "http://www.mamedev.org/index.php" 
 
 LICENSE = "GPLv2+"
-LIC_FILES_CHKSUM = "file://COPYING;md5=0e3f1798ec9d172989b43198146441e6"
+LIC_FILES_CHKSUM = "file://COPYING;md5=b9fb1aafa6200e0f5fe91623fe536dc3"
 
 SRC_URI = " \
     git://github.com/mamedev/mame.git \
@@ -10,8 +10,8 @@ SRC_URI = " \
     file://mame.desktop \
     file://mame32k.desktop \
 "
-PV = "0220"
-SRCREV = "c5c5723b9d5c19220825eaaebf4eb12e2f452a7a"
+PV = "0221"
+SRCREV = "e8a0e0469b0e7956be5e3b0c4d243c65d7b8406c"
 S = "${WORKDIR}/git"
 
 inherit siteinfo gtk-icon-cache
