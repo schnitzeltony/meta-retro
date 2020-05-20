@@ -1,6 +1,6 @@
 From 389ed0e18c10a8b3368d0b9fbd2e1f5a7e37f072 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
-Date: Fri, 30 Jun 2017 09:30:32 +0200
+Date: Wed, 20 May 2020 22:12:52 +0200
 Subject: [PATCH] custtomize configure and Makefile to our needs
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,28 +11,14 @@ Upstream-Status: Inappropriate [oe-specific]
 Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
 
 ---
- Makefile  |  2 +-
- configure | 39 +++++++++++++++++++++++----------------
- 2 files changed, 24 insertions(+), 17 deletions(-)
+ configure | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 35a1e36..a8984d0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -177,7 +177,7 @@ config.mak: $(srcdir)/configure
- 
- install: all
- 	$(INSTALL) -d "$(DESTDIR)$(BINDIR)"
--	$(INSTALL) -c -s -m 755 "$(srcdir)/stella$(EXEEXT)" "$(DESTDIR)$(BINDIR)/stella$(EXEEXT)"
-+	$(INSTALL) -c -m 755 "$(srcdir)/stella$(EXEEXT)" "$(DESTDIR)$(BINDIR)/stella$(EXEEXT)"
- 	$(INSTALL) -d "$(DESTDIR)$(DOCDIR)"
- 	$(INSTALL) -c -m 644 "$(srcdir)/Announce.txt" "$(srcdir)/Changes.txt" "$(srcdir)/Copyright.txt" "$(srcdir)/License.txt" "$(srcdir)/README-SDL.txt" "$(srcdir)/Readme.txt" "$(srcdir)/Todo.txt" "$(srcdir)/docs/index.html" "$(srcdir)/docs/debugger.html" "$(DESTDIR)$(DOCDIR)/"
- 	$(INSTALL) -d "$(DESTDIR)$(DOCDIR)/graphics"
 diff --git a/configure b/configure
-index a1ecfb1..05e5c1c 100755
+index 4fb2cf0..37f502e 100755
 --- a/configure
 +++ b/configure
-@@ -307,6 +307,7 @@ mingw32-cross)
+@@ -331,6 +331,7 @@ mingw32-cross)
  	_host_cpu=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\1/'`
  	_host_os=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
  	_host_vendor=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\2/'`
@@ -40,8 +26,8 @@ index a1ecfb1..05e5c1c 100755
  	;;
  esac
  
-@@ -511,8 +517,9 @@ if test -n "$_host"; then
- 			_host_os=win32
+@@ -557,8 +558,9 @@ if test -n "$_host"; then
+ 			_host_os=unix
  			;;
  		*)
 -			echo "Cross-compiling to unknown target, please add your target to configure."
@@ -52,7 +38,7 @@ index a1ecfb1..05e5c1c 100755
  			;;
  	esac
  
-@@ -676,7 +683,7 @@ fi
+@@ -802,7 +804,7 @@ fi
  # Now, add the appropriate defines/libraries/headers
  #
  echo
@@ -61,16 +47,16 @@ index a1ecfb1..05e5c1c 100755
  
  SRC="src"
  CORE="$SRC/emucore"
-@@ -698,7 +698,7 @@ ZLIB="$SRC/zlib"
+@@ -821,7 +823,7 @@ SQLITE="$SRC/common/repository/sqlite"
  
- INCLUDES="-I$CORE -I$COMMON -I$TV -I$GUI -I$TIA -I$TIA_FRAME_MANAGER"
+ INCLUDES="-I$CORE -I$COMMON -I$TV -I$TIA -I$TIA_FRAME_MANAGER"
  
 -INCLUDES="$INCLUDES `$_sdlconfig --cflags`"
 +INCLUDES="$INCLUDES `pkg-config --cflags sdl2`"
  if test "$_build_static" = yes ; then
  	_sdl_conf_libs="--static-libs"
  	LDFLAGS="-static $LDFLAGS"
-@@ -706,7 +706,7 @@ else
+@@ -829,7 +831,7 @@ else
  	_sdl_conf_libs="--libs"
  fi
  
@@ -80,5 +66,5 @@ index a1ecfb1..05e5c1c 100755
  
  case $_host_os in
 -- 
-2.14.3
+2.21.1
 
