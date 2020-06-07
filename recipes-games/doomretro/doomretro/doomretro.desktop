@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Doomretro
+Comment=The classic, refined DOOM source port
+Exec=doomretro
+Icon=doomretro
+Terminal=false
+StartupNotify=false
+Categories=Game
