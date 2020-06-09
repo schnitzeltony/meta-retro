@@ -10,6 +10,7 @@ DEPENDS = " \
     python3-scons-native \
     libsdl \
     libsdl-mixer \
+    libsdl-image \
     physfs \
     libpng \
 "
@@ -19,8 +20,9 @@ SRC_URI = " \
     http://www.dxx-rebirth.com/download/dxx/content/descent-mac-demo.zip;name=data \
     http://www.descent2.de/files/sound/hires-sounds.7z;name=sound \
     http://www.dxx-rebirth.com/download/dxx/res/d1xr-sc55-music.dxa;name=music;unpack=0 \
+    file://0001-clipper.cpp-Fix-build-with-gcc10.patch \
 "
-SRCREV = "211a172c1dc5f939a3ed387bea57b1d0ee679192"
+SRCREV = "6212b914cb2dfb78e1fc4dcbc574b9b1d329783b"
 PV = "v0.59+git${SRCPV}"
 S = "${WORKDIR}/git"
 
