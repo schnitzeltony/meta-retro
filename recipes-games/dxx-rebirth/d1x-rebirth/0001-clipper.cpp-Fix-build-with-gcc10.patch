@@ -8,6 +8,8 @@ Content-Transfer-Encoding: 8bit
 
 | common/3d/clipper.cpp:29:14: error: 'out_of_range' is not a member of 'std'
 
+Upstream-Status: Submitted[https://github.com/dxx-rebirth/dxx-rebirth/pull/512]
+
 Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
 ---
  common/3d/clipper.cpp | 1 +
