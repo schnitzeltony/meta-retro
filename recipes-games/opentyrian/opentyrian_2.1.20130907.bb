@@ -24,7 +24,9 @@ SRC_URI[sha256sum] = "f54b6b3cedcefa187c9f605d6164aae29ec46a731a6df30d351af4c008
 SRC_URI[data.md5sum] = "2a3b206a6de25ed4b771af073f8ca904"
 SRC_URI[data.sha256sum] = "7790d09a2a3addcd33c66ef063d5900eb81cc9c342f4807eb8356364dd1d9277"
 
-CFLAGS += "-Wimplicit-fallthrough=0"
+# Hack to build - yes this is bad but I sometimes still like to play
+# opentyrian at the risk it is going to kill me
+CFLAGS += "-Wimplicit-fallthrough=0 -Wno-error=format-truncation -Wno-error=format-overflow"
 
 do_install() {
     install -d ${D}${bindir}
