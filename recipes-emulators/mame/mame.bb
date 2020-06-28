@@ -2,16 +2,16 @@ SUMMARY = "Multiple Arcade Machine Emulator"
 HOMEPAGE = "http://www.mamedev.org/index.php" 
 
 LICENSE = "GPLv2+"
-LIC_FILES_CHKSUM = "file://COPYING;md5=b9fb1aafa6200e0f5fe91623fe536dc3"
+LIC_FILES_CHKSUM = "file://COPYING;md5=c9c1babc1ba9605e7b9d320d2d4f6be7"
 
 SRC_URI = " \
     git://github.com/mamedev/mame.git \
-    file://no-upstream/0001-pokey-Make-step_one_clock-inline.patch \
+    file://0001-Only-build-asmjit-on-x86-and-x86_64.patch \
     file://mame.desktop \
     file://mame32k.desktop \
 "
-PV = "0221"
-SRCREV = "e8a0e0469b0e7956be5e3b0c4d243c65d7b8406c"
+PV = "0222"
+SRCREV = "6d50d60a43b335d71d9a2d0496deeb6973658423"
 S = "${WORKDIR}/git"
 
 inherit siteinfo gtk-icon-cache
