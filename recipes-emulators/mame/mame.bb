@@ -31,7 +31,7 @@ DEPENDS = " \
     sqlite3 \
     portaudio-v19 \
     rapidjson \
-    ${@bb.utils.contains('BBFILE_COLLECTIONS', 'meta-qt5-extra', 'portmidi', '', d)} \
+    portmidi \
 "
 
 CLEANBROKEN = "1"
@@ -75,7 +75,7 @@ EXTRA_OEMAKE = " \
     USE_SYSTEM_LIB_ZLIB=1 \
     USE_SYSTEM_LIB_RAPIDJSON=1 \
     USE_OPENMP=1 \
-    ${@bb.utils.contains('BBFILE_COLLECTIONS', 'meta-qt5-extra', 'USE_SYSTEM_LIB_PORTMIDI=1', '', d)} \
+    USE_SYSTEM_LIB_PORTMIDI=1 \
     SDL_INI_PATH=${sysconfdir}/${BPN} \
     PYTHON_EXECUTABLE=python3 \
 "
