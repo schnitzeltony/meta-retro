@@ -6,12 +6,12 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=c9c1babc1ba9605e7b9d320d2d4f6be7"
 
 SRC_URI = " \
     git://github.com/mamedev/mame.git \
-    file://0001-Only-build-asmjit-on-x86-and-x86_64.patch \
+    file://0001-Fix-non-x86-build-and-try-to-make-sure-it-does-not-b.patch \
     file://mame.desktop \
     file://mame32k.desktop \
 "
-PV = "0222"
-SRCREV = "6d50d60a43b335d71d9a2d0496deeb6973658423"
+PV = "0223"
+SRCREV = "c55a261d26d225c5c847c046f729290139b6546e"
 S = "${WORKDIR}/git"
 
 inherit siteinfo gtk-icon-cache

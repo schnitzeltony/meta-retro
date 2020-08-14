@@ -1,0 +1,59 @@
+From 65b0df8761dd7772149ac1608fe7109f8cc8e056 Mon Sep 17 00:00:00 2001
+From: Julian Sikorski <belegdol+github@gmail.com>
+Date: Wed, 12 Aug 2020 18:54:22 +0200
+Subject: [PATCH] Fix non-x86 build and try to make sure it does not break
+ silently again (#7041)
+
+* Do not build x64 DRC backend when C backend is forced
+
+Upstream-Status: Backport[https://github.com/mamedev/mame/commit/83df00516badcdd4df0d73bf15f79dd54537f03a]
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ scripts/src/cpu.lua        |  12 ++-
+ src/devices/cpu/drcuml.cpp |   2 +
+ 2 files changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/scripts/src/cpu.lua b/scripts/src/cpu.lua
+index 64814fd67d7..f8c16807c87 100644
+--- a/scripts/src/cpu.lua
++++ b/scripts/src/cpu.lua
+@@ -39,12 +39,16 @@ if (CPU_INCLUDE_DRC) then
+ 		MAME_DIR .. "src/devices/cpu/uml.h",
+ 		MAME_DIR .. "src/devices/cpu/x86log.cpp",
+ 		MAME_DIR .. "src/devices/cpu/x86log.h",
+-		MAME_DIR .. "src/devices/cpu/drcbex86.cpp",
+-		MAME_DIR .. "src/devices/cpu/drcbex86.h",
+-		MAME_DIR .. "src/devices/cpu/drcbex64.cpp",
+-		MAME_DIR .. "src/devices/cpu/drcbex64.h",
+ 		MAME_DIR .. "src/devices/cpu/drcumlsh.h",
+ 	}
++	if not _OPTIONS["FORCE_DRC_C_BACKEND"] then
++		files {
++			MAME_DIR .. "src/devices/cpu/drcbex64.cpp",
++			MAME_DIR .. "src/devices/cpu/drcbex64.h",
++			MAME_DIR .. "src/devices/cpu/drcbex86.cpp",
++			MAME_DIR .. "src/devices/cpu/drcbex86.h",
++		}
++	end
+ end
+ 
+ --------------------------------------------------
+diff --git a/src/devices/cpu/drcuml.cpp b/src/devices/cpu/drcuml.cpp
+index 0a1dcae9d02..e935913aceb 100644
+--- a/src/devices/cpu/drcuml.cpp
++++ b/src/devices/cpu/drcuml.cpp
+@@ -36,8 +36,10 @@
+ 
+ #include "emuopts.h"
+ #include "drcbec.h"
++#ifdef NATIVE_DRC
+ #include "drcbex86.h"
+ #include "drcbex64.h"
++#endif
+ 
+ #include <fstream>
+ 
+-- 
+2.26.2
+
