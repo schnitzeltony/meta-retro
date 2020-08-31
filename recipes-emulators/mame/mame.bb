@@ -6,12 +6,11 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=c9c1babc1ba9605e7b9d320d2d4f6be7"
 
 SRC_URI = " \
     git://github.com/mamedev/mame.git \
-    file://0001-Fix-non-x86-build-and-try-to-make-sure-it-does-not-b.patch \
     file://mame.desktop \
     file://mame32k.desktop \
 "
-PV = "0223"
-SRCREV = "c55a261d26d225c5c847c046f729290139b6546e"
+PV = "0224"
+SRCREV = "5892c78a15231c2aa5c2ddda497e91d4c8dbd22d"
 S = "${WORKDIR}/git"
 
 inherit siteinfo gtk-icon-cache
