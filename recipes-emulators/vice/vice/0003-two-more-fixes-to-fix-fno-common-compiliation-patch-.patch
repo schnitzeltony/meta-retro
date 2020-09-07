@@ -1,0 +1,46 @@
+From 1936dac13d3019ecb2fc07fb7b61106f5164cac4 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Mon, 7 Sep 2020 21:22:32 +0200
+Subject: [PATCH] two more fixes to fix -fno-common compiliation, patch #217
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Accepted[https://sourceforge.net/p/vice-emu/code/37527/]
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ src/c128/z80.c       | 3 ++-
+ src/rs232drv/rs232.h | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/c128/z80.c b/src/c128/z80.c
+index 3a7eba3..f53f55d 100644
+--- a/src/c128/z80.c
++++ b/src/c128/z80.c
+@@ -444,7 +444,8 @@ static const uint8_t SZP[256] = {
+ 
+ /* ------------------------------------------------------------------------- */
+ 
+-z80_regs_t z80_regs;
++/* This struct variable is exported by ../c64/cart/cpmcart.c */
++/* z80_regs_t z80_regs; */
+ 
+ static void import_registers(void)
+ {
+diff --git a/src/rs232drv/rs232.h b/src/rs232drv/rs232.h
+index 1c5e6ff..e21fbaf 100644
+--- a/src/rs232drv/rs232.h
++++ b/src/rs232drv/rs232.h
+@@ -78,7 +78,7 @@ extern int rs232_cmdline_options_init(void);
+ #define RS232_NUM_DEVICES 4
+ 
+ extern char *rs232_devfile[RS232_NUM_DEVICES];
+-int rs232_useip232[RS232_NUM_DEVICES];
++extern int rs232_useip232[RS232_NUM_DEVICES];
+ 
+ /* the "ip232" protocol used by tcpser 
+  
+-- 
+2.26.2
+

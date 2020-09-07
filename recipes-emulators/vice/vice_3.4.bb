@@ -9,6 +9,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=c93c0550bd3173f4504b2cbd8991e50b"
 SRC_URI = " \
     ${SOURCEFORGE_MIRROR}/vice-emu/${BPN}-${PV}.tar.gz \
     file://0001-fix-autoreconfig.patch \
+    file://0002-use-extern-for-the-declarations.patch \
+    file://0003-two-more-fixes-to-fix-fno-common-compiliation-patch-.patch \
     file://c64_16.png \
     file://c64_32.png \
     file://c64_48.png \
