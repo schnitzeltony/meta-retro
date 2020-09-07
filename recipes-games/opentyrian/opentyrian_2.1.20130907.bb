@@ -17,6 +17,7 @@ SRC_URI = " \
     file://0004-increase-buffer-size-to-avoid-gcc7-format-overflow-e.patch \
     file://0005-fix-build-with-gcc8.patch \
     file://0006-Fix-build-with-gcc-9.patch \
+    file://0007-Move-definitions-that-don-t-need-to-be-exposed-from-.patch \
 "
 SRC_URI[md5sum] = "978686c5a1dfbac69a2161aadf084c2b"
 SRC_URI[sha256sum] = "f54b6b3cedcefa187c9f605d6164aae29ec46a731a6df30d351af4c008dee45f"
