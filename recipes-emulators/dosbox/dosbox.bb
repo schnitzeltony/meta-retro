@@ -15,6 +15,7 @@ SRC_URI = " \
     file://0001-use-pkgconfig-to-find-sdl.patch \
 "
 SRC_URI[sha256sum] = "c0d13dd7ed2ed363b68de615475781e891cd582e8162b5c3669137502222260a"
+PV = "0.74-3"
 
 PACKAGECONFIG ??= "${@bb.utils.filter('DISTRO_FEATURES', 'opengl', d)}"
 PACKAGECONFIG[opengl] = "--enable-opengl,--disable-opengl,virtual/libgl libglu"
