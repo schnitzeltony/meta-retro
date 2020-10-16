@@ -14,13 +14,9 @@ SRC_URI = " \
     file://dosbox.png \
     file://0001-use-pkgconfig-to-find-sdl.patch \
 "
-SRC_URI[md5sum] = "7110ee24a45a2b4951ad52eb1a3722be"
-SRC_URI[sha256sum] = "7077303595bedd7cd0bb94227fa9a6b5609e7c90a3e6523af11bc4afcb0a57cf"
+SRC_URI[sha256sum] = "c0d13dd7ed2ed363b68de615475781e891cd582e8162b5c3669137502222260a"
 
-PACKAGECONFIG ??= " \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'opengl', '', d)} \
-"
-
+PACKAGECONFIG ??= "${@bb.utils.filter('DISTRO_FEATURES', 'opengl', d)}"
 PACKAGECONFIG[opengl] = "--enable-opengl,--disable-opengl,virtual/libgl libglu"
 
 do_install_append() {
