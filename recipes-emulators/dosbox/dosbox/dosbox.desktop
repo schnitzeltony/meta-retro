@@ -5,4 +5,4 @@ Exec=dosbox
 Icon=dosbox.png
 Terminal=false
 Type=Application
-Categories=System;Emulator;Game;
+Categories=Emulator;Game;
