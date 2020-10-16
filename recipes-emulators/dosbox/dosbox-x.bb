@@ -21,6 +21,7 @@ REQUIRED_DISTRO_FEATURES = "x11 opengl"
 SRC_URI = " \
     git://github.com/joncampbell123/dosbox-x.git \
     file://0001-use-pkgconfig-to-find-sdl2.patch \
+    file://dosbox-x.desktop \
 "
 SRCREV = "0f1435e18d06ac955f26211541a9556bac759ae2"
 PV = "0.83.6"
@@ -33,5 +34,10 @@ EXTRA_OECONF = " \
     --disable-sdl2test \
     --disable-alsatest \
 "
+
+do_install_append() {
+	install -d ${D}/${datadir}/applications
+	install -m 0644 ${WORKDIR}/*.desktop ${D}/${datadir}/applications
+}
 
 FILES_${PN} += "${datadir}/metainfo"
