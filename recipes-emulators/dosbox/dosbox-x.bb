@@ -21,6 +21,7 @@ REQUIRED_DISTRO_FEATURES = "x11 opengl"
 SRC_URI = " \
     git://github.com/joncampbell123/dosbox-x.git \
     file://0001-use-pkgconfig-to-find-sdl2.patch \
+    file://0002-Enable-unaligned-memory-based-on-recipe-s-suggestion.patch \
     file://dosbox-x.desktop \
 "
 SRCREV = "0f1435e18d06ac955f26211541a9556bac759ae2"
@@ -34,6 +35,11 @@ EXTRA_OECONF = " \
     --disable-sdl2test \
     --disable-alsatest \
 "
+
+# configure's cpu detection does not match here so set what was intended
+EXTRA_OECONF_append_armv4 = " --disable-unaligned-memory"
+EXTRA_OECONF_append_armv5 = " --disable-unaligned-memory"
+EXTRA_OECONF_append_armv6 = " --disable-unaligned-memory"
 
 do_install_append() {
 	install -d ${D}/${datadir}/applications
