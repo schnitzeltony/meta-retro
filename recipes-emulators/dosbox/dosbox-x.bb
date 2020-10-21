@@ -22,6 +22,7 @@ SRC_URI = " \
     git://github.com/joncampbell123/dosbox-x.git \
     file://0001-use-pkgconfig-to-find-sdl2.patch \
     file://0002-Enable-unaligned-memory-based-on-recipe-s-suggestion.patch \
+    file://0003-menu-Fix-segfaults-during-menu-creation-in-some-envi.patch \
     file://dosbox-x.desktop \
 "
 SRCREV = "0f1435e18d06ac955f26211541a9556bac759ae2"
