@@ -1,0 +1,31 @@
+From 60cc0473ef7f17a5f3f43be238f37a7db786a7c3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Sat, 24 Oct 2020 00:34:59 +0200
+Subject: [PATCH] Treat all arm hosts as armv7 le
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropriate [dirty hack]
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 8841e6c4d..6277f96c2 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -489,7 +489,7 @@ case "$host_cpu" in
+     c_targetcpu="m68k"
+     c_unalignedmemory=yes
+     ;;
+-   armv7l)
++   arm)
+     AC_DEFINE(C_TARGETCPU,ARMV7LE)
+     AC_MSG_RESULT(ARMv7 Little Endian)
+     c_targetcpu="arm"
+-- 
+2.26.2
+

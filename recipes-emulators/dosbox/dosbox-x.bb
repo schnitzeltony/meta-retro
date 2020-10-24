@@ -23,6 +23,7 @@ SRC_URI = " \
     file://0001-use-pkgconfig-to-find-sdl2.patch \
     file://0002-Enable-unaligned-memory-based-on-recipe-s-suggestion.patch \
     file://0003-menu-Fix-segfaults-during-menu-creation-in-some-envi.patch \
+    file://0004-Treat-all-arm-hosts-as-armv7.patch \
     file://dosbox-x.desktop \
 "
 SRCREV = "0f1435e18d06ac955f26211541a9556bac759ae2"
@@ -37,10 +38,10 @@ EXTRA_OECONF = " \
     --disable-alsatest \
 "
 
-# configure's cpu detection does not match here so set what was intended
-EXTRA_OECONF_append_armv4 = " --disable-unaligned-memory"
-EXTRA_OECONF_append_armv5 = " --disable-unaligned-memory"
-EXTRA_OECONF_append_armv6 = " --disable-unaligned-memory"
+# sorry - but it does not make sense
+COMPATIBLE_HOST_armv4 = 'null'
+COMPATIBLE_HOST_armv5 = 'null'
+COMPATIBLE_HOST_armv6 = 'null'
 
 do_install_append() {
 	install -d ${D}/${datadir}/applications
