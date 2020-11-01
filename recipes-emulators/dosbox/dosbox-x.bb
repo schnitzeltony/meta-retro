@@ -22,12 +22,11 @@ SRC_URI = " \
     git://github.com/joncampbell123/dosbox-x.git \
     file://0001-use-pkgconfig-to-find-sdl2.patch \
     file://0002-Enable-unaligned-memory-based-on-recipe-s-suggestion.patch \
-    file://0003-menu-Fix-segfaults-during-menu-creation-in-some-envi.patch \
-    file://0004-Treat-all-arm-hosts-as-armv7.patch \
+    file://0003-Treat-all-arm-hosts-as-armv7.patch \
     file://dosbox-x.desktop \
 "
-SRCREV = "0f1435e18d06ac955f26211541a9556bac759ae2"
-PV = "0.83.6"
+SRCREV = "223701a170c2a37a02bccd153147a4344e4bfa41"
+PV = "0.83.7"
 S = "${WORKDIR}/git"
 
 EXTRA_OECONF = " \
