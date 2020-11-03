@@ -23,7 +23,6 @@ SRC_URI = " \
     file://0001-use-pkgconfig-to-find-sdl2.patch \
     file://0002-Enable-unaligned-memory-based-on-recipe-s-suggestion.patch \
     file://0003-Treat-all-arm-hosts-as-armv7.patch \
-    file://dosbox-x.desktop \
 "
 SRCREV = "223701a170c2a37a02bccd153147a4344e4bfa41"
 PV = "0.83.7"
@@ -41,10 +40,5 @@ EXTRA_OECONF = " \
 COMPATIBLE_HOST_armv4 = 'null'
 COMPATIBLE_HOST_armv5 = 'null'
 COMPATIBLE_HOST_armv6 = 'null'
-
-do_install_append() {
-	install -d ${D}/${datadir}/applications
-	install -m 0644 ${WORKDIR}/*.desktop ${D}/${datadir}/applications
-}
 
 FILES_${PN} += "${datadir}/metainfo"

@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=DOSBox-X
-Comment=An x86/DOS emulator capable of running DOS based Windows
-Exec=dosbox-x
-Icon=dosbox-x
-Terminal=false
-Type=Application
-Categories=Emulator;Game;
