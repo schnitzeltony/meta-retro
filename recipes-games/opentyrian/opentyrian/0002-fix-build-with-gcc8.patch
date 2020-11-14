@@ -53,21 +53,6 @@ diff --git a/src/tyrian2.c b/src/tyrian2.c
 index 4d528cf..411d8b6 100644
 --- a/src/tyrian2.c
 +++ b/src/tyrian2.c
-@@ -2088,12 +2088,12 @@ draw_player_shot_loop_end:
- 	if (debug)
- 	{
- 		strcpy(tempStr, "");
--		for (temp = 0; temp < 9; temp++)
-+		/*for (temp = 0; temp < 9; temp++)
- 		{
- 			sprintf(tempStr, "%s%c", tempStr,  smoothies[temp] + 48);
- 		}
- 		sprintf(buffer, "SM = %s", tempStr);
--		JE_outText(VGAScreen, 30, 70, buffer, 4, 0);
-+		JE_outText(VGAScreen, 30, 70, buffer, 4, 0);*/
- 
- 		sprintf(buffer, "Memory left = %d", -1);
- 		JE_outText(VGAScreen, 30, 80, buffer, 4, 0);
 @@ -2608,7 +2608,7 @@ new_game:
  							read_encrypted_pascal_string(s, sizeof(s), ep_f);
  
