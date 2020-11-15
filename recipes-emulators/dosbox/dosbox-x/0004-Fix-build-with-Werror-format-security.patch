@@ -1,0 +1,74 @@
+From 2a09f33089f5a957547c6b882fd78bb00c4373f5 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Sun, 15 Nov 2020 20:44:48 +0100
+Subject: [PATCH] Fix build with -Werror=format-security
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Some build environmaents harden their security flags. For
+-Werror=format-security build failed with:
+
+| midi_synth.h: In function 'void synth_log(int, char*, void*)':
+| midi_synth.h:48:33: error: format not a string literal and no format arguments [-Werror=format-security]
+|    48 |   LOG(LOG_ALL,LOG_ERROR)(message);
+|       |                                 ^
+| midi_synth.h:52:32: error: format not a string literal and no format arguments [-Werror=format-security]
+|    52 |   LOG(LOG_ALL,LOG_WARN)(message);
+|       |                                ^
+| midi_synth.h:56:34: error: format not a string literal and no format arguments [-Werror=format-security]
+|    56 |   LOG(LOG_ALL,LOG_NORMAL)(message);
+|       |                                  ^
+
+and
+
+| sdlmain.cpp: In function 'int main(int, char**)':
+| sdlmain.cpp:9696:207: error: format not a string literal and no format arguments [-Werror=format-security]
+
+Upstream-Status: Submitted[https://github.com/joncampbell123/dosbox-x/pull/2000]
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ src/gui/midi_synth.h | 6 +++---
+ src/gui/sdlmain.cpp  | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/gui/midi_synth.h b/src/gui/midi_synth.h
+index 592b041d9..aa9cf9ebe 100644
+--- a/src/gui/midi_synth.h
++++ b/src/gui/midi_synth.h
+@@ -45,15 +45,15 @@ static void synth_log(int level,
+ 	switch (level) {
+ 	case FLUID_PANIC:
+ 	case FLUID_ERR:
+-		LOG(LOG_ALL,LOG_ERROR)(message);
++		LOG(LOG_ALL,LOG_ERROR)("%s", message);
+ 		break;
+ 
+ 	case FLUID_WARN:
+-		LOG(LOG_ALL,LOG_WARN)(message);
++		LOG(LOG_ALL,LOG_WARN)("%s", message);
+ 		break;
+ 
+ 	default:
+-		LOG(LOG_ALL,LOG_NORMAL)(message);
++		LOG(LOG_ALL,LOG_NORMAL)("%s", message);
+ 		break;
+ 	}
+ }
+diff --git a/src/gui/sdlmain.cpp b/src/gui/sdlmain.cpp
+index 00a31c74a..af8fa51d1 100644
+--- a/src/gui/sdlmain.cpp
++++ b/src/gui/sdlmain.cpp
+@@ -10472,7 +10472,7 @@ int main(int argc, char* argv[]) SDL_MAIN_NOEXCEPT {
+                 ""
+ #endif
+         " %s)",VERSION,SDL_STRING);
+-        LOG(LOG_MISC,LOG_NORMAL)(("Copyright 2011-"+std::string(COPYRIGHT_END_YEAR)+" The DOSBox-X Team. Project maintainer: joncampbell123 (The Great Codeholio). DOSBox-X published under GNU GPL.").c_str());
++        LOG(LOG_MISC,LOG_NORMAL)(("Copyright 2011-%s The DOSBox-X Team. Project maintainer: joncampbell123 (The Great Codeholio). DOSBox-X published under GNU GPL."),std::string(COPYRIGHT_END_YEAR).c_str());
+ 
+ #if defined(MACOSX)
+         LOG_MSG("macOS EXE path: %s",MacOSXEXEPath.c_str());
+-- 
+2.26.2
+
