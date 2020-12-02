@@ -25,8 +25,8 @@ SRC_URI = " \
     file://0003-Treat-all-arm-hosts-as-armv7.patch \
     file://0004-Fix-build-with-Werror-format-security.patch \
 "
-SRCREV = "223701a170c2a37a02bccd153147a4344e4bfa41"
-PV = "0.83.7"
+SRCREV = "9e9d7acd934862208f20479cc8069404fa06fa03"
+PV = "0.83.8"
 S = "${WORKDIR}/git"
 
 EXTRA_OECONF = " \

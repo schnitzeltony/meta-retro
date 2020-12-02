@@ -1,6 +1,6 @@
-From 2a09f33089f5a957547c6b882fd78bb00c4373f5 Mon Sep 17 00:00:00 2001
+From 9c1073e47399943c30d86aa16f02de0baa7a7fc8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
-Date: Sun, 15 Nov 2020 20:44:48 +0100
+Date: Thu, 3 Dec 2020 00:07:45 +0100
 Subject: [PATCH] Fix build with -Werror=format-security
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -8,67 +8,43 @@ Content-Transfer-Encoding: 8bit
 
 Some build environmaents harden their security flags. For
 -Werror=format-security build failed with:
+| ne2000.cpp: In constructor 'NE2K::NE2K(Section*)':
+| ne2000.cpp:1606:27: error: format not a string literal and no format arguments [-Werror=format-security]
+|  1606 |    LOG_MSG(niclist.c_str());
+|       |                           ^
+| ne2000.cpp:1624:37: error: format not a string literal and no format arguments [-Werror=format-security]
+|  1624 |                 LOG_MSG(line.c_str());
+|       |                                     ^
 
-| midi_synth.h: In function 'void synth_log(int, char*, void*)':
-| midi_synth.h:48:33: error: format not a string literal and no format arguments [-Werror=format-security]
-|    48 |   LOG(LOG_ALL,LOG_ERROR)(message);
-|       |                                 ^
-| midi_synth.h:52:32: error: format not a string literal and no format arguments [-Werror=format-security]
-|    52 |   LOG(LOG_ALL,LOG_WARN)(message);
-|       |                                ^
-| midi_synth.h:56:34: error: format not a string literal and no format arguments [-Werror=format-security]
-|    56 |   LOG(LOG_ALL,LOG_NORMAL)(message);
-|       |                                  ^
-
-and
-
-| sdlmain.cpp: In function 'int main(int, char**)':
-| sdlmain.cpp:9696:207: error: format not a string literal and no format arguments [-Werror=format-security]
-
-Upstream-Status: Submitted[https://github.com/joncampbell123/dosbox-x/pull/2000]
+Upstream-Status: Submitted[https://github.com/joncampbell123/dosbox-x/pull/2053]
 
 Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
 ---
- src/gui/midi_synth.h | 6 +++---
- src/gui/sdlmain.cpp  | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ src/hardware/ne2000.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/src/gui/midi_synth.h b/src/gui/midi_synth.h
-index 592b041d9..aa9cf9ebe 100644
---- a/src/gui/midi_synth.h
-+++ b/src/gui/midi_synth.h
-@@ -45,15 +45,15 @@ static void synth_log(int level,
- 	switch (level) {
- 	case FLUID_PANIC:
- 	case FLUID_ERR:
--		LOG(LOG_ALL,LOG_ERROR)(message);
-+		LOG(LOG_ALL,LOG_ERROR)("%s", message);
- 		break;
- 
- 	case FLUID_WARN:
--		LOG(LOG_ALL,LOG_WARN)(message);
-+		LOG(LOG_ALL,LOG_WARN)("%s", message);
- 		break;
- 
- 	default:
--		LOG(LOG_ALL,LOG_NORMAL)(message);
-+		LOG(LOG_ALL,LOG_NORMAL)("%s", message);
- 		break;
- 	}
- }
-diff --git a/src/gui/sdlmain.cpp b/src/gui/sdlmain.cpp
-index 00a31c74a..af8fa51d1 100644
---- a/src/gui/sdlmain.cpp
-+++ b/src/gui/sdlmain.cpp
-@@ -10472,7 +10472,7 @@ int main(int argc, char* argv[]) SDL_MAIN_NOEXCEPT {
-                 ""
+diff --git a/src/hardware/ne2000.cpp b/src/hardware/ne2000.cpp
+index 9a4cc9c9f..741c60f54 100644
+--- a/src/hardware/ne2000.cpp
++++ b/src/hardware/ne2000.cpp
+@@ -1603,7 +1603,7 @@ public:
  #endif
-         " %s)",VERSION,SDL_STRING);
--        LOG(LOG_MISC,LOG_NORMAL)(("Copyright 2011-"+std::string(COPYRIGHT_END_YEAR)+" The DOSBox-X Team. Project maintainer: joncampbell123 (The Great Codeholio). DOSBox-X published under GNU GPL.").c_str());
-+        LOG(LOG_MISC,LOG_NORMAL)(("Copyright 2011-%s The DOSBox-X Team. Project maintainer: joncampbell123 (The Great Codeholio). DOSBox-X published under GNU GPL."),std::string(COPYRIGHT_END_YEAR).c_str());
- 
- #if defined(MACOSX)
-         LOG_MSG("macOS EXE path: %s",MacOSXEXEPath.c_str());
+  		{
+             niclist = "Cannot enumerate network interfaces: "+std::string(errbuf);
+-			LOG_MSG(niclist.c_str());
++			LOG_MSG("%s", niclist.c_str());
+ 			load_success = false;
+ 			return;
+ 		}
+@@ -1621,7 +1621,7 @@ public:
+ 			// print list and quit
+             std::istringstream in(("\n"+niclist+"\n").c_str());
+             if (in)	for (std::string line; std::getline(in, line); )
+-                LOG_MSG(line.c_str());
++                LOG_MSG("%s", line.c_str());
+ 			pcap_freealldevs(alldevs);
+ 			load_success = false;
+ 			return;
 -- 
 2.26.2
 
