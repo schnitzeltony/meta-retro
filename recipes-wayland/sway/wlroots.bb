@@ -19,7 +19,11 @@ DEPENDS = " \
 
 inherit meson features_check
 
-REQUIRED_DISTRO_FEATURES = "wayland"
+REQUIRED_DISTRO_FEATURES = "wayland opengl"
+
+PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES','x11','xwayland x11-backend','',d)}"
+PACKAGECONFIG[xwayland] = "-Dxwayland=enabled,-Dxwayland=disabled,xserver-xorg,xserver-xorg-xwayland"
+PACKAGECONFIG[x11-backend] = "-Dx11-backend=enabled,-Dx11-backend=disabled,xserver-xorg"
 
 SRC_URI = " \
     git://github.com/swaywm/${BPN}.git \
