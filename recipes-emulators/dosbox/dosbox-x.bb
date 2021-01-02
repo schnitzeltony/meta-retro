@@ -23,6 +23,7 @@ SRC_URI = " \
     file://0001-use-pkgconfig-to-find-sdl2.patch \
     file://0002-Enable-unaligned-memory-based-on-recipe-s-suggestion.patch \
     file://0003-Treat-all-arm-hosts-as-armv7.patch \
+    file://0004-Fix-build-with-Werror-format-security.patch \
 "
 SRCREV = "d9f66b9635b062aaed0a704c7c6a600e0a7e7930"
 PV = "0.83.9"
