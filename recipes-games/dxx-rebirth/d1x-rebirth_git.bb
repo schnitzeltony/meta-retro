@@ -20,9 +20,9 @@ SRC_URI = " \
     http://www.dxx-rebirth.com/download/dxx/content/descent-mac-demo.zip;name=data \
     http://www.descent2.de/files/sound/hires-sounds.7z;name=sound \
     http://www.dxx-rebirth.com/download/dxx/res/d1xr-sc55-music.dxa;name=music;unpack=0 \
-    file://0001-clipper.cpp-Fix-build-with-gcc10.patch \
+    file://0001-Hack-build-with-gcc11.patch \
 "
-SRCREV = "6212b914cb2dfb78e1fc4dcbc574b9b1d329783b"
+SRCREV = "48589d0fb019eb971818c15665358e30fa778dc4"
 PV = "v0.59+git${SRCPV}"
 S = "${WORKDIR}/git"
 
@@ -36,7 +36,7 @@ SRC_URI[music.sha256sum] = "b27f7b9dc5f9c2744402c56c9499dfd9503c17e73a2a5223e745
 do_unpack[depends] += "p7zip-native:do_populate_sysroot"
 
 do_compile() {
-    scons opengl=0 prefix=${D}${prefix} sharepath=${datadir}/${BPN}
+    scons ${PARALLEL_MAKE} opengl=0 prefix=${D}${prefix} sharepath=${datadir}/${BPN}
 }
 
 do_install() {

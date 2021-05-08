@@ -1,0 +1,37 @@
+From a9bdc7d166851eb032af187b5873f2e74b6deaaa Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Sat, 8 May 2021 16:23:08 +0200
+Subject: [PATCH] Hack build with gcc11
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+| common/2d/canvas.cpp:58:19: error: '<unknown>' may be used uninitialized [-Werror=maybe-uninitialized]
+|    58 |     gr_init_bitmap(canv.cv_bitmap, pixtype, 0, 0, w, h, wreal, pixdata);
+|       |     ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Upstream-Status: Pending
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ common/2d/canvas.cpp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/common/2d/canvas.cpp b/common/2d/canvas.cpp
+index b32b31902..c47aa3ce1 100644
+--- a/common/2d/canvas.cpp
++++ b/common/2d/canvas.cpp
+@@ -55,7 +55,10 @@ void gr_init_canvas(grs_canvas &canv, unsigned char *const pixdata, const bm_mod
+ 	canv.cv_font_fg_color = 0;
+ 	canv.cv_font_bg_color = 0;
+ 	auto wreal = w;
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+ 	gr_init_bitmap(canv.cv_bitmap, pixtype, 0, 0, w, h, wreal, pixdata);
++#pragma GCC diagnostic pop	
+ }
+ 
+ void gr_init_sub_canvas(grs_canvas &n, grs_canvas &src, uint16_t x, uint16_t y, uint16_t w, uint16_t h)
+-- 
+2.30.2
+
