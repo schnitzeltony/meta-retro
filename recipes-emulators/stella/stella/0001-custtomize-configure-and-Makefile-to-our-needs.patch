@@ -15,10 +15,10 @@ Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
  1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/configure b/configure
-index 4fb2cf0..37f502e 100755
+index df91054..81690b2 100755
 --- a/configure
 +++ b/configure
-@@ -331,6 +331,7 @@ mingw32-cross)
+@@ -323,6 +323,7 @@ mingw32-cross)
  	_host_cpu=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\1/'`
  	_host_os=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
  	_host_vendor=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\2/'`
@@ -26,7 +26,7 @@ index 4fb2cf0..37f502e 100755
  	;;
  esac
  
-@@ -557,8 +558,9 @@ if test -n "$_host"; then
+@@ -549,8 +550,9 @@ if test -n "$_host"; then
  			_host_os=unix
  			;;
  		*)
@@ -38,7 +38,7 @@ index 4fb2cf0..37f502e 100755
  			;;
  	esac
  
-@@ -802,7 +804,7 @@ fi
+@@ -762,7 +764,7 @@ fi
  # Now, add the appropriate defines/libraries/headers
  #
  echo
@@ -47,16 +47,16 @@ index 4fb2cf0..37f502e 100755
  
  SRC="src"
  CORE="$SRC/emucore"
-@@ -821,7 +823,7 @@ SQLITE="$SRC/common/repository/sqlite"
+@@ -783,7 +785,7 @@ JSON="$SRC/json"
  
- INCLUDES="-I$CORE -I$COMMON -I$TV -I$TIA -I$TIA_FRAME_MANAGER"
+ INCLUDES="-I$CORE -I$COMMON -I$TV -I$TIA -I$TIA_FRAME_MANAGER -I$JSON -I$SQLITE_REPO -I$SQLITE_LIB"
  
 -INCLUDES="$INCLUDES `$_sdlconfig --cflags`"
 +INCLUDES="$INCLUDES `pkg-config --cflags sdl2`"
  if test "$_build_static" = yes ; then
  	_sdl_conf_libs="--static-libs"
  	LDFLAGS="-static $LDFLAGS"
-@@ -829,7 +831,7 @@ else
+@@ -791,7 +793,7 @@ else
  	_sdl_conf_libs="--libs"
  fi
  
