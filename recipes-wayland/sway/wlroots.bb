@@ -13,6 +13,7 @@ DEPENDS = " \
     virtual/libgbm \
     libinput \
     libxkbcommon \
+    xcb-util-renderutil \
     udev \
     pixman \
 "
@@ -26,9 +27,9 @@ PACKAGECONFIG[xwayland] = "-Dxwayland=enabled,-Dxwayland=disabled,xserver-xorg,x
 PACKAGECONFIG[x11-backend] = "-Dx11-backend=enabled,-Dx11-backend=disabled,xserver-xorg"
 
 SRC_URI = " \
-    git://github.com/swaywm/${BPN}.git \
+    git://github.com/swaywm/${BPN}.git;branch=0.14 \
     file://0001-Adjust-meson.build-to-meson-0.54.patch \
 "
-SRCREV = "238d1c078fb03338e9f271d98f7bf6b1fc399285"
-PV = "0.12.0"
+SRCREV = "49a574420138646845fb664862db03982cfd9f5b"
+PV = "0.14.1"
 S = "${WORKDIR}/git"

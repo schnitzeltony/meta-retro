@@ -1,6 +1,6 @@
 From df8a70b2db61a395bb424d4f4942434544e3ef43 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
-Date: Tue, 8 Dec 2020 01:57:15 +0100
+Date: Wed, 28 Jul 2021 15:21:28 +0200
 Subject: [PATCH] Adjust meson.build to meson < 0.54
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -13,31 +13,30 @@ Upstream-Status: Inappropriate[Configuration]
 
 Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
 ---
- meson.build | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ meson.build | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/meson.build b/meson.build
-index 835e0195..b07760ab 100644
+index d8078212..9494b9ca 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -3,7 +3,7 @@ project(
  	'c',
- 	version: '0.12.0',
+ 	version: '0.14.1',
  	license: 'MIT',
--	meson_version: '>=0.54.0',
+-	meson_version: '>=0.56.0',
 +	meson_version: '>=0.53.2',
  	default_options: [
  		'c_std=c11',
  		'warning_level=2',
-@@ -172,8 +172,6 @@ wlroots = declare_dependency(
- 	include_directories: wlr_inc,
+@@ -164,7 +164,6 @@ wlroots = declare_dependency(
+ 	variables: wlr_vars,
  )
  
 -meson.override_dependency('wlroots', wlroots)
--
- summary({
- 	'systemd': conf_data.get('WLR_HAS_SYSTEMD', 0),
- 	'elogind': conf_data.get('WLR_HAS_ELOGIND', 0),
+ 
+ summary(features + internal_features, bool_yn: true)
+ 
 -- 
-2.26.2
+2.31.1
 
