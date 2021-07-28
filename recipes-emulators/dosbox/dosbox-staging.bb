@@ -35,6 +35,12 @@ EXTRA_OEMESON = " \
     ${DYNCORE} \
 "
 
+do_install_append() {
+    # avoid clashes
+    mv ${D}${bindir}/dosbox ${D}${bindir}/dosbox-staging
+    sed -i 's:Exec=dosbox:Exec=dosbox-staging:g' ${D}${datadir}/applications/dosbox-staging.desktop
+}
+
 # sorry - but it does not make sense
 COMPATIBLE_HOST_armv4 = 'null'
 COMPATIBLE_HOST_armv5 = 'null'
