@@ -9,8 +9,8 @@ SRC_URI = " \
     file://mame.desktop \
     file://mame32k.desktop \
 "
-PV = "0233"
-SRCREV = "05d0cf61e7f929d1b3b5582b500648c4253dac60"
+PV = "0234"
+SRCREV = "2633c19a68fbe5c3c47750b4ac83992545e7e733"
 S = "${WORKDIR}/git"
 
 inherit siteinfo gtk-icon-cache
