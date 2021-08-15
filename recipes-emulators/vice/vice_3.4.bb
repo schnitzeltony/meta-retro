@@ -58,18 +58,18 @@ EXTRA_OECONF = " \
     --enable-x64 \
 "
 
-EXTRA_OECONF_remove = " \
+EXTRA_OECONF:remove = " \
     --disable-static \
 "
 
-CONFIGUREOPTS_remove = " \
+CONFIGUREOPTS:remove = " \
     --disable-silent-rules \
     ${@append_libtool_sysroot(d)} \
 "
 
 export ar_check="no"
 
-do_install_append() {
+do_install:append() {
     install -d ${D}/${datadir}/applications
     install -m 0644 ${WORKDIR}/vice_64*.desktop ${D}/${datadir}/applications
 
@@ -79,7 +79,7 @@ do_install_append() {
     done
 }
 
-RDEPENDS_${PN} += "hicolor-icon-theme"
+RDEPENDS:${PN} += "hicolor-icon-theme"
 
-RREPLACES_${PN} += "vice-3.2"
-RCONFLICTS_${PN} += "vice-3.2"
+RREPLACES:${PN} += "vice-3.2"
+RCONFLICTS:${PN} += "vice-3.2"

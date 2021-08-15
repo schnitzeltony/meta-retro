@@ -45,4 +45,4 @@ do_install() {
     find ${D}${datadir}/games/tyrian -name '*.tfp' -exec rm -f {} \; 
 }
 
-FILES_${PN} += "${datadir}/games"
+FILES:${PN} += "${datadir}/games"

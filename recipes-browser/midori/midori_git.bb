@@ -39,11 +39,11 @@ EXTRA_OECMAKE = " \
     -DCMAKE_INSTALL_SYSCONFDIR=/etc \
 "
 
-do_configure_prepend() {
+do_configure:prepend() {
     export VALAC=${STAGING_BINDIR_NATIVE}/valac
 }
 
-RRECOMMENDS_${PN} += " \
+RRECOMMENDS:${PN} += " \
     glib-networking ca-certificates \
     adwaita-icon-theme \
 "
@@ -52,10 +52,10 @@ RRECOMMENDS_${PN} += " \
 # which plugins are # really necessary so use gstreamer1.0-plugins-*-meta.
 # These are necessary to make video streaming work - see [1]
 # [1] https://github.com/midori-browser/core/issues/329
-RRECOMMENDS_${PN} += " \
+RRECOMMENDS:${PN} += " \
     gstreamer1.0-plugins-base-meta \
     gstreamer1.0-plugins-good-meta \
     gstreamer1.0-libav \
 "
 
-FILES_${PN} += "${datadir}/metainfo"
+FILES:${PN} += "${datadir}/metainfo"

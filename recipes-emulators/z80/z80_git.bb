@@ -46,4 +46,4 @@ do_install() {
 	install -m 0644 ${WORKDIR}/*.desktop ${D}/${datadir}/applications
 }
 
-FILES_${PN} += "${datadir}/cgenie ${datadir}/trs80"
+FILES:${PN} += "${datadir}/cgenie ${datadir}/trs80"

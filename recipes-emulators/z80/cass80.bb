@@ -12,7 +12,7 @@ inherit qmake5
 
 DEPENDS = "qtbase"
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${bindir}
     mv ${D}/opt/cass80/bin/cass80 ${D}${bindir}
     rm -r ${D}/opt

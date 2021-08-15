@@ -20,7 +20,7 @@ PV = "0.74-3"
 PACKAGECONFIG ??= "${@bb.utils.filter('DISTRO_FEATURES', 'opengl', d)}"
 PACKAGECONFIG[opengl] = "--enable-opengl,--disable-opengl,virtual/libgl libglu"
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}/${datadir}/applications
 	install -m 0644 ${WORKDIR}/*.desktop ${D}/${datadir}/applications
 

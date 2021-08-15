@@ -17,7 +17,7 @@ SRCREV = "2655445b7a82643568bd58192185b25a864e5380"
 PV = "3.5.10"
 S = "${WORKDIR}/git"
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${datadir}/applications
     install ${WORKDIR}/${BPN}.desktop ${D}${datadir}/applications
 

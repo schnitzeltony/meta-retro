@@ -53,4 +53,4 @@ do_install() {
     install ${WORKDIR}/descent.hog ${WORKDIR}/descent.pig ${WORKDIR}/d1xr-sc55-music.dxa ${D}${datadir}/${BPN}
 }
 
-RRECOMMENDS_${PN} = "tremor"
+RRECOMMENDS:${PN} = "tremor"

@@ -36,8 +36,8 @@ EXTRA_OECONF = " \
 "
 
 # sorry - but it does not make sense
-COMPATIBLE_HOST_armv4 = 'null'
-COMPATIBLE_HOST_armv5 = 'null'
-COMPATIBLE_HOST_armv6 = 'null'
+COMPATIBLE_HOST:armv4 = 'null'
+COMPATIBLE_HOST:armv5 = 'null'
+COMPATIBLE_HOST:armv6 = 'null'
 
-FILES_${PN} += "${datadir}/metainfo"
+FILES:${PN} += "${datadir}/metainfo"
