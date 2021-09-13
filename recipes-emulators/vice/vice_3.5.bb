@@ -9,8 +9,6 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=c93c0550bd3173f4504b2cbd8991e50b"
 SRC_URI = " \
     ${SOURCEFORGE_MIRROR}/vice-emu/${BPN}-${PV}.tar.gz \
     file://0001-fix-autoreconfig.patch \
-    file://0002-use-extern-for-the-declarations.patch \
-    file://0003-two-more-fixes-to-fix-fno-common-compiliation-patch-.patch \
     file://c64_16.png \
     file://c64_32.png \
     file://c64_48.png \
@@ -18,8 +16,7 @@ SRC_URI = " \
     file://vice_64dtv.desktop \
     file://vice_64sc.desktop \
 "
-SRC_URI[md5sum] = "24d83f692910f5d87de19857e8095f0b"
-SRC_URI[sha256sum] = "4bd00c1c63d38cd1fe01b90032834b52f774bc29e4b67eeb1e525b14fee07aeb"
+SRC_URI[sha256sum] = "56b978faaeb8b2896032bd604d03c3501002187eef1ca58ceced40f11a65dc0e"
 
 inherit autotools pkgconfig gtk-icon-cache features_check
 
@@ -30,6 +27,7 @@ DEPENDS = " \
     bdftopcf-native \
     mkfontdir-native \
     mkfontscale-native \
+    dos2unix-native \
     xa-native \
     bison-native \
     glew \
@@ -54,6 +52,7 @@ EXTRA_OECONF = " \
     --enable-parsid \
     --enable-native-gtk3ui \
     --without-oss \
+    --disable-pdf-docs \
     --libdir=${libdir} \
     --enable-x64 \
 "
