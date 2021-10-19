@@ -15,6 +15,7 @@ DEPENDS = " \
     libxkbcommon \
     udev \
     pixman \
+    seatd \
 "
 
 inherit meson pkgconfig features_check
@@ -22,13 +23,10 @@ inherit meson pkgconfig features_check
 REQUIRED_DISTRO_FEATURES = "wayland opengl"
 
 PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES','x11','xwayland x11-backend','',d)}"
-PACKAGECONFIG[xwayland] = "-Dxwayland=enabled,-Dxwayland=disabled,xserver-xorg,xwayland"
-PACKAGECONFIG[x11-backend] = "-Dx11-backend=enabled,-Dx11-backend=disabled,xserver-xorg"
+PACKAGECONFIG[xwayland] = "-Dxwayland=enabled,-Dxwayland=disabled,virtual/libx11 xwayland xcb-util-wm"
+PACKAGECONFIG[x11-backend] = "-Dx11-backend=enabled,-Dx11-backend=disabled,virtual/libx11 xcb-util-renderutil"
 
-SRC_URI = " \
-    git://github.com/swaywm/${BPN}.git \
-    file://0001-Adjust-meson.build-to-meson-0.54.patch \
-"
-SRCREV = "238d1c078fb03338e9f271d98f7bf6b1fc399285"
-PV = "0.12.0"
+SRC_URI = "git://github.com/swaywm/${BPN}.git;branch=0.14"
+SRCREV = "49a574420138646845fb664862db03982cfd9f5b"
+PV = "0.14.1"
 S = "${WORKDIR}/git"
