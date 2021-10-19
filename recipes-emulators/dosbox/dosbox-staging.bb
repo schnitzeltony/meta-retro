@@ -16,7 +16,7 @@ DEPENDS = " \
     munt \
 "
 
-inherit meson gtk-icon-cache features_check
+inherit meson pkgconfig gtk-icon-cache features_check
 
 REQUIRED_DISTRO_FEATURES = "x11 opengl"
 
