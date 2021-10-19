@@ -13,7 +13,7 @@ PV = "0236"
 SRCREV = "5e865af540563eeda57bc159723908a169c57d28"
 S = "${WORKDIR}/git"
 
-inherit siteinfo gtk-icon-cache
+inherit pkgconfig siteinfo gtk-icon-cache
 
 DEPENDS = " \
     libsdl2 \
