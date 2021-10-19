@@ -5,7 +5,7 @@ SECTION = "emulators"
 LICENSE = "GPLv2" 
 LIC_FILES_CHKSUM = "file://License.txt;md5=878e3965c7b52d85827c75f5a2f3b314" 
 
-inherit autotools-brokensep gtk-icon-cache
+inherit autotools-brokensep pkgconfig gtk-icon-cache
 
 DEPENDS += "libsdl2 zlib libpng"
 
