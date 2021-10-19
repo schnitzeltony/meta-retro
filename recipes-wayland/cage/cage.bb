@@ -17,8 +17,8 @@ inherit meson pkgconfig features_check
 REQUIRED_DISTRO_FEATURES = "wayland"
 
 SRC_URI = "git://github.com/Hjdskes/${BPN}.git"
-SRCREV = "d09739373288adef901cdd58c983c0d02302932c"
-PV = "0.1.2.1"
+SRCREV = "646b3e80b45a011676eb4190652b8c506d56e7a4"
+PV = "0.1.4"
 S = "${WORKDIR}/git"
 
 PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES','x11','xwayland','',d)}"
