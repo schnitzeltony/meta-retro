@@ -4,7 +4,7 @@ SECTION = "games"
 LICENSE = "DXX-Rebirth"
 LIC_FILES_CHKSUM = "file://COPYING.txt;md5=7077769a51d612f2edcc6abd1e5dfa6d"
 
-inherit python3native
+inherit python3native pkgconfig
 
 DEPENDS = " \
     python3-scons-native \
