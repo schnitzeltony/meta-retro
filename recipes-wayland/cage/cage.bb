@@ -12,7 +12,7 @@ DEPENDS = " \
     libxkbcommon \
 "
 
-inherit meson features_check
+inherit meson pkgconfig features_check
 
 REQUIRED_DISTRO_FEATURES = "wayland"
 
