@@ -26,7 +26,6 @@ DEPENDS = " \
     flac \
     jpeg \
     glm \
-    lua lua-native \
     sqlite3 \
     portaudio-v19 \
     rapidjson \
@@ -68,7 +67,6 @@ EXTRA_OEMAKE = " \
     USE_SYSTEM_LIB_FLAC=1 \
     USE_SYSTEM_LIB_JPEG=1 \
     USE_SYSTEM_LIB_GLM=1 \
-    USE_SYSTEM_LIB_LUA=1 \
     USE_SYSTEM_LIB_PORTAUDIO=1 \
     USE_SYSTEM_LIB_SQLITE3=1 \
     USE_SYSTEM_LIB_ZLIB=1 \
