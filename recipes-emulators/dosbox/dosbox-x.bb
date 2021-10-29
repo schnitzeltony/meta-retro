@@ -24,7 +24,7 @@ SRC_URI = " \
     file://0002-Enable-unaligned-memory-based-on-recipe-s-suggestion.patch \
 "
 SRCREV = "25de4a47451187c5cf4988bd559e241f49eb9645"
-PV = "0.83.17"
+PV = "0.83.18"
 S = "${WORKDIR}/git"
 
 EXTRA_OECONF = " \
