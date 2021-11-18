@@ -5,7 +5,7 @@ LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=417c683350df4c63046fee551c461bd4"
 
 SRC_URI = " \
-    git://github.com/mamedev/mame.git \
+    git://github.com/mamedev/mame.git;branch=master;protocol=https \
     file://mame.desktop \
     file://mame32k.desktop \
 "

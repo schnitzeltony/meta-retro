@@ -21,7 +21,7 @@ inherit meson pkgconfig gtk-icon-cache features_check
 REQUIRED_DISTRO_FEATURES = "x11 opengl"
 
 SRC_URI = " \
-    git://github.com/dosbox-staging/dosbox-staging.git;branch=kc/release-0.77.1 \
+    git://github.com/dosbox-staging/dosbox-staging.git;branch=kc/release-0.77.1;protocol=https \
     file://0001-Fix-missing-include.patch \
 "
 SRCREV = "30d8752ac518182b83af945b3dd372eb4fc9b08d"

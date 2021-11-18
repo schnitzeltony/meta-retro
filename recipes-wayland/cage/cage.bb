@@ -16,7 +16,7 @@ inherit meson pkgconfig features_check
 
 REQUIRED_DISTRO_FEATURES = "wayland"
 
-SRC_URI = "git://github.com/Hjdskes/${BPN}.git"
+SRC_URI = "git://github.com/Hjdskes/${BPN}.git;branch=master;protocol=https"
 SRCREV = "646b3e80b45a011676eb4190652b8c506d56e7a4"
 PV = "0.1.4"
 S = "${WORKDIR}/git"

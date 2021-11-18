@@ -5,7 +5,7 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
 SRC_URI = " \
-    git://github.com/schnitzeltony/z80.git;branch=master \
+    git://github.com/schnitzeltony/z80.git;branch=master;protocol=https \
     file://0001-use-pkg-config-to-find-sdl.patch \
     file://cgenie.desktop \
     file://trs80.desktop \

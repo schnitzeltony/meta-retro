@@ -21,7 +21,7 @@ DEPENDS = " \
 inherit cmake
 inherit ${@bb.utils.contains('PACKAGECONFIG', 'qt5', 'cmake_qt5', '', d)}
 
-SRC_URI = "git://github.com/munt/munt.git"
+SRC_URI = "git://github.com/munt/munt.git;branch=master;protocol=https"
 SRCREV = "480985e4b4d774cdf795251fa9f86929295082e6"
 PV = "2.5.0"
 S = "${WORKDIR}/git"

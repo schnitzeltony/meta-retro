@@ -19,7 +19,7 @@ inherit autotools-brokensep pkgconfig dos2unix gtk-icon-cache features_check
 REQUIRED_DISTRO_FEATURES = "x11 opengl"
 
 SRC_URI = " \
-    git://github.com/joncampbell123/dosbox-x.git \
+    git://github.com/joncampbell123/dosbox-x.git;branch=master;protocol=https \
     file://0001-use-pkgconfig-to-find-sdl2.patch \
     file://0002-Enable-unaligned-memory-based-on-recipe-s-suggestion.patch \
 "

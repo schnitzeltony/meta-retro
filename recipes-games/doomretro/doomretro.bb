@@ -9,7 +9,7 @@ DEPENDS = "libsdl2 libsdl2-image libsdl2-mixer"
 inherit cmake pkgconfig
 
 SRC_URI = " \
-    git://github.com/bradharding/doomretro.git \
+    git://github.com/bradharding/doomretro.git;branch=master;protocol=https \
     file://doomretro.png \
     file://doomretro.desktop \
 "

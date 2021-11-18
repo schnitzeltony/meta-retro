@@ -3,7 +3,7 @@ AUTHOR = "Jürgen Buchmüller"
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=9fa70e05c591cf3ab4016b22aab701df"
 
-SRC_URI = "git://github.com/pullmoll/cass80.git"
+SRC_URI = "git://github.com/pullmoll/cass80.git;branch=master;protocol=https"
 SRCREV= "372455830343e5c8ebd42125cfe13191f976c343"
 PV = "0.0.0+git${SRCPV}"
 S = "${WORKDIR}/git"

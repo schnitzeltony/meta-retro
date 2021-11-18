@@ -26,7 +26,7 @@ PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES','x11','xwayland x11-ba
 PACKAGECONFIG[xwayland] = "-Dxwayland=enabled,-Dxwayland=disabled,virtual/libx11 xwayland xcb-util-wm"
 PACKAGECONFIG[x11-backend] = "-Dx11-backend=enabled,-Dx11-backend=disabled,virtual/libx11 xcb-util-renderutil"
 
-SRC_URI = "git://github.com/swaywm/${BPN}.git;branch=0.14"
+SRC_URI = "git://github.com/swaywm/${BPN}.git;branch=0.14;protocol=https"
 SRCREV = "49a574420138646845fb664862db03982cfd9f5b"
 PV = "0.14.1"
 S = "${WORKDIR}/git"
