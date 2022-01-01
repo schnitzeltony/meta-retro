@@ -14,24 +14,21 @@ DEPENDS = " \
     fluidsynth \
     opusfile \
     munt \
+    libslirp \
 "
 
 inherit meson pkgconfig gtk-icon-cache features_check
 
 REQUIRED_DISTRO_FEATURES = "x11 opengl"
 
-SRC_URI = " \
-    git://github.com/dosbox-staging/dosbox-staging.git;branch=kc/release-0.77.1;protocol=https \
-    file://0001-Fix-missing-include.patch \
-"
-SRCREV = "30d8752ac518182b83af945b3dd372eb4fc9b08d"
-PV = "0.77.1"
+SRC_URI = "git://github.com/dosbox-staging/dosbox-staging.git;branch=main;protocol=https"
+SRCREV = "656e98edaf0fd2269c3d74792a568f277180e6d0"
+PV = "0.78.0"
 S = "${WORKDIR}/git"
 
 DYNCORE ?= "-Ddynamic_core=dynrec"
 
 EXTRA_OEMESON = " \
-    -Duse_pcap=true \
     ${DYNCORE} \
 "
 
