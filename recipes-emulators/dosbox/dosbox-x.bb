@@ -14,7 +14,7 @@ DEPENDS = " \
     fluidsynth \
 "
 
-inherit autotools-brokensep pkgconfig dos2unix gtk-icon-cache features_check
+inherit autotools-brokensep pkgconfig dos2unix gtk-icon-cache features_check bash-completion
 
 REQUIRED_DISTRO_FEATURES = "x11 opengl"
 
@@ -23,8 +23,8 @@ SRC_URI = " \
     file://0001-use-pkgconfig-to-find-sdl2.patch \
     file://0002-Enable-unaligned-memory-based-on-recipe-s-suggestion.patch \
 "
-SRCREV = "71ebd3b0df3362085ba04e908d2630f951f8733d"
-PV = "0.83.20"
+SRCREV = "31a9cb16ebf95c874e367ee558d122f13f2a857f"
+PV = "0.83.21"
 S = "${WORKDIR}/git"
 
 EXTRA_OECONF = " \
