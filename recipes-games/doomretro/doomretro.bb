@@ -13,8 +13,8 @@ SRC_URI = " \
     file://doomretro.png \
     file://doomretro.desktop \
 "
-SRCREV = "0ba43d17bbe925a42eebfa09b794cd6a437cb099"
-PV = "4.3"
+SRCREV = "bdcad451c02ffc38ac44900d32648952ad710971"
+PV = "4.4.1"
 S = "${WORKDIR}/git"
 
 do_install:append() {
