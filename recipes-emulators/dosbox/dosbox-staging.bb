@@ -22,8 +22,8 @@ inherit meson pkgconfig gtk-icon-cache features_check
 REQUIRED_DISTRO_FEATURES = "x11 opengl"
 
 SRC_URI = "git://github.com/dosbox-staging/dosbox-staging.git;branch=main;protocol=https"
-SRCREV = "656e98edaf0fd2269c3d74792a568f277180e6d0"
-PV = "0.78.0"
+SRCREV = "50abadd8bf4ed736344ac2c6b25c85de822693ce"
+PV = "0.78.1"
 S = "${WORKDIR}/git"
 
 DYNCORE ?= "-Ddynamic_core=dynrec"
