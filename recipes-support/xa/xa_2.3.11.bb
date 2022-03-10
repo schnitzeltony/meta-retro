@@ -1,5 +1,5 @@
 SUMMARY = "Open-source 6502 cross assembler"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=1f67e705f4eb5064027b8c40ccfdb43e"
 
 # They move old versions to a different folder

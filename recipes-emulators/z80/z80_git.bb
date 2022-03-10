@@ -1,7 +1,7 @@
 DESCRIPTION = "Radio Shack® TRS-80 and the EACA Colour Genie EG2000 emulator"
 HOMEPAGE = "http://pmbits.de/40846.html"
 AUTHOR = "Jürgen Buchmüller"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"
 
 SRC_URI = " \

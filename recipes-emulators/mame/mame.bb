@@ -1,7 +1,7 @@
 SUMMARY = "Multiple Arcade Machine Emulator"
 HOMEPAGE = "http://www.mamedev.org/index.php" 
 
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://COPYING;md5=cdeccd9fdcfe3e35c2c2be5cdf8d37d6"
 
 SRC_URI = " \

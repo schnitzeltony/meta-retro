@@ -1,7 +1,7 @@
 SUMMARY = "DOSBox-X fork of the DOSBox project"
 HOMEPAGE = "https://dosbox-x.com/" 
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b5d36d7c1f35e9597b9843b9bedb6667" 
 
 DEPENDS = " \

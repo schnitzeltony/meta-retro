@@ -1,7 +1,7 @@
 SUMMARY = "DOS/x86 emulator focusing on ease of use"
 HOMEPAGE = "https://dosbox-staging.github.io/" 
 
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=a75e9ff85f9de2c690521c2b6ddd26cf" 
 
 DEPENDS = " \

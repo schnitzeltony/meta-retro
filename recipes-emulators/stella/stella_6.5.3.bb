@@ -2,7 +2,7 @@ SUMMARY = "Multi-platform Atari 2600 VCS emulator"
 HOMEPAGE = "https://stella-emu.github.io/" 
 SECTION = "emulators"
 
-LICENSE = "GPLv2" 
+LICENSE = "GPL-2.0-only" 
 LIC_FILES_CHKSUM = "file://License.txt;md5=878e3965c7b52d85827c75f5a2f3b314" 
 
 inherit autotools-brokensep pkgconfig gtk-icon-cache
