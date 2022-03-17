@@ -1,0 +1,63 @@
+From 7a5b60cce751eb9603541d8fd2d30290edb0dbf3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Thu, 17 Mar 2022 00:18:20 +0100
+Subject: [PATCH] Adjust to ffmpeg4
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropriate [configuration]
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ configure.ac | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 3f206ab..1cc40db 100755
+--- a/configure.ac
++++ b/configure.ac
+@@ -2336,13 +2336,13 @@ if test x"$enable_external_ffmpeg" = "xyes"; then
+ 
+   if test x"$valid_ffmpeg_platform" = "xyes"; then
+     AC_MSG_RESULT([via pkg-config])
+-    PKG_CHECK_MODULES(FFMPEG_AV,  [libavcodec libavformat libavutil],
++    PKG_CHECK_MODULES(FFMPEG_AV,  [libavcodec4 libavformat4 libavutil4],
+       [old_CFLAGS=$CFLAGS
+        old_CPPFLAGS=$CPPFLAGS
+        CFLAGS="$CFLAGS $FFMPEG_AV_CFLAGS"
+        CPPFLAGS="$CPPFLAGS $FFMPEG_AV_CFLAGS"
+ 
+-       AC_CHECK_HEADER(libavformat/avformat.h,
++       AC_CHECK_HEADER(ffmpeg4/libavformat/avformat.h,
+         [AC_DEFINE([HAVE_FFMPEG_HEADER_SUBDIRS],,[FFMPEG uses subdirs for headers])],
+         [AC_CHECK_HEADER(avformat.h,,
+           [AC_MSG_ERROR([No suitable FFMPEG header found!])])])
+@@ -2350,7 +2350,7 @@ if test x"$enable_external_ffmpeg" = "xyes"; then
+        CFLAGS=$old_CFLAGS
+        CPPFLAGS=$old_CPPFLAGS
+ 
+-      PKG_CHECK_MODULES(FFMPEG_SWSCALE, [libswscale],
++      PKG_CHECK_MODULES(FFMPEG_SWSCALE, [libswscale4],
+         [have_swscale=yes],
+         [echo "no. trying img_convert"]
+         [old_LIBS=$LIBS]
+@@ -2375,13 +2375,13 @@ if test x"$enable_external_ffmpeg" = "xyes"; then
+     )
+     AC_DEFINE([EXTERNAL_FFMPEG],,[External FFMPEG libraries are used])
+     HAVE_EXTERNAL_FFMPEG=yes
+-    PKG_CHECK_MODULES(FFMPEG_SWRESAMPLE, [libswresample], [have_swresample=yes], [have_swresample=no])
++    PKG_CHECK_MODULES(FFMPEG_SWRESAMPLE, [libswresample4], [have_swresample=yes], [have_swresample=no])
+     if test x"$have_swresample" = "xyes"; then
+       AC_DEFINE([HAVE_FFMPEG_SWRESAMPLE],,[Have FFMPEG swresample lib available])
+       HAVE_FFMPEG_SWRESAMPLE_SUPPORT="yes"
+     else
+       # dnl libav is abandoned and support should be removed, but check for it if swresample is missing.
+-      PKG_CHECK_MODULES(FFMPEG_AVRESAMPLE, [libavresample], [have_avresample=yes], [have_avresample=no])
++      PKG_CHECK_MODULES(FFMPEG_AVRESAMPLE, [libavresample4], [have_avresample=yes], [have_avresample=no])
+       if test x"$have_avresample" = "xyes"; then
+         AC_DEFINE([HAVE_FFMPEG_AVRESAMPLE],,[Have libav avresample lib available])
+         HAVE_FFMPEG_AVRESAMPLE_SUPPORT="yes"
+-- 
+2.34.1
+

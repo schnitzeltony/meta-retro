@@ -1,6 +1,6 @@
 SUMMARY = "Versatile Commodore Emulator"
 HOMEPAGE = "http://vice-emu.sourceforge.net"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=c93c0550bd3173f4504b2cbd8991e50b"
 
 # Sources for c64 software:
@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=c93c0550bd3173f4504b2cbd8991e50b"
 
 SRC_URI = " \
     ${SOURCEFORGE_MIRROR}/vice-emu/${BPN}-${PV}.tar.gz \
-    file://0001-fix-autoreconfig.patch \
+    file://0001-Adjust-to-ffmpeg4.patch \
     file://c64_16.png \
     file://c64_32.png \
     file://c64_48.png \
@@ -16,9 +16,9 @@ SRC_URI = " \
     file://vice_64dtv.desktop \
     file://vice_64sc.desktop \
 "
-SRC_URI[sha256sum] = "56b978faaeb8b2896032bd604d03c3501002187eef1ca58ceced40f11a65dc0e"
+SRC_URI[sha256sum] = "20df84c851aaf2f5000510927f6d31b32f269916d351465c366dc0afc9dc150c"
 
-inherit autotools pkgconfig gtk-icon-cache features_check
+inherit autotools-brokensep pkgconfig gtk-icon-cache features_check
 
 REQUIRED_DISTRO_FEATURES = "opengl x11"
 
@@ -32,7 +32,6 @@ DEPENDS = " \
     bison-native \
     glew \
     gtk+3 \
-    libav \
     libsdl \
     libpng \
     jpeg \
@@ -42,6 +41,7 @@ DEPENDS = " \
     mpg123 \
     virtual/libgl \
     vte9 \
+    ffmpeg4 \
 "
 
 PACKAGECONFIG ??= "${@bb.utils.filter('DISTRO_FEATURES', 'pulseaudio', d)}"
@@ -49,7 +49,6 @@ PACKAGECONFIG[pulseaudio] = "--with-pulse,--without-pulse,pulseaudio,pulseaudio-
 
 EXTRA_OECONF = " \
     --enable-external-ffmpeg \
-    --enable-parsid \
     --enable-native-gtk3ui \
     --without-oss \
     --disable-pdf-docs \
@@ -67,6 +66,18 @@ CONFIGUREOPTS:remove = " \
 "
 
 export ar_check="no"
+
+
+do_configure() {
+    cd ${S}/src/resid
+    echo "Configuring resid..."
+    ACLOCAL="$ACLOCAL" autoreconf -Wcross -Wno-obsolete --verbose --install --force ${EXTRA_AUTORECONF} $acpaths || die "autoreconf execution failed."
+    echo "Configuring resid done"
+    cd ${S}
+    rm -f ./configure
+    ACLOCAL="$ACLOCAL" autoreconf -Wcross -Wno-obsolete --verbose --install --force ${EXTRA_AUTORECONF} $acpaths || die "autoreconf execution failed."
+    oe_runconf
+}
 
 do_install:append() {
     install -d ${D}/${datadir}/applications
