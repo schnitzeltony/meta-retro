@@ -20,9 +20,8 @@ SRC_URI = " \
     http://www.dxx-rebirth.com/download/dxx/content/descent-mac-demo.zip;name=data \
     http://www.descent2.de/files/sound/hires-sounds.7z;name=sound \
     http://www.dxx-rebirth.com/download/dxx/res/d1xr-sc55-music.dxa;name=music;unpack=0 \
-    file://0001-Hack-build-with-gcc11.patch \
 "
-SRCREV = "48589d0fb019eb971818c15665358e30fa778dc4"
+SRCREV = "ad46235b67a24a38dec4734f94a59eba149ad94a"
 PV = "v0.59+git${SRCPV}"
 S = "${WORKDIR}/git"
 
@@ -41,7 +40,7 @@ do_compile() {
 
 do_install() {
     install -d ${D}${bindir}
-    install ${S}/${BPN}/${BPN} ${D}${bindir}
+    install ${S}/build/${BPN}/${BPN} ${D}${bindir}
 
     install -d ${D}${datadir}/applications
     install ${S}/${BPN}/${BPN}.desktop ${D}${datadir}/applications
