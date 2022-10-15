@@ -2,15 +2,15 @@ SUMMARY = "Multiple Arcade Machine Emulator"
 HOMEPAGE = "http://www.mamedev.org/index.php" 
 
 LICENSE = "GPL-2.0-or-later"
-LIC_FILES_CHKSUM = "file://COPYING;md5=f878ec5dbd711878ea22d64de390c664"
+LIC_FILES_CHKSUM = "file://COPYING;md5=07be887a543dff60d56851e4cb65a910"
 
 SRC_URI = " \
     git://github.com/mamedev/mame.git;branch=master;protocol=https \
     file://mame.desktop \
     file://mame32k.desktop \
 "
-PV = "0243"
-SRCREV = "addbb8ab40b4f0e780a6937a8788c8bb6bbcb3da"
+PV = "0248"
+SRCREV = "2d3d0deec8fa4025ea51c1722a21e6b9a7a8bb92"
 S = "${WORKDIR}/git"
 
 inherit pkgconfig siteinfo gtk-icon-cache
@@ -143,7 +143,7 @@ do_install() {
         install -pm 644 castool.1 chdman.1 imgtool.1 floptool.1 jedutil.1 ldresample.1 \
                         ldverify.1 romcmp.1 ${D}${mandir}/man1
         install -d ${D}${mandir}/man6
-        install -pm 644 mame.6 mess.6 ${D}${mandir}/man6
+        install -pm 644 mame.6 ${D}${mandir}/man6
     popd
 
     # install paths where user can add downloaded files
