@@ -23,8 +23,8 @@ SRC_URI = " \
     file://0001-use-pkgconfig-to-find-sdl2.patch \
     file://0002-Enable-unaligned-memory-based-on-recipe-s-suggestion.patch \
 "
-SRCREV = "02e6785e2916304b65a95d62715c860295ee61a6"
-PV = "0.83.25"
+SRCREV = "f35f2e895b58bcebac4212ef96f672f22d447700"
+PV = "0.84.3"
 S = "${WORKDIR}/git"
 
 EXTRA_OECONF = " \
