@@ -1,8 +1,8 @@
 SUMMARY = "DOS/x86 emulator focusing on ease of use"
 HOMEPAGE = "https://dosbox-staging.github.io/" 
 
-LICENSE = "GPL-2.0-only"
-LIC_FILES_CHKSUM = "file://COPYING;md5=a75e9ff85f9de2c690521c2b6ddd26cf" 
+LICENSE = "GPL-2.0-or-later"
+LIC_FILES_CHKSUM = "file://COPYING;md5=ca8be14ecd86a8ae1155f8023c73bca6"
 
 DEPENDS = " \
     libsdl2 \
@@ -15,15 +15,16 @@ DEPENDS = " \
     opusfile \
     munt \
     libslirp \
+    iir1 \
 "
 
 inherit meson pkgconfig gtk-icon-cache features_check
 
 REQUIRED_DISTRO_FEATURES = "x11 opengl"
 
-SRC_URI = "git://github.com/dosbox-staging/dosbox-staging.git;branch=main;protocol=https"
-SRCREV = "50abadd8bf4ed736344ac2c6b25c85de822693ce"
-PV = "0.78.1"
+SRC_URI = "git://github.com/dosbox-staging/dosbox-staging.git;branch=release/0.79.x;protocol=https"
+SRCREV = "dd7f21809870cc998005b3b09a33f1c36bd764a6"
+PV = "0.79.1"
 S = "${WORKDIR}/git"
 
 DYNCORE ?= "-Ddynamic_core=dynrec"
